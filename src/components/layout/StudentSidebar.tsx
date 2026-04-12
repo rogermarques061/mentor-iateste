@@ -1,0 +1,83 @@
+import { Home, BookOpen, Trophy, BarChart3, Settings, LogOut } from "lucide-react";
+import { NavLink } from "@/components/NavLink";
+import { useLocation } from "react-router-dom";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarFooter,
+  useSidebar,
+} from "@/components/ui/sidebar";
+
+const mainItems = [
+  { title: "Início", url: "/", icon: Home },
+  { title: "Meus Cursos", url: "/courses", icon: BookOpen },
+  { title: "Minha Evolução", url: "/evolution", icon: BarChart3 },
+  { title: "Conquistas", url: "/achievements", icon: Trophy },
+];
+
+export function StudentSidebar() {
+  const { state } = useSidebar();
+  const collapsed = state === "collapsed";
+  const location = useLocation();
+
+  return (
+    <Sidebar collapsible="icon" className="border-r-0">
+      <SidebarContent className="pt-6">
+        <div className="px-4 mb-8">
+          {!collapsed && (
+            <h2 className="font-display text-lg text-gradient">MentorIA</h2>
+          )}
+          {collapsed && (
+            <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+              <span className="text-sm font-display text-gradient">M</span>
+            </div>
+          )}
+        </div>
+
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {mainItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to={item.url}
+                      end={item.url === "/"}
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 hover:bg-accent/50"
+                      activeClassName="bg-accent text-accent-foreground"
+                    >
+                      <item.icon className="h-[18px] w-[18px]" strokeWidth={1.5} />
+                      {!collapsed && <span>{item.title}</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter className="pb-6">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <NavLink
+                to="/mentor"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:bg-accent/50 transition-all duration-200"
+                activeClassName="bg-accent text-accent-foreground"
+              >
+                <Settings className="h-[18px] w-[18px]" strokeWidth={1.5} />
+                {!collapsed && <span>Painel Mentor</span>}
+              </NavLink>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </Sidebar>
+  );
+}

@@ -1,4 +1,4 @@
-import { Home, BookOpen, Trophy, BarChart3, Settings, LogOut } from "lucide-react";
+import { Home, BookOpen, Trophy, BarChart3, Medal, PlayCircle, Settings } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import {
@@ -16,14 +16,15 @@ import {
 const mainItems = [
   { title: "Início", url: "/", icon: Home },
   { title: "Meus Cursos", url: "/courses", icon: BookOpen },
+  { title: "Player de Aula", url: "/player", icon: PlayCircle },
   { title: "Minha Evolução", url: "/evolution", icon: BarChart3 },
   { title: "Conquistas", url: "/achievements", icon: Trophy },
+  { title: "Ranking", url: "/ranking", icon: Medal },
 ];
 
 export function StudentSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
-  const location = useLocation();
 
   return (
     <Sidebar collapsible="icon" className="border-r-0">

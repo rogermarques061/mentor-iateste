@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, Brain, BookOpen, Gamepad2, BarChart3, Settings, GraduationCap, Package, ShoppingCart, DollarSign } from "lucide-react";
+import { LayoutDashboard, Users, Brain, BookOpen, Gamepad2, BarChart3, Settings, GraduationCap, Package, ShoppingCart, DollarSign, CreditCard } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
   Sidebar,
@@ -18,6 +18,7 @@ const mainItems = [
   { title: "Produtos", url: "/mentor/products", icon: Package },
   { title: "Vendas", url: "/mentor/sales", icon: ShoppingCart },
   { title: "Financeiro", url: "/mentor/financial", icon: DollarSign },
+  { title: "Checkout", url: "/mentor/checkout", icon: CreditCard, badge: 2 },
   { title: "Inteligência IA", url: "/mentor/ai", icon: Brain, badge: 3 },
   { title: "Conteúdo", url: "/mentor/content", icon: BookOpen },
   { title: "Gamificação", url: "/mentor/gamification", icon: Gamepad2 },

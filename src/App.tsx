@@ -21,6 +21,7 @@ import MentorSettings from "./pages/MentorSettings";
 import MentorProducts from "./pages/MentorProducts";
 import MentorSales from "./pages/MentorSales";
 import MentorFinancial from "./pages/MentorFinancial";
+import MentorCheckout from "./pages/MentorCheckout";
 import ProductSalesPage from "./pages/ProductSalesPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import PurchaseSuccess from "./pages/PurchaseSuccess";
@@ -52,6 +53,7 @@ const App = () => (
           <Route path="/mentor/products" element={<AppLayout><MentorProducts /></AppLayout>} />
           <Route path="/mentor/sales" element={<AppLayout><MentorSales /></AppLayout>} />
           <Route path="/mentor/financial" element={<AppLayout><MentorFinancial /></AppLayout>} />
+          <Route path="/mentor/checkout" element={<AppLayout><MentorCheckout /></AppLayout>} />
           <Route path="/p/:slug" element={<ProductSalesPage />} />
           <Route path="/checkout/:slug" element={<CheckoutPage />} />
           <Route path="/obrigado/:id" element={<PurchaseSuccess />} />

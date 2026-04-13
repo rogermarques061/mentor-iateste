@@ -156,6 +156,118 @@ const MentorSettings = () => {
         </div>
       )}
 
+      {/* Checkout & Payments */}
+      {activeTab === "checkout" && (
+        <div className="space-y-6 animate-fade-slide-in">
+          <div className="glass rounded-2xl p-6 space-y-4">
+            <h3 className="font-semibold text-sm">Configurações do Checkout</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="text-xs text-muted-foreground mb-1.5 block">Nome exibido no checkout</label>
+                <input type="text" defaultValue="MentorIA" className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50" />
+              </div>
+              <div>
+                <label className="text-xs text-muted-foreground mb-1.5 block">Cor de destaque</label>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary border border-[rgba(255,255,255,0.1)] cursor-pointer glow-primary" />
+                  <input type="text" defaultValue="#8B5CF6" className="glass rounded-xl px-4 py-2.5 text-sm font-mono bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 w-32" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="glass rounded-2xl p-6 space-y-4">
+            <h3 className="font-semibold text-sm">Métodos de Pagamento</h3>
+            {[
+              { label: "Aceitar Cartão de Crédito", icon: CreditCard, active: true },
+              { label: "Aceitar PIX", icon: Smartphone, active: true },
+              { label: "Aceitar Boleto Bancário", icon: FileText, active: false },
+              { label: "Permitir parcelamento", icon: ShoppingCart, active: true },
+            ].map((m, i) => (
+              <div key={i} className="flex items-center justify-between py-2">
+                <div className="flex items-center gap-2">
+                  <m.icon className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
+                  <span className="text-sm">{m.label}</span>
+                </div>
+                <div className={`w-9 h-5 rounded-full flex items-center px-0.5 cursor-pointer transition-all ${m.active ? 'bg-primary/30' : 'bg-muted'}`}>
+                  <div className={`w-4 h-4 rounded-full transition-transform ${m.active ? 'bg-primary translate-x-4' : 'bg-muted-foreground translate-x-0'}`} />
+                </div>
+              </div>
+            ))}
+            <div className="grid grid-cols-2 gap-4 pt-2">
+              <div>
+                <label className="text-xs text-muted-foreground mb-1.5 block">Máximo de parcelas</label>
+                <select className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 appearance-none">
+                  <option>12x</option><option>10x</option><option>6x</option><option>3x</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-xs text-muted-foreground mb-1.5 block">Dias para liberação de saldo</label>
+                <input type="number" defaultValue={14} className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono" />
+              </div>
+            </div>
+          </div>
+
+          <div className="glass rounded-2xl p-6 space-y-4">
+            <h3 className="font-semibold text-sm">Garantia</h3>
+            <div>
+              <label className="text-xs text-muted-foreground mb-1.5 block">Prazo padrão de garantia (dias)</label>
+              <div className="flex items-center gap-4">
+                {[7, 15, 30].map(d => (
+                  <button key={d} className={`px-4 py-2 rounded-xl text-sm font-mono transition-all ${d === 7 ? 'bg-primary/20 text-primary' : 'glass text-muted-foreground hover:text-foreground'}`}>
+                    {d} dias
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground mb-1.5 block">Texto da política de garantia</label>
+              <textarea className="w-full glass rounded-xl px-4 py-3 text-sm bg-transparent resize-none focus:outline-none focus:ring-1 focus:ring-primary/50 h-20" defaultValue="Se dentro do prazo de garantia você não estiver satisfeito, devolvemos 100% do seu investimento." />
+            </div>
+          </div>
+
+          <div className="glass rounded-2xl p-6 space-y-4">
+            <h3 className="font-semibold text-sm">Recuperação de Carrinho</h3>
+            <div className="flex items-center justify-between py-2">
+              <span className="text-sm">Ativar e-mail de recuperação</span>
+              <div className="w-9 h-5 rounded-full bg-primary/30 flex items-center px-0.5 cursor-pointer">
+                <div className="w-4 h-4 rounded-full bg-primary translate-x-4 transition-transform" />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-xs text-muted-foreground mb-1.5 block">Enviar após (horas)</label>
+                <input type="number" defaultValue={2} className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono" />
+              </div>
+              <div>
+                <label className="text-xs text-muted-foreground mb-1.5 block">Desconto de recuperação (%)</label>
+                <input type="number" defaultValue={10} className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono" />
+              </div>
+            </div>
+          </div>
+
+          <div className="glass rounded-2xl p-6 space-y-4">
+            <h3 className="font-semibold text-sm">Pixel e Rastreamento</h3>
+            <div>
+              <label className="text-xs text-muted-foreground mb-1.5 block">Facebook Pixel ID</label>
+              <input type="text" placeholder="Ex: 123456789012345" className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono" />
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground mb-1.5 block">Google Analytics (GA4)</label>
+              <input type="text" placeholder="Ex: G-XXXXXXXXXX" className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono" />
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground mb-1.5 block">Google Tag Manager</label>
+              <input type="text" placeholder="Ex: GTM-XXXXXXX" className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono" />
+            </div>
+          </div>
+
+          <button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-5 py-2.5 text-sm flex items-center gap-2 glow-primary transition-all">
+            <Save className="h-4 w-4" strokeWidth={1.5} /> Salvar configurações de checkout
+          </button>
+        </div>
+      )}
+
       {/* General */}
       {activeTab === "general" && (
         <div className="space-y-6 animate-fade-slide-in">

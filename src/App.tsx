@@ -32,36 +32,38 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<AppLayout><StudentHome /></AppLayout>} />
-          <Route path="/courses" element={<AppLayout><MyCourses /></AppLayout>} />
-          <Route path="/player" element={<AppLayout><LessonPlayer /></AppLayout>} />
-          <Route path="/evolution" element={<AppLayout><Evolution /></AppLayout>} />
-          <Route path="/achievements" element={<AppLayout><Achievements /></AppLayout>} />
-          <Route path="/ranking" element={<AppLayout><Ranking /></AppLayout>} />
-          <Route path="/mentor" element={<AppLayout><MentorDashboard /></AppLayout>} />
-          <Route path="/mentor/students" element={<AppLayout><MentorStudents /></AppLayout>} />
-          <Route path="/mentor/students/:id" element={<AppLayout><MentorStudentProfile /></AppLayout>} />
-          <Route path="/mentor/ai" element={<AppLayout><MentorAI /></AppLayout>} />
-          <Route path="/mentor/content" element={<AppLayout><MentorContent /></AppLayout>} />
-          <Route path="/mentor/gamification" element={<AppLayout><MentorGamification /></AppLayout>} />
-          <Route path="/mentor/reports" element={<AppLayout><MentorReports /></AppLayout>} />
-          <Route path="/mentor/settings" element={<AppLayout><MentorSettings /></AppLayout>} />
-          <Route path="/mentor/products" element={<AppLayout><MentorProducts /></AppLayout>} />
-          <Route path="/mentor/sales" element={<AppLayout><MentorSales /></AppLayout>} />
-          <Route path="/mentor/financial" element={<AppLayout><MentorFinancial /></AppLayout>} />
-          <Route path="/mentor/checkout" element={<AppLayout><MentorCheckout /></AppLayout>} />
-          <Route path="/p/:slug" element={<ProductSalesPage />} />
-          <Route path="/checkout/:slug" element={<CheckoutPage />} />
-          <Route path="/obrigado/:id" element={<PurchaseSuccess />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <PlatformProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<AppLayout><StudentHome /></AppLayout>} />
+            <Route path="/courses" element={<AppLayout><MyCourses /></AppLayout>} />
+            <Route path="/player" element={<AppLayout><LessonPlayer /></AppLayout>} />
+            <Route path="/evolution" element={<AppLayout><Evolution /></AppLayout>} />
+            <Route path="/achievements" element={<AppLayout><Achievements /></AppLayout>} />
+            <Route path="/ranking" element={<AppLayout><Ranking /></AppLayout>} />
+            <Route path="/mentor" element={<AppLayout><MentorDashboard /></AppLayout>} />
+            <Route path="/mentor/students" element={<AppLayout><MentorStudents /></AppLayout>} />
+            <Route path="/mentor/students/:id" element={<AppLayout><MentorStudentProfile /></AppLayout>} />
+            <Route path="/mentor/ai" element={<AppLayout><MentorAI /></AppLayout>} />
+            <Route path="/mentor/content" element={<AppLayout><MentorContent /></AppLayout>} />
+            <Route path="/mentor/gamification" element={<AppLayout><MentorGamification /></AppLayout>} />
+            <Route path="/mentor/reports" element={<AppLayout><MentorReports /></AppLayout>} />
+            <Route path="/mentor/settings" element={<AppLayout><MentorSettings /></AppLayout>} />
+            <Route path="/mentor/products" element={<AppLayout><MentorProducts /></AppLayout>} />
+            <Route path="/mentor/sales" element={<AppLayout><MentorSales /></AppLayout>} />
+            <Route path="/mentor/financial" element={<AppLayout><MentorFinancial /></AppLayout>} />
+            <Route path="/mentor/checkout" element={<AppLayout><MentorCheckout /></AppLayout>} />
+            <Route path="/p/:slug" element={<ProductSalesPage />} />
+            <Route path="/checkout/:slug" element={<CheckoutPage />} />
+            <Route path="/obrigado/:id" element={<PurchaseSuccess />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </PlatformProvider>
   </QueryClientProvider>
 );
 

@@ -70,6 +70,22 @@ const CheckoutPage = () => {
     return () => clearInterval(int);
   }, [pixGenerated, pixConfirmed]);
 
+  // Guard: product not found (placed after all hooks)
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-[#050508] flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <ShoppingCart className="h-12 w-12 text-muted-foreground/30 mx-auto" />
+          <h1 className="font-display text-2xl text-[#F1F0F5]">Checkout não encontrado</h1>
+          <p className="text-sm text-[#9B9AA8]">Este checkout não existe ou foi removido.</p>
+          <button onClick={() => navigate("/")} className="bg-[#8B5CF6] text-white rounded-xl px-6 py-3 text-sm font-medium hover:bg-[#8B5CF6]/90 transition-all">
+            Voltar ao início
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const formatTimer = (s: number) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

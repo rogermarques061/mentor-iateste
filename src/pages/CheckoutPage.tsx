@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Lock, Shield, CreditCard, Smartphone, FileText, Check, Copy, Clock,
-  ChevronDown, Star, Eye, EyeOff, AlertCircle, CheckCircle2, ChevronRight, Award, Play
+  ChevronDown, Star, Eye, EyeOff, AlertCircle, CheckCircle2, ChevronRight, Award, Play, ShoppingCart
 } from "lucide-react";
 import { usePlatform, formatCurrency } from "@/contexts/PlatformContext";
 
@@ -37,9 +37,6 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
   const { state, simulatePayment } = usePlatform();
 
-  // Find product by slug
-  const product = state.products.find(p => p.slug === slug) || state.products[0];
-
   const [paymentMethod, setPaymentMethod] = useState<"card" | "pix" | "boleto">("pix");
   const [coupon, setCoupon] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
@@ -61,14 +58,33 @@ const CheckoutPage = () => {
   const [cardCvv, setCardCvv] = useState("");
   const [installment, setInstallment] = useState(1);
 
+  // Find product by slug
+  const product = state.products.find(p => p.slug === slug);
+
   const discount = couponApplied ? 100 : 0;
-  const total = product.price - discount;
+  const total = product ? product.price - discount : 0;
 
   useEffect(() => {
     if (!pixGenerated || pixConfirmed) return;
     const int = setInterval(() => setPixTimer(p => (p > 0 ? p - 1 : 0)), 1000);
     return () => clearInterval(int);
   }, [pixGenerated, pixConfirmed]);
+
+  // Guard: product not found (placed after all hooks)
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-[#050508] flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <ShoppingCart className="h-12 w-12 text-muted-foreground/30 mx-auto" />
+          <h1 className="font-display text-2xl text-[#F1F0F5]">Checkout não encontrado</h1>
+          <p className="text-sm text-[#9B9AA8]">Este checkout não existe ou foi removido.</p>
+          <button onClick={() => navigate("/")} className="bg-[#8B5CF6] text-white rounded-xl px-6 py-3 text-sm font-medium hover:bg-[#8B5CF6]/90 transition-all">
+            Voltar ao início
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const formatTimer = (s: number) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 

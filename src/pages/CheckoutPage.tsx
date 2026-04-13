@@ -37,8 +37,23 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
   const { state, simulatePayment } = usePlatform();
 
-  // Find product by slug
-  const product = state.products.find(p => p.slug === slug) || state.products[0];
+  // Find product by slug — must match exactly
+  const product = state.products.find(p => p.slug === slug);
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-[#050508] flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <ShoppingCart className="h-12 w-12 text-muted-foreground/30 mx-auto" />
+          <h1 className="font-display text-2xl text-[#F1F0F5]">Checkout não encontrado</h1>
+          <p className="text-sm text-[#9B9AA8]">Este checkout não existe ou foi removido.</p>
+          <button onClick={() => navigate("/")} className="bg-[#8B5CF6] text-white rounded-xl px-6 py-3 text-sm font-medium hover:bg-[#8B5CF6]/90 transition-all">
+            Voltar ao início
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const [paymentMethod, setPaymentMethod] = useState<"card" | "pix" | "boleto">("pix");
   const [coupon, setCoupon] = useState("");

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Lock, Shield, CreditCard, Smartphone, FileText, Check, Copy, Clock,
-  ChevronDown, Star, Eye, EyeOff, AlertCircle, CheckCircle2, ChevronRight, Award, Play
+  ChevronDown, Star, Eye, EyeOff, AlertCircle, CheckCircle2, ChevronRight, Award, Play, ShoppingCart
 } from "lucide-react";
 import { usePlatform, formatCurrency } from "@/contexts/PlatformContext";
 

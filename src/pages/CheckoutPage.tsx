@@ -1,65 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Lock, Shield, CreditCard, Smartphone, FileText, Check, Copy, Clock,
-  ChevronDown, X, Star, Users, Award, MessageSquare, ChevronRight,
-  Play, Eye, EyeOff, AlertCircle, CheckCircle2
+  ChevronDown, Star, Eye, EyeOff, AlertCircle, CheckCircle2, ChevronRight, Award, Play
 } from "lucide-react";
-
-const product = {
-  name: "Mentoria PATRON",
-  tagline: "O programa definitivo para vendedores de alto ticket",
-  description: "Transforme sua carreira em 90 dias com o método comprovado que já ajudou +500 profissionais a triplicar seus resultados.",
-  price: 997,
-  originalPrice: 1497,
-  guarantee: 7,
-  mentorName: "Marcos Costa",
-  mentorBio: "Especialista em vendas de alto ticket com +15 anos de experiência. Já treinou mais de 5.000 profissionais.",
-};
-
-const installmentOptions = [
-  { n: 1, value: 997, label: "1x de R$ 997,00 (sem juros)" },
-  { n: 3, value: 332.33, label: "3x de R$ 332,33 (sem juros)" },
-  { n: 6, value: 166.17, label: "6x de R$ 166,17 (sem juros)" },
-  { n: 12, value: 89.25, label: "12x de R$ 89,25 (2,99% a.m.)" },
-];
-
-const benefits = [
-  "12 módulos com +80 aulas práticas",
-  "Acesso vitalício a todo conteúdo",
-  "Suporte direto com o mentor",
-  "Certificado de conclusão",
-  "Templates e materiais exclusivos",
-  "Comunidade privada de alunos",
-];
-
-const testimonials = [
-  { name: "Maria Silva", role: "Empreendedora", text: "Em 3 meses dobrei meu faturamento. O melhor investimento da minha carreira.", rating: 5 },
-  { name: "Pedro Santos", role: "Vendedor Senior", text: "Conteúdo prático e direto ao ponto. Resultados desde a primeira semana.", rating: 5 },
-  { name: "Ana Costa", role: "Consultora", text: "Recomendo para qualquer profissional que quer elevar seu nível de atuação.", rating: 5 },
-];
-
-const faqItems = [
-  { q: "Quanto tempo tenho de acesso?", a: "Acesso vitalício. Assista quando quiser, quantas vezes quiser." },
-  { q: "Tem garantia?", a: "Sim! Garantia incondicional de 7 dias. Se não gostar, devolvemos 100% do valor." },
-  { q: "Como funciona o suporte?", a: "Suporte direto com o mentor por comentários nas aulas e grupo exclusivo." },
-  { q: "Posso parcelar?", a: "Sim! Até 12x no cartão de crédito ou à vista no PIX com desconto." },
-];
-
-const modules = [
-  { name: "Módulo 1 — Fundamentos", lessons: 8 },
-  { name: "Módulo 2 — Prospecção", lessons: 10 },
-  { name: "Módulo 3 — Negociação", lessons: 12 },
-  { name: "Módulo 4 — Fechamento", lessons: 9 },
-  { name: "Módulo 5 — Pós-venda", lessons: 7 },
-];
-
-/* Validators */
-const validateCpf = (cpf: string) => {
-  const nums = cpf.replace(/\D/g, "");
-  if (nums.length !== 11) return false;
-  return true; // simplified
-};
+import { usePlatform, formatCurrency } from "@/contexts/PlatformContext";
 
 const maskCpf = (v: string) => {
   const n = v.replace(/\D/g, "").slice(0, 11);
@@ -89,6 +34,12 @@ const maskExpiry = (v: string) => {
 
 const CheckoutPage = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
+  const { state, simulatePayment } = usePlatform();
+
+  // Find product by slug
+  const product = state.products.find(p => p.slug === slug) || state.products[0];
+
   const [paymentMethod, setPaymentMethod] = useState<"card" | "pix" | "boleto">("pix");
   const [coupon, setCoupon] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
@@ -100,7 +51,6 @@ const CheckoutPage = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [showCvv, setShowCvv] = useState(false);
 
-  /* Form fields */
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [cpf, setCpf] = useState("");
@@ -114,18 +64,10 @@ const CheckoutPage = () => {
   const discount = couponApplied ? 100 : 0;
   const total = product.price - discount;
 
-  /* PIX countdown */
   useEffect(() => {
     if (!pixGenerated || pixConfirmed) return;
     const int = setInterval(() => setPixTimer(p => (p > 0 ? p - 1 : 0)), 1000);
     return () => clearInterval(int);
-  }, [pixGenerated, pixConfirmed]);
-
-  /* Simulate PIX confirmation after 8s */
-  useEffect(() => {
-    if (!pixGenerated || pixConfirmed) return;
-    const t = setTimeout(() => setPixConfirmed(true), 8000);
-    return () => clearTimeout(t);
   }, [pixGenerated, pixConfirmed]);
 
   const formatTimer = (s: number) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
@@ -143,87 +85,94 @@ const CheckoutPage = () => {
     if (d.startsWith("3")) return "Amex";
     return null;
   };
-
   const brand = detectBrand(cardNumber);
 
   const applyCoupon = () => {
     setCouponLoading(true);
-    setTimeout(() => {
-      setCouponApplied(true);
-      setCoupon("LAUNCH10");
-      setCouponLoading(false);
-    }, 800);
+    setTimeout(() => { setCouponApplied(true); setCoupon("LAUNCH10"); setCouponLoading(false); }, 800);
   };
 
-  const handleCardSubmit = () => {
+  const handlePixPayment = async () => {
+    setPixGenerated(true);
+    try {
+      const txn = await simulatePayment(
+        product.id,
+        { name, email, cpf, phone },
+        "pix"
+      );
+      setPixConfirmed(true);
+      setTimeout(() => navigate(`/obrigado/${txn.id}`), 1500);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleCardSubmit = async () => {
     setProcessing(true);
-    setTimeout(() => {
-      window.location.href = `/obrigado/ORD-2025-${Math.floor(Math.random() * 99999).toString().padStart(5, "0")}`;
-    }, 2500);
+    try {
+      const txn = await simulatePayment(
+        product.id,
+        { name, email, cpf, phone },
+        "card"
+      );
+      navigate(`/obrigado/${txn.id}`);
+    } catch (e) {
+      setProcessing(false);
+    }
   };
 
-  const InputField = ({
-    label, value, onChange, placeholder, mono, valid, type = "text", icon,
-  }: {
+  const installmentOptions = product.installments
+    ? Array.from({ length: product.maxInstallments }, (_, i) => {
+        const n = i + 1;
+        const val = +(total / n).toFixed(2);
+        const juros = n > 6 ? " (2,99% a.m.)" : " (sem juros)";
+        return { n, value: val, label: `${n}x de ${formatCurrency(val)}${juros}` };
+      })
+    : [{ n: 1, value: total, label: `1x de ${formatCurrency(total)}` }];
+
+  const InputField = ({ label, value, onChange, placeholder, mono, valid, type = "text" }: {
     label: string; value: string; onChange: (v: string) => void; placeholder: string;
-    mono?: boolean; valid?: boolean | null; type?: string; icon?: React.ReactNode;
+    mono?: boolean; valid?: boolean | null; type?: string;
   }) => (
     <div>
       <label className="text-[13px] text-[#9B9AA8] mb-1.5 block font-sans">{label}</label>
       <div className="relative">
-        <input
-          type={type}
-          value={value}
-          onChange={e => onChange(e.target.value)}
-          placeholder={placeholder}
-          className={`w-full rounded-xl px-4 py-3.5 text-sm bg-[rgba(255,255,255,0.04)] border transition-all duration-200 focus:outline-none focus:ring-0 ${
-            mono ? "font-mono" : ""
-          } ${
-            valid === true
-              ? "border-[rgba(52,211,153,0.5)] focus:border-[rgba(52,211,153,0.7)]"
-              : valid === false
-              ? "border-[rgba(248,113,113,0.5)] focus:border-[rgba(248,113,113,0.7)]"
-              : "border-[rgba(255,255,255,0.1)] focus:border-[#8B5CF6] focus:shadow-[0_0_0_3px_rgba(139,92,246,0.15)]"
+        <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
+          className={`w-full rounded-xl px-4 py-3.5 text-sm bg-[rgba(255,255,255,0.04)] border transition-all duration-200 focus:outline-none focus:ring-0 ${mono ? "font-mono" : ""} ${
+            valid === true ? "border-[rgba(52,211,153,0.5)]" : valid === false ? "border-[rgba(248,113,113,0.5)]" : "border-[rgba(255,255,255,0.1)] focus:border-[#8B5CF6] focus:shadow-[0_0_0_3px_rgba(139,92,246,0.15)]"
           } placeholder:text-[#5C5B6B] text-[#F1F0F5]`}
         />
-        {valid === true && (
-          <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#34D399] animate-scale-in" />
-        )}
-        {valid === false && value.length > 0 && (
-          <AlertCircle className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#F87171]" />
-        )}
-        {icon && !valid && (
-          <div className="absolute right-3 top-1/2 -translate-y-1/2">{icon}</div>
-        )}
+        {valid === true && <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#34D399]" />}
+        {valid === false && value.length > 0 && <AlertCircle className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#F87171]" />}
       </div>
     </div>
   );
 
   return (
     <div className="min-h-screen bg-[#050508]">
-      {/* Sales Page Content */}
       <div className="max-w-5xl mx-auto">
-
         {/* Hero */}
         <section className="pt-12 pb-16 px-4 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs text-[#A78BFA] mb-6">
             <Shield className="h-3.5 w-3.5" /> Garantia de {product.guarantee} dias
           </div>
           <h1 className="font-display text-3xl md:text-5xl font-bold mb-4 leading-tight max-w-3xl mx-auto">
-            {product.description}
+            {product.headline}
           </h1>
-          <p className="text-[#9B9AA8] text-base md:text-lg max-w-xl mx-auto mb-8">
-            {product.tagline}
-          </p>
+          <p className="text-[#9B9AA8] text-base md:text-lg max-w-xl mx-auto mb-8">{product.subheadline}</p>
           <div className="flex items-center justify-center gap-4 mb-8">
-            <span className="font-mono text-sm text-[#9B9AA8] line-through">R$ {product.originalPrice.toLocaleString("pt-BR")}</span>
-            <span className="font-mono text-3xl font-bold text-[#F59E0B]">R$ {product.price.toLocaleString("pt-BR")}</span>
-            <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-[rgba(52,211,153,0.15)] text-[#34D399]">
-              -{Math.round((1 - product.price / product.originalPrice) * 100)}%
-            </span>
+            {product.originalPrice > product.price && (
+              <span className="font-mono text-sm text-[#9B9AA8] line-through">{formatCurrency(product.originalPrice)}</span>
+            )}
+            <span className="font-mono text-3xl font-bold text-[#F59E0B]">{formatCurrency(product.price)}</span>
+            {product.originalPrice > product.price && (
+              <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-[rgba(52,211,153,0.15)] text-[#34D399]">
+                -{Math.round((1 - product.price / product.originalPrice) * 100)}%
+              </span>
+            )}
           </div>
-          <a href="#checkout" className="inline-flex items-center gap-2 bg-[#8B5CF6] hover:bg-[#8B5CF6]/90 text-white rounded-xl px-8 py-4 font-semibold transition-all glow-primary text-base">
-            Quero começar agora <ChevronDown className="h-4 w-4" />
+          <a href="#checkout" className="inline-flex items-center gap-2 bg-[#8B5CF6] hover:bg-[#8B5CF6]/90 text-white rounded-xl px-8 py-4 font-semibold transition-all glow-primary text-base" style={{ background: product.accentColor }}>
+            {product.ctaText} <ChevronDown className="h-4 w-4" />
           </a>
           <div className="flex items-center justify-center gap-6 mt-6 text-[10px] text-[#5C5B6B]">
             <span className="flex items-center gap-1"><Lock className="h-3 w-3" /> SSL 256-bit</span>
@@ -233,183 +182,132 @@ const CheckoutPage = () => {
         </section>
 
         {/* Benefits */}
-        <section className="py-12 px-4">
-          <h2 className="font-display text-2xl text-center mb-8">O que você vai receber</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
-            {benefits.map((b, i) => (
-              <div key={i} className="glass rounded-xl p-4 flex items-center gap-3 animate-fade-slide-in" style={{ animationDelay: `${i * 60}ms` }}>
-                <div className="w-8 h-8 rounded-lg bg-[rgba(139,92,246,0.15)] flex items-center justify-center shrink-0">
-                  <Check className="h-4 w-4 text-[#8B5CF6]" />
+        {product.sections.beneficios && product.benefits.length > 0 && (
+          <section className="py-12 px-4">
+            <h2 className="font-display text-2xl text-center mb-8">O que você vai receber</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
+              {product.benefits.map((b, i) => (
+                <div key={i} className="glass rounded-xl p-4 flex items-center gap-3 animate-fade-slide-in" style={{ animationDelay: `${i * 60}ms` }}>
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: `${product.accentColor}20` }}>
+                    <Check className="h-4 w-4" style={{ color: product.accentColor }} />
+                  </div>
+                  <span className="text-sm">{b}</span>
                 </div>
-                <span className="text-sm">{b}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Course content */}
-        <section className="py-12 px-4">
-          <h2 className="font-display text-2xl text-center mb-8">Conteúdo do programa</h2>
-          <div className="max-w-xl mx-auto space-y-2">
-            {modules.map((m, i) => (
-              <div key={i} className="glass rounded-xl p-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Play className="h-4 w-4 text-[#8B5CF6]" strokeWidth={1.5} />
-                  <span className="text-sm">{m.name}</span>
+        {product.sections.conteudo && product.linkedCourseId && (
+          <section className="py-12 px-4">
+            <h2 className="font-display text-2xl text-center mb-8">Conteúdo do programa</h2>
+            <div className="max-w-xl mx-auto space-y-2">
+              {state.courses.find(c => c.id === product.linkedCourseId)?.modules.map((m, i) => (
+                <div key={i} className="glass rounded-xl p-4 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Play className="h-4 w-4" style={{ color: product.accentColor }} strokeWidth={1.5} />
+                    <span className="text-sm">{m.title}</span>
+                  </div>
+                  <span className="text-xs text-[#9B9AA8] font-mono">{m.lessons.length} aulas</span>
                 </div>
-                <span className="text-xs text-[#9B9AA8] font-mono">{m.lessons} aulas</span>
-              </div>
-            ))}
-            <div className="text-center text-xs text-[#9B9AA8] pt-2 font-mono">
-              +46 aulas · 24h de conteúdo
+              ))}
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Testimonials */}
-        <section className="py-12 px-4">
-          <h2 className="font-display text-2xl text-center mb-8">O que dizem nossos alunos</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-            {testimonials.map((t, i) => (
-              <div key={i} className="glass rounded-2xl p-5 space-y-3">
-                <div className="flex gap-0.5">
-                  {Array.from({ length: t.rating }).map((_, j) => (
-                    <Star key={j} className="h-3.5 w-3.5 fill-[#F59E0B] text-[#F59E0B]" />
-                  ))}
-                </div>
-                <p className="text-xs text-[#9B9AA8]">"{t.text}"</p>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[rgba(139,92,246,0.15)] flex items-center justify-center text-[10px] font-medium text-[#8B5CF6]">
-                    {t.name.split(" ").map(n => n[0]).join("")}
+        {product.sections.depoimentos && product.testimonials.length > 0 && (
+          <section className="py-12 px-4">
+            <h2 className="font-display text-2xl text-center mb-8">O que dizem nossos alunos</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              {product.testimonials.map((t, i) => (
+                <div key={i} className="glass rounded-2xl p-5 space-y-3">
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: t.rating }).map((_, j) => (
+                      <Star key={j} className="h-3.5 w-3.5 fill-[#F59E0B] text-[#F59E0B]" />
+                    ))}
                   </div>
-                  <div>
-                    <div className="text-xs font-medium">{t.name}</div>
-                    <div className="text-[10px] text-[#5C5B6B]">{t.role}</div>
+                  <p className="text-xs text-[#9B9AA8]">"{t.text}"</p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-medium" style={{ background: `${product.accentColor}20`, color: product.accentColor }}>
+                      {t.name.split(" ").map(n => n[0]).join("")}
+                    </div>
+                    <div>
+                      <div className="text-xs font-medium">{t.name}</div>
+                      <div className="text-[10px] text-[#5C5B6B]">{t.role}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Mentor */}
-        <section className="py-12 px-4">
-          <div className="glass rounded-2xl p-8 max-w-2xl mx-auto flex flex-col md:flex-row items-center gap-6">
-            <div className="w-20 h-20 rounded-full bg-[rgba(139,92,246,0.15)] flex items-center justify-center text-xl font-display text-[#8B5CF6] shrink-0">
-              MC
+              ))}
             </div>
-            <div>
-              <h3 className="font-display text-lg mb-1">{product.mentorName}</h3>
-              <p className="text-xs text-[#9B9AA8]">{product.mentorBio}</p>
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Guarantee */}
-        <section className="py-12 px-4">
-          <div className="glass rounded-2xl p-8 max-w-lg mx-auto text-center border border-[rgba(52,211,153,0.15)]">
-            <Shield className="h-12 w-12 text-[#34D399] mx-auto mb-4" strokeWidth={1.5} />
-            <h3 className="font-display text-xl mb-2">Garantia de {product.guarantee} dias</h3>
-            <p className="text-xs text-[#9B9AA8]">
-              Se não ficar satisfeito em {product.guarantee} dias, devolvemos 100% do seu dinheiro. Sem perguntas.
-            </p>
-          </div>
-        </section>
+        {product.sections.garantia && (
+          <section className="py-12 px-4">
+            <div className="glass rounded-2xl p-8 max-w-lg mx-auto text-center border border-[rgba(52,211,153,0.15)]">
+              <Shield className="h-12 w-12 text-[#34D399] mx-auto mb-4" strokeWidth={1.5} />
+              <h3 className="font-display text-xl mb-2">Garantia de {product.guarantee} dias</h3>
+              <p className="text-xs text-[#9B9AA8]">Se não ficar satisfeito em {product.guarantee} dias, devolvemos 100% do seu dinheiro.</p>
+            </div>
+          </section>
+        )}
 
         {/* FAQ */}
-        <section className="py-12 px-4">
-          <h2 className="font-display text-2xl text-center mb-8">Perguntas frequentes</h2>
-          <div className="max-w-xl mx-auto space-y-2">
-            {faqItems.map((f, i) => (
-              <div key={i} className="glass rounded-xl overflow-hidden">
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full p-4 flex items-center justify-between text-sm text-left"
-                >
-                  <span>{f.q}</span>
-                  <ChevronRight className={`h-4 w-4 text-[#9B9AA8] transition-transform ${openFaq === i ? "rotate-90" : ""}`} />
-                </button>
-                {openFaq === i && (
-                  <div className="px-4 pb-4 text-xs text-[#9B9AA8] animate-fade-slide-in">
-                    {f.a}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
+        {product.sections.faq && product.faq.length > 0 && (
+          <section className="py-12 px-4">
+            <h2 className="font-display text-2xl text-center mb-8">Perguntas frequentes</h2>
+            <div className="max-w-xl mx-auto space-y-2">
+              {product.faq.map((f, i) => (
+                <div key={i} className="glass rounded-xl overflow-hidden">
+                  <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full p-4 flex items-center justify-between text-sm text-left">
+                    <span>{f.q}</span>
+                    <ChevronRight className={`h-4 w-4 text-[#9B9AA8] transition-transform ${openFaq === i ? "rotate-90" : ""}`} />
+                  </button>
+                  {openFaq === i && <div className="px-4 pb-4 text-xs text-[#9B9AA8] animate-fade-slide-in">{f.a}</div>}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
-        {/* ── CHECKOUT FORM ── */}
+        {/* CHECKOUT FORM */}
         <section id="checkout" className="py-16 px-4">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 max-w-4xl mx-auto">
             {/* Left — Order Summary */}
             <div className="lg:col-span-2 space-y-4">
               <div className="glass rounded-2xl p-6 space-y-5 lg:sticky lg:top-8">
                 <h2 className="font-display text-lg">Resumo do pedido</h2>
-
                 <div className="flex gap-3">
-                  <div className="w-16 h-12 rounded-xl bg-[rgba(139,92,246,0.1)] shrink-0 flex items-center justify-center">
-                    <Award className="h-6 w-6 text-[#8B5CF6]/40" />
+                  <div className="w-16 h-12 rounded-xl shrink-0 flex items-center justify-center" style={{ background: `${product.accentColor}15` }}>
+                    <Award className="h-6 w-6" style={{ color: `${product.accentColor}60` }} />
                   </div>
                   <div>
                     <div className="text-sm font-medium">{product.name}</div>
-                    <div className="text-[11px] text-[#9B9AA8]">{product.tagline}</div>
+                    <div className="text-[11px] text-[#9B9AA8]">{product.description}</div>
                   </div>
                 </div>
-
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-[#9B9AA8]">Subtotal</span>
-                    <span className="font-mono">R$ {product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
-                  </div>
-                  {couponApplied && (
-                    <div className="flex justify-between text-[#34D399] animate-fade-slide-in">
-                      <span>Desconto (LAUNCH10)</span>
-                      <span className="font-mono">-R$ {discount.toFixed(2)}</span>
-                    </div>
-                  )}
+                  <div className="flex justify-between"><span className="text-[#9B9AA8]">Subtotal</span><span className="font-mono">{formatCurrency(product.price)}</span></div>
+                  {couponApplied && <div className="flex justify-between text-[#34D399] animate-fade-slide-in"><span>Desconto (LAUNCH10)</span><span className="font-mono">-{formatCurrency(discount)}</span></div>}
                   <div className="border-t border-[rgba(255,255,255,0.05)] pt-2 flex justify-between">
                     <span className="font-semibold">Total</span>
-                    <span className="font-mono text-2xl font-bold text-[#F59E0B]">
-                      R$ {total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-                    </span>
+                    <span className="font-mono text-2xl font-bold text-[#F59E0B]">{formatCurrency(total)}</span>
                   </div>
                 </div>
-
-                {/* Coupon */}
                 <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={coupon}
-                    onChange={e => setCoupon(e.target.value)}
-                    placeholder="Código do cupom"
-                    className="flex-1 rounded-xl px-3 py-2.5 text-sm bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.1)] focus:outline-none focus:border-[#8B5CF6] font-mono uppercase transition-all"
-                  />
-                  <button
-                    onClick={applyCoupon}
-                    disabled={couponLoading}
-                    className="rounded-xl px-4 py-2.5 text-xs bg-[rgba(139,92,246,0.15)] text-[#8B5CF6] hover:bg-[rgba(139,92,246,0.25)] transition-all font-medium"
-                  >
+                  <input type="text" value={coupon} onChange={e => setCoupon(e.target.value)} placeholder="Código do cupom"
+                    className="flex-1 rounded-xl px-3 py-2.5 text-sm bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.1)] focus:outline-none focus:border-[#8B5CF6] font-mono uppercase transition-all" />
+                  <button onClick={applyCoupon} disabled={couponLoading} className="rounded-xl px-4 py-2.5 text-xs text-[#8B5CF6] hover:bg-[rgba(139,92,246,0.25)] transition-all font-medium" style={{ background: `${product.accentColor}15` }}>
                     {couponLoading ? "..." : "Aplicar"}
                   </button>
                 </div>
-                {couponApplied && (
-                  <div className="flex items-center gap-2 text-xs text-[#34D399] animate-fade-slide-in">
-                    <Check className="h-3.5 w-3.5" /> Cupom LAUNCH10 aplicado!
-                  </div>
-                )}
-
-                {/* Trust badges */}
+                {couponApplied && <div className="flex items-center gap-2 text-xs text-[#34D399] animate-fade-slide-in"><Check className="h-3.5 w-3.5" /> Cupom LAUNCH10 aplicado!</div>}
                 <div className="grid grid-cols-2 gap-2 pt-2">
-                  {[
-                    { icon: Lock, text: "SSL 256-bit" },
-                    { icon: Check, text: "Pagamento seguro" },
-                    { icon: Shield, text: `Garantia ${product.guarantee} dias` },
-                    { icon: CreditCard, text: "Acesso imediato" },
-                  ].map((b, i) => (
-                    <div key={i} className="flex items-center gap-1.5 text-[10px] text-[#5C5B6B]">
-                      <b.icon className="h-3 w-3" strokeWidth={1.5} /> {b.text}
-                    </div>
+                  {[{ icon: Lock, text: "SSL 256-bit" }, { icon: Check, text: "Pagamento seguro" }, { icon: Shield, text: `Garantia ${product.guarantee} dias` }, { icon: CreditCard, text: "Acesso imediato" }].map((b, i) => (
+                    <div key={i} className="flex items-center gap-1.5 text-[10px] text-[#5C5B6B]"><b.icon className="h-3 w-3" strokeWidth={1.5} /> {b.text}</div>
                   ))}
                 </div>
               </div>
@@ -419,39 +317,11 @@ const CheckoutPage = () => {
             <div className="lg:col-span-3 space-y-4">
               <div className="glass rounded-2xl p-6 space-y-5">
                 <h2 className="font-display text-lg">Dados de pagamento</h2>
-
-                {/* Personal info */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <InputField
-                    label="Nome completo"
-                    value={name}
-                    onChange={setName}
-                    placeholder="Seu nome completo"
-                    valid={name.length > 2 ? true : name.length > 0 ? false : null}
-                  />
-                  <InputField
-                    label="E-mail"
-                    value={email}
-                    onChange={setEmail}
-                    placeholder="seu@email.com"
-                    valid={emailValid ? true : email.length > 3 ? false : null}
-                  />
-                  <InputField
-                    label="CPF"
-                    value={cpf}
-                    onChange={v => setCpf(maskCpf(v))}
-                    placeholder="000.000.000-00"
-                    mono
-                    valid={cpfValid ? true : cpf.length > 3 ? false : null}
-                  />
-                  <InputField
-                    label="Telefone"
-                    value={phone}
-                    onChange={v => setPhone(maskPhone(v))}
-                    placeholder="(00) 00000-0000"
-                    mono
-                    valid={phoneValid ? true : phone.length > 3 ? false : null}
-                  />
+                  <InputField label="Nome completo" value={name} onChange={setName} placeholder="Seu nome completo" valid={name.length > 2 ? true : name.length > 0 ? false : null} />
+                  <InputField label="E-mail" value={email} onChange={setEmail} placeholder="seu@email.com" valid={emailValid ? true : email.length > 3 ? false : null} />
+                  <InputField label="CPF" value={cpf} onChange={v => setCpf(maskCpf(v))} placeholder="000.000.000-00" mono valid={cpfValid ? true : cpf.length > 3 ? false : null} />
+                  <InputField label="Telefone" value={phone} onChange={v => setPhone(maskPhone(v))} placeholder="(00) 00000-0000" mono valid={phoneValid ? true : phone.length > 3 ? false : null} />
                 </div>
 
                 {/* Payment method tabs */}
@@ -461,14 +331,11 @@ const CheckoutPage = () => {
                     { id: "card" as const, label: "Cartão", icon: CreditCard },
                     { id: "boleto" as const, label: "Boleto", icon: FileText },
                   ]).map(m => (
-                    <button
-                      key={m.id}
-                      onClick={() => setPaymentMethod(m.id)}
+                    <button key={m.id} onClick={() => setPaymentMethod(m.id)}
                       className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium transition-all ${
-                        paymentMethod === m.id
-                          ? "bg-[rgba(139,92,246,0.2)] text-[#8B5CF6] border border-[rgba(139,92,246,0.3)]"
-                          : "text-[#5C5B6B] hover:text-[#9B9AA8]"
+                        paymentMethod === m.id ? "text-[#8B5CF6] border" : "text-[#5C5B6B] hover:text-[#9B9AA8]"
                       }`}
+                      style={paymentMethod === m.id ? { background: `${product.accentColor}20`, borderColor: `${product.accentColor}30`, color: product.accentColor } : undefined}
                     >
                       <m.icon className="h-4 w-4" strokeWidth={1.5} /> {m.label}
                     </button>
@@ -480,19 +347,12 @@ const CheckoutPage = () => {
                   <div className="space-y-4 animate-fade-slide-in text-center">
                     {!pixGenerated ? (
                       <>
-                        <div className="glass rounded-xl p-4 text-xs text-[#9B9AA8]">
-                          Gere o QR Code, pague pelo seu banco e o acesso é liberado automaticamente.
-                        </div>
-                        <button
-                          onClick={() => setPixGenerated(true)}
-                          disabled={!personalValid}
-                          className={`w-full rounded-xl py-4 text-sm font-semibold transition-all ${
-                            personalValid
-                              ? "bg-[#8B5CF6] hover:bg-[#8B5CF6]/90 text-white glow-primary"
-                              : "bg-[rgba(255,255,255,0.05)] text-[#5C5B6B] cursor-not-allowed"
-                          }`}
+                        <div className="glass rounded-xl p-4 text-xs text-[#9B9AA8]">Gere o QR Code, pague pelo seu banco e o acesso é liberado automaticamente.</div>
+                        <button onClick={handlePixPayment} disabled={!personalValid}
+                          className={`w-full rounded-xl py-4 text-sm font-semibold transition-all ${personalValid ? "text-white glow-primary" : "bg-[rgba(255,255,255,0.05)] text-[#5C5B6B] cursor-not-allowed"}`}
+                          style={personalValid ? { background: product.accentColor } : undefined}
                         >
-                          Finalizar e gerar QR Code — R$ {total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                          Finalizar e gerar QR Code — {formatCurrency(total)}
                         </button>
                       </>
                     ) : pixConfirmed ? (
@@ -514,12 +374,6 @@ const CheckoutPage = () => {
                           <Clock className="h-4 w-4" />
                           <span className="font-mono text-sm font-medium">QR Code válido por {formatTimer(pixTimer)}</span>
                         </div>
-                        <div className="glass rounded-xl p-3 flex items-center gap-2 max-w-sm mx-auto">
-                          <span className="font-mono text-[10px] text-[#9B9AA8] truncate flex-1">00020126580014BR.GOV.BCB.PIX0136abc123def456...</span>
-                          <button className="shrink-0 p-1.5 hover:bg-[rgba(255,255,255,0.06)] rounded-lg transition-all">
-                            <Copy className="h-3.5 w-3.5" />
-                          </button>
-                        </div>
                         <div className="flex items-center justify-center gap-2 text-xs text-[#9B9AA8]">
                           <div className="w-2 h-2 rounded-full bg-[#FBBF24] animate-pulse" />
                           Aguardando pagamento...
@@ -529,54 +383,26 @@ const CheckoutPage = () => {
                   </div>
                 )}
 
-                {/* Card form */}
+                {/* Card */}
                 {paymentMethod === "card" && (
                   <div className="space-y-3 animate-fade-slide-in">
                     <div>
                       <label className="text-[13px] text-[#9B9AA8] mb-1.5 block">Número do cartão</label>
                       <div className="relative">
-                        <input
-                          type="text"
-                          value={cardNumber}
-                          onChange={e => setCardNumber(maskCard(e.target.value))}
-                          placeholder="0000 0000 0000 0000"
-                          className="w-full rounded-xl px-4 py-3.5 text-sm bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.1)] focus:outline-none focus:border-[#8B5CF6] focus:shadow-[0_0_0_3px_rgba(139,92,246,0.15)] font-mono transition-all"
-                        />
-                        {brand && (
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-mono font-medium text-[#A78BFA] bg-[rgba(139,92,246,0.15)] px-2 py-0.5 rounded animate-fade-slide-in">
-                            {brand}
-                          </span>
-                        )}
+                        <input type="text" value={cardNumber} onChange={e => setCardNumber(maskCard(e.target.value))} placeholder="0000 0000 0000 0000"
+                          className="w-full rounded-xl px-4 py-3.5 text-sm bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.1)] focus:outline-none focus:border-[#8B5CF6] focus:shadow-[0_0_0_3px_rgba(139,92,246,0.15)] font-mono transition-all" />
+                        {brand && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-mono font-medium px-2 py-0.5 rounded animate-fade-slide-in" style={{ color: product.accentColor, background: `${product.accentColor}15` }}>{brand}</span>}
                       </div>
                     </div>
-                    <InputField
-                      label="Nome no cartão"
-                      value={cardName}
-                      onChange={v => setCardName(v.toUpperCase())}
-                      placeholder="Como está no cartão"
-                    />
+                    <InputField label="Nome no cartão" value={cardName} onChange={v => setCardName(v.toUpperCase())} placeholder="Como está no cartão" />
                     <div className="grid grid-cols-2 gap-3">
-                      <InputField
-                        label="Validade"
-                        value={cardExpiry}
-                        onChange={v => setCardExpiry(maskExpiry(v))}
-                        placeholder="MM/AA"
-                        mono
-                      />
+                      <InputField label="Validade" value={cardExpiry} onChange={v => setCardExpiry(maskExpiry(v))} placeholder="MM/AA" mono />
                       <div>
                         <label className="text-[13px] text-[#9B9AA8] mb-1.5 block">CVV</label>
                         <div className="relative">
-                          <input
-                            type={showCvv ? "text" : "password"}
-                            value={cardCvv}
-                            onChange={e => setCardCvv(e.target.value.replace(/\D/g, "").slice(0, 4))}
-                            placeholder="000"
-                            className="w-full rounded-xl px-4 py-3.5 text-sm bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.1)] focus:outline-none focus:border-[#8B5CF6] focus:shadow-[0_0_0_3px_rgba(139,92,246,0.15)] font-mono transition-all"
-                          />
-                          <button
-                            onClick={() => setShowCvv(!showCvv)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2"
-                          >
+                          <input type={showCvv ? "text" : "password"} value={cardCvv} onChange={e => setCardCvv(e.target.value.replace(/\D/g, "").slice(0, 4))} placeholder="000"
+                            className="w-full rounded-xl px-4 py-3.5 text-sm bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.1)] focus:outline-none focus:border-[#8B5CF6] font-mono transition-all" />
+                          <button onClick={() => setShowCvv(!showCvv)} className="absolute right-3 top-1/2 -translate-y-1/2">
                             {showCvv ? <EyeOff className="h-4 w-4 text-[#5C5B6B]" /> : <Eye className="h-4 w-4 text-[#5C5B6B]" />}
                           </button>
                         </div>
@@ -584,38 +410,22 @@ const CheckoutPage = () => {
                     </div>
                     <div>
                       <label className="text-[13px] text-[#9B9AA8] mb-1.5 block">Parcelas</label>
-                      <select
-                        value={installment}
-                        onChange={e => setInstallment(Number(e.target.value))}
-                        className="w-full rounded-xl px-4 py-3.5 text-sm bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.1)] focus:outline-none focus:border-[#8B5CF6] appearance-none font-mono transition-all text-[#F1F0F5]"
-                      >
-                        {installmentOptions.map(o => (
-                          <option key={o.n} value={o.n} className="bg-[#12121C]">{o.label}</option>
-                        ))}
+                      <select value={installment} onChange={e => setInstallment(Number(e.target.value))}
+                        className="w-full rounded-xl px-4 py-3.5 text-sm bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.1)] focus:outline-none appearance-none font-mono transition-all text-[#F1F0F5]">
+                        {installmentOptions.map(o => <option key={o.n} value={o.n} className="bg-[#12121C]">{o.label}</option>)}
                       </select>
                     </div>
-
-                    <p className="text-[10px] text-[#5C5B6B] flex items-center gap-1">
-                      <Lock className="h-3 w-3" /> Seus dados são criptografados com SSL 256-bit
-                    </p>
-
-                    <button
-                      onClick={handleCardSubmit}
-                      disabled={!personalValid || processing}
-                      className={`w-full rounded-xl py-4 text-base font-semibold transition-all mt-2 ${
-                        personalValid && !processing
-                          ? "bg-[#8B5CF6] hover:bg-[#8B5CF6]/90 text-white glow-primary active:scale-[0.98]"
-                          : "bg-[rgba(255,255,255,0.05)] text-[#5C5B6B] cursor-not-allowed"
-                      }`}
+                    <p className="text-[10px] text-[#5C5B6B] flex items-center gap-1"><Lock className="h-3 w-3" /> Seus dados são criptografados com SSL 256-bit</p>
+                    <button onClick={handleCardSubmit} disabled={!personalValid || processing}
+                      className={`w-full rounded-xl py-4 text-base font-semibold transition-all mt-2 ${personalValid && !processing ? "text-white glow-primary active:scale-[0.98]" : "bg-[rgba(255,255,255,0.05)] text-[#5C5B6B] cursor-not-allowed"}`}
+                      style={personalValid && !processing ? { background: product.accentColor } : undefined}
                     >
                       {processing ? (
                         <span className="flex items-center justify-center gap-2">
                           <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                           Processando pagamento...
                         </span>
-                      ) : (
-                        `Finalizar compra — R$ ${total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`
-                      )}
+                      ) : `Finalizar compra — ${formatCurrency(total)}`}
                     </button>
                   </div>
                 )}
@@ -624,17 +434,11 @@ const CheckoutPage = () => {
                 {paymentMethod === "boleto" && (
                   <div className="space-y-4 animate-fade-slide-in text-center">
                     <div className="glass rounded-xl p-4">
-                      <p className="text-xs text-[#FBBF24] flex items-center justify-center gap-1.5">
-                        <Clock className="h-3.5 w-3.5" /> Compensação em até 3 dias úteis
-                      </p>
+                      <p className="text-xs text-[#FBBF24] flex items-center justify-center gap-1.5"><Clock className="h-3.5 w-3.5" /> Compensação em até 3 dias úteis</p>
                     </div>
-                    <button
-                      disabled={!personalValid}
-                      className={`w-full rounded-xl py-4 text-sm font-semibold transition-all ${
-                        personalValid
-                          ? "bg-[#8B5CF6] hover:bg-[#8B5CF6]/90 text-white glow-primary"
-                          : "bg-[rgba(255,255,255,0.05)] text-[#5C5B6B] cursor-not-allowed"
-                      }`}
+                    <button disabled={!personalValid}
+                      className={`w-full rounded-xl py-4 text-sm font-semibold transition-all ${personalValid ? "text-white glow-primary" : "bg-[rgba(255,255,255,0.05)] text-[#5C5B6B] cursor-not-allowed"}`}
+                      style={personalValid ? { background: product.accentColor } : undefined}
                     >
                       Gerar boleto bancário
                     </button>
@@ -643,8 +447,8 @@ const CheckoutPage = () => {
 
                 <p className="text-[10px] text-[#5C5B6B] text-center">
                   Ao finalizar, você concorda com os{" "}
-                  <span className="text-[#8B5CF6] cursor-pointer hover:underline">Termos de Uso</span> e{" "}
-                  <span className="text-[#8B5CF6] cursor-pointer hover:underline">Política de Privacidade</span>
+                  <span className="cursor-pointer hover:underline" style={{ color: product.accentColor }}>Termos de Uso</span> e{" "}
+                  <span className="cursor-pointer hover:underline" style={{ color: product.accentColor }}>Política de Privacidade</span>
                 </p>
               </div>
             </div>
@@ -655,19 +459,18 @@ const CheckoutPage = () => {
         <section className="py-16 px-4 text-center">
           <h2 className="font-display text-2xl mb-4">Pronto para transformar seus resultados?</h2>
           <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="font-mono text-sm text-[#9B9AA8] line-through">R$ {product.originalPrice}</span>
-            <span className="font-mono text-3xl font-bold text-[#F59E0B]">R$ {product.price}</span>
+            {product.originalPrice > product.price && <span className="font-mono text-sm text-[#9B9AA8] line-through">{formatCurrency(product.originalPrice)}</span>}
+            <span className="font-mono text-3xl font-bold text-[#F59E0B]">{formatCurrency(product.price)}</span>
           </div>
-          <a href="#checkout" className="inline-flex items-center gap-2 bg-[#8B5CF6] hover:bg-[#8B5CF6]/90 text-white rounded-xl px-8 py-4 font-semibold transition-all glow-primary">
-            Quero começar agora <ChevronRight className="h-4 w-4" />
+          <a href="#checkout" className="inline-flex items-center gap-2 text-white rounded-xl px-8 py-4 font-semibold transition-all glow-primary" style={{ background: product.accentColor }}>
+            {product.ctaText} <ChevronRight className="h-4 w-4" />
           </a>
         </section>
       </div>
 
-      {/* Mobile sticky CTA */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 p-3 bg-[#050508]/95 backdrop-blur-xl border-t border-[rgba(255,255,255,0.05)] z-50">
-        <a href="#checkout" className="flex items-center justify-center gap-2 bg-[#8B5CF6] text-white rounded-xl py-3.5 font-semibold glow-primary w-full">
-          Comprar agora — R$ {total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+        <a href="#checkout" className="flex items-center justify-center gap-2 text-white rounded-xl py-3.5 font-semibold glow-primary w-full" style={{ background: product.accentColor }}>
+          Comprar agora — {formatCurrency(total)}
         </a>
       </div>
     </div>

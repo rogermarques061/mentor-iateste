@@ -1,4 +1,4 @@
-import { Shield, Check, Star, Lock, CreditCard, ChevronDown, Play, Award, ChevronRight, MessageSquare } from "lucide-react";
+import { Shield, Check, Star, Lock, CreditCard, Smartphone, Award, Clock } from "lucide-react";
 import { formatCurrency } from "@/contexts/PlatformContext";
 import type { CheckoutProduct, Course } from "@/contexts/PlatformContext";
 
@@ -10,198 +10,153 @@ interface CheckoutPreviewProps {
 
 const CheckoutPreview = ({ product, courses, previewMode }: CheckoutPreviewProps) => {
   const accent = product.accentColor || "#8B5CF6";
-  const linkedCourse = courses.find(c => c.id === product.linkedCourseId);
-  const sections = product.sections || {};
-  const benefits = product.benefits || [];
   const testimonials = product.testimonials || [];
-  const faq = product.faq || [];
-
   const isMobile = previewMode === "mobile";
 
   return (
     <div
-      className={`bg-[#050508] text-[#F1F0F5] overflow-y-auto ${isMobile ? "max-w-[375px] mx-auto rounded-3xl border border-[rgba(255,255,255,0.1)] shadow-2xl" : ""}`}
-      style={{ fontFamily: "'DM Sans', sans-serif", maxHeight: "100%" }}
+      className={`bg-[#f5f5f7] text-gray-900 overflow-y-auto ${isMobile ? "max-w-[375px] mx-auto rounded-3xl border border-gray-200 shadow-2xl" : ""}`}
+      style={{ fontFamily: "'DM Sans', sans-serif", maxHeight: "100%", fontSize: isMobile ? "13px" : "14px" }}
     >
-      {/* Hero */}
-      <section className="pt-10 pb-12 px-5 text-center">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] mb-5" style={{ background: `${accent}15`, color: accent }}>
-          <Shield className="h-3 w-3" /> Garantia de {product.guarantee} dias
+      {/* Countdown bar */}
+      <div className="w-full py-2 px-3 text-center text-[11px] font-semibold text-white" style={{ background: accent }}>
+        <div className="flex items-center justify-center gap-1.5">
+          <Clock className="h-3 w-3" />
+          <span>OFERTA TERMINA EM</span>
+          <span className="font-mono bg-white/20 rounded px-1.5 py-0.5 text-[10px]">00:15:42</span>
         </div>
-        <h1 className="font-display text-xl md:text-2xl font-bold mb-3 leading-tight">
-          {product.headline || "Seu título aparecerá aqui"}
-        </h1>
-        <p className="text-[#9B9AA8] text-xs mb-6">{product.subheadline || "Sua subheadline aparecerá aqui"}</p>
-        <div className="flex items-center justify-center gap-3 mb-5">
-          {product.originalPrice > product.price && (
-            <span className="font-mono text-xs text-[#9B9AA8] line-through">{formatCurrency(product.originalPrice)}</span>
-          )}
-          <span className="font-mono text-2xl font-bold text-[#F59E0B]">{formatCurrency(product.price)}</span>
-          {product.originalPrice > product.price && (
-            <span className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-[rgba(52,211,153,0.15)] text-[#34D399]">
-              -{Math.round((1 - product.price / product.originalPrice) * 100)}%
-            </span>
-          )}
-        </div>
-        <button className="inline-flex items-center gap-2 text-white rounded-xl px-6 py-3 text-sm font-semibold transition-all" style={{ background: accent, boxShadow: `0 0 20px ${accent}40` }}>
-          {product.ctaText || "Quero começar agora"} <ChevronDown className="h-3.5 w-3.5" />
-        </button>
-        <div className="flex items-center justify-center gap-4 mt-4 text-[9px] text-[#5C5B6B]">
-          <span className="flex items-center gap-1"><Lock className="h-2.5 w-2.5" /> SSL 256-bit</span>
-          <span className="flex items-center gap-1"><Check className="h-2.5 w-2.5" /> Pagamento seguro</span>
-          <span className="flex items-center gap-1"><Shield className="h-2.5 w-2.5" /> Garantia {product.guarantee}d</span>
-        </div>
-      </section>
+      </div>
 
-      {/* Benefits */}
-      {sections.beneficios && benefits.length > 0 && (
-        <section className="py-8 px-5">
-          <h2 className="font-display text-base text-center mb-5">O que você vai receber</h2>
-          <div className={`grid gap-2 ${isMobile ? "grid-cols-1" : "grid-cols-2"}`}>
-            {benefits.map((b, i) => (
-              <div key={i} className="rounded-xl p-3 flex items-center gap-2 text-xs" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                <div className="w-6 h-6 rounded-md flex items-center justify-center shrink-0" style={{ background: `${accent}20` }}>
-                  <Check className="h-3 w-3" style={{ color: accent }} />
-                </div>
-                <span>{b}</span>
+      <div className={`p-4 ${isMobile ? "" : "px-6"}`}>
+        <div className={`grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-2"}`}>
+
+          {/* LEFT — Order Summary */}
+          <div className={`space-y-3 ${isMobile ? "order-2" : "order-1"}`}>
+            {/* Logo */}
+            <div className="flex items-center gap-1.5">
+              <div className="w-5 h-5 rounded flex items-center justify-center text-white text-[8px] font-bold" style={{ background: accent }}>
+                {(product.name || "M")[0]}
               </div>
-            ))}
-          </div>
-        </section>
-      )}
+              <span className="text-[10px] font-semibold text-gray-600">MentorIA</span>
+            </div>
 
-      {/* Course content */}
-      {sections.conteudo && linkedCourse && (
-        <section className="py-8 px-5">
-          <h2 className="font-display text-base text-center mb-5">Conteúdo do programa</h2>
-          <div className="space-y-1.5">
-            {linkedCourse.modules.map((m, i) => (
-              <div key={i} className="rounded-xl p-3 flex items-center justify-between text-xs" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                <div className="flex items-center gap-2">
-                  <Play className="h-3 w-3" style={{ color: accent }} strokeWidth={1.5} />
-                  <span>{m.title}</span>
+            {/* Product card */}
+            <div className="bg-white rounded-lg border border-gray-100 p-3 shadow-sm">
+              <div className="flex gap-2 items-start">
+                <div className="w-10 h-10 rounded-lg shrink-0 flex items-center justify-center" style={{ background: `${accent}12` }}>
+                  <Award className="h-5 w-5" style={{ color: accent }} />
                 </div>
-                <span className="text-[10px] text-[#9B9AA8] font-mono">{m.lessons.length} aulas</span>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Testimonials */}
-      {sections.depoimentos && testimonials.length > 0 && (
-        <section className="py-8 px-5">
-          <h2 className="font-display text-base text-center mb-5">O que dizem nossos alunos</h2>
-          <div className={`grid gap-3 ${isMobile ? "grid-cols-1" : "grid-cols-3"}`}>
-            {testimonials.map((t, i) => (
-              <div key={i} className="rounded-xl p-4 space-y-2" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                <div className="flex gap-0.5">
-                  {Array.from({ length: t.rating }).map((_, j) => (
-                    <Star key={j} className="h-3 w-3 fill-[#F59E0B] text-[#F59E0B]" />
-                  ))}
-                </div>
-                <p className="text-[10px] text-[#9B9AA8]">"{t.text}"</p>
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-full flex items-center justify-center text-[8px] font-medium" style={{ background: `${accent}20`, color: accent }}>
-                    {t.name.split(" ").map(n => n[0]).join("")}
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-medium">{t.name}</div>
-                    <div className="text-[8px] text-[#5C5B6B]">{t.role}</div>
-                  </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-bold text-gray-900 truncate">{product.name || "Novo Produto"}</div>
+                  <div className="text-[9px] text-gray-500 mt-0.5 line-clamp-2">{product.description || "Descrição do produto"}</div>
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Guarantee */}
-      {sections.garantia && (
-        <section className="py-8 px-5">
-          <div className="rounded-xl p-6 text-center" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(52,211,153,0.15)" }}>
-            <Shield className="h-8 w-8 text-[#34D399] mx-auto mb-3" strokeWidth={1.5} />
-            <h3 className="font-display text-sm mb-1">Garantia de {product.guarantee} dias</h3>
-            <p className="text-[10px] text-[#9B9AA8]">Se não ficar satisfeito, devolvemos 100% do seu dinheiro.</p>
-          </div>
-        </section>
-      )}
-
-      {/* FAQ */}
-      {sections.faq && faq.length > 0 && (
-        <section className="py-8 px-5">
-          <h2 className="font-display text-base text-center mb-5">Perguntas frequentes</h2>
-          <div className="space-y-1.5">
-            {faq.map((f, i) => (
-              <div key={i} className="rounded-xl p-3 text-xs" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                <div className="flex items-center justify-between">
-                  <span>{f.q}</span>
-                  <ChevronRight className="h-3 w-3 text-[#9B9AA8]" />
+              <div className="mt-3 pt-2 border-t border-gray-100 space-y-1">
+                <div className="flex justify-between text-[10px]">
+                  <span className="text-gray-500">Subtotal</span>
+                  <span className="font-mono text-gray-700">{formatCurrency(product.price)}</span>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Checkout form preview */}
-      <section className="py-8 px-5">
-        <div className={`grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-5"}`}>
-          <div className={isMobile ? "" : "col-span-2"}>
-            <div className="rounded-xl p-4 space-y-3" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <h3 className="text-xs font-semibold">Resumo do pedido</h3>
-              <div className="flex gap-2">
-                <div className="w-10 h-8 rounded-lg shrink-0 flex items-center justify-center" style={{ background: `${accent}15` }}>
-                  <Award className="h-4 w-4" style={{ color: `${accent}60` }} />
+                <div className="flex justify-between pt-1 border-t border-gray-50">
+                  <span className="text-[10px] font-bold text-gray-900">Total</span>
+                  <span className="text-sm font-bold font-mono" style={{ color: accent }}>{formatCurrency(product.price)}</span>
                 </div>
-                <div>
-                  <div className="text-[10px] font-medium">{product.name}</div>
-                  <div className="text-[8px] text-[#9B9AA8]">{product.description}</div>
-                </div>
-              </div>
-              <div className="border-t border-[rgba(255,255,255,0.05)] pt-2 flex justify-between">
-                <span className="text-[10px] font-semibold">Total</span>
-                <span className="font-mono text-sm font-bold text-[#F59E0B]">{formatCurrency(product.price)}</span>
               </div>
             </div>
-          </div>
-          <div className={isMobile ? "" : "col-span-3"}>
-            <div className="rounded-xl p-4 space-y-3" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <h3 className="text-xs font-semibold">Dados de pagamento</h3>
-              <div className="space-y-2">
-                {["Nome completo", "E-mail", "CPF", "Telefone"].map(label => (
-                  <div key={label} className="rounded-lg px-3 py-2 text-[10px] text-[#5C5B6B]" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                    {label}
+
+            {/* Coupon */}
+            <div className="bg-white rounded-lg border border-gray-100 p-2.5 shadow-sm">
+              <div className="text-[9px] font-medium text-gray-500 mb-1.5">Cupom de desconto</div>
+              <div className="flex gap-1.5">
+                <div className="flex-1 rounded px-2 py-1.5 text-[9px] bg-gray-50 border border-gray-200 text-gray-400 font-mono">
+                  CÓDIGO
+                </div>
+                <div className="rounded px-2.5 py-1.5 text-[9px] font-semibold text-white" style={{ background: accent }}>
+                  Aplicar
+                </div>
+              </div>
+            </div>
+
+            {/* Security badges */}
+            <div className="grid grid-cols-2 gap-1.5">
+              {[
+                { icon: Lock, text: "SSL 256-bit" },
+                { icon: Shield, text: "Pagamento seguro" },
+                { icon: Shield, text: `Garantia ${product.guarantee}d` },
+                { icon: CreditCard, text: "Acesso imediato" },
+              ].map((b, i) => (
+                <div key={i} className="flex items-center gap-1.5 bg-white rounded-lg border border-gray-100 p-2 shadow-sm">
+                  <b.icon className="h-3 w-3 text-gray-400 shrink-0" strokeWidth={1.5} />
+                  <span className="text-[9px] font-medium text-gray-600">{b.text}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Reviews */}
+            {testimonials.length > 0 && (
+              <div className="space-y-1.5">
+                <div className="text-[10px] font-semibold text-gray-700">Avaliações</div>
+                {testimonials.slice(0, 3).map((t, i) => (
+                  <div key={i} className="bg-white rounded-lg border border-gray-100 p-2.5 shadow-sm">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <div className="w-5 h-5 rounded-full flex items-center justify-center text-[7px] font-bold text-white" style={{ background: accent }}>
+                        {t.name.split(" ").map(n => n[0]).join("")}
+                      </div>
+                      <span className="text-[9px] font-medium text-gray-800">{t.name}</span>
+                      <div className="flex gap-px ml-auto">
+                        {Array.from({ length: t.rating }).map((_, j) => (
+                          <Star key={j} className="h-2.5 w-2.5 fill-amber-400 text-amber-400" />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-[8px] text-gray-500">"{t.text}"</p>
                   </div>
                 ))}
               </div>
-              <div className="flex gap-1 p-1 rounded-lg" style={{ background: "rgba(255,255,255,0.03)" }}>
-                {["PIX", "Cartão", "Boleto"].map((m, i) => (
-                  <div key={m} className={`flex-1 text-center py-2 rounded-md text-[10px] ${i === 0 ? "font-medium" : "text-[#5C5B6B]"}`}
-                    style={i === 0 ? { background: `${accent}20`, color: accent } : undefined}>
-                    {m}
+            )}
+          </div>
+
+          {/* RIGHT — Form */}
+          <div className={isMobile ? "order-1" : "order-2"}>
+            <div className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
+              {/* Steps tabs */}
+              <div className="flex border-b border-gray-100">
+                <div className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-semibold border-b-2" style={{ borderColor: accent, color: accent }}>
+                  <span className="w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold text-white" style={{ background: accent }}>1</span>
+                  IDENTIFICAÇÃO
+                </div>
+                <div className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-semibold text-gray-400 border-b-2 border-transparent">
+                  <span className="w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold text-white bg-gray-300">2</span>
+                  PAGAMENTO
+                </div>
+              </div>
+
+              <div className="p-3 space-y-2.5">
+                <div className="text-xs font-bold text-gray-900">Seus dados</div>
+
+                {/* Form fields */}
+                {["Nome completo", "E-mail", "Telefone", "CPF"].map(label => (
+                  <div key={label}>
+                    <div className="text-[9px] text-gray-600 font-medium mb-1">{label}</div>
+                    <div className="rounded-md px-2.5 py-2 text-[10px] bg-white border border-gray-200 text-gray-400">
+                      {label === "E-mail" ? "seu@email.com" : label === "Telefone" ? "(00) 00000-0000" : label === "CPF" ? "000.000.000-00" : "Seu nome completo"}
+                    </div>
                   </div>
                 ))}
+
+                {/* CTA */}
+                <div className="rounded-md py-2.5 text-center text-[10px] font-semibold text-white mt-1" style={{ background: accent }}>
+                  Continuar
+                </div>
+
+                <p className="text-[7px] text-gray-400 text-center pt-1">
+                  Ao finalizar, você concorda com os Termos de Uso e Política de Privacidade
+                </p>
               </div>
-              <button className="w-full rounded-lg py-2.5 text-xs font-semibold text-white" style={{ background: accent, boxShadow: `0 0 16px ${accent}30` }}>
-                {product.ctaText || "Quero começar agora"} — {formatCurrency(product.price)}
-              </button>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* CTA Final */}
-      <section className="py-10 px-5 text-center">
-        <h2 className="font-display text-base mb-3">Pronto para transformar seus resultados?</h2>
-        <div className="flex items-center justify-center gap-2 mb-4">
-          {product.originalPrice > product.price && <span className="font-mono text-xs text-[#9B9AA8] line-through">{formatCurrency(product.originalPrice)}</span>}
-          <span className="font-mono text-xl font-bold text-[#F59E0B]">{formatCurrency(product.price)}</span>
         </div>
-        <button className="inline-flex items-center gap-2 text-white rounded-xl px-6 py-3 text-sm font-semibold" style={{ background: accent, boxShadow: `0 0 20px ${accent}40` }}>
-          {product.ctaText || "Quero começar agora"} <ChevronRight className="h-3.5 w-3.5" />
-        </button>
-      </section>
+      </div>
     </div>
   );
 };

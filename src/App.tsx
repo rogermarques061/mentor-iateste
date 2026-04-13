@@ -21,6 +21,7 @@ import MentorSettings from "./pages/MentorSettings";
 import MentorProducts from "./pages/MentorProducts";
 import MentorSales from "./pages/MentorSales";
 import MentorFinancial from "./pages/MentorFinancial";
+import MentorCheckout from "./pages/MentorCheckout";
 import ProductSalesPage from "./pages/ProductSalesPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import PurchaseSuccess from "./pages/PurchaseSuccess";

@@ -373,6 +373,46 @@ const MentorAI = () => {
           </div>
         </div>
       </div>
+
+      {/* Sales Intelligence */}
+      <div className="space-y-4">
+        <div>
+          <h3 className="font-semibold text-sm">Inteligência de Vendas</h3>
+          <p className="text-xs text-muted-foreground">Alertas e oportunidades de vendas</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {[
+            { text: "Conversão do Mentoria PATRON caiu 40% esta semana", color: "border-l-destructive bg-destructive/5" },
+            { text: "68% dos checkouts abandonados na etapa de pagamento", color: "border-l-warning bg-warning/5" },
+            { text: "Assinatura teve 3x mais vendas hoje", color: "border-l-success bg-success/5" },
+            { text: "14 assinantes com cartão a vencer em 7 dias", color: "border-l-warning bg-warning/5" },
+          ].map((a, i) => (
+            <div key={i} className={`glass rounded-xl p-4 border-l-[3px] ${a.color}`}>
+              <p className="text-xs">{a.text}</p>
+            </div>
+          ))}
+        </div>
+        <div className="glass rounded-2xl p-5">
+          <h4 className="text-xs font-medium mb-3">Top 5 — Propensão de Upsell</h4>
+          <div className="space-y-2">
+            {[
+              { name: "Ana Silva", avatar: "AS", score: 94, product: "Mentoria Individual" },
+              { name: "Lucas Ferreira", avatar: "LF", score: 91, product: "Programa Avançado" },
+              { name: "Carla Lima", avatar: "CL", score: 87, product: "Bundle Premium" },
+            ].map((s, i) => (
+              <div key={i} className="glass rounded-xl p-3 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center text-[10px] font-medium text-primary">{s.avatar}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium truncate">{s.name}</div>
+                  <div className="text-[10px] text-muted-foreground">{s.product}</div>
+                </div>
+                <span className="font-mono text-xs text-success font-medium">{s.score}%</span>
+                <button className="px-2 py-1 rounded-lg text-[10px] bg-primary/20 text-primary hover:bg-primary/30 transition-all">Oferta</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

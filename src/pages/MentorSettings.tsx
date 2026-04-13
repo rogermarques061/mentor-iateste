@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Upload, Save, Palette, Type, Bell, Shield, AlertTriangle, FileText } from "lucide-react";
+import { Upload, Save, Palette, Type, Bell, Shield, AlertTriangle, FileText, ShoppingCart, Eye, Smartphone, CreditCard } from "lucide-react";
 
 const systemMessages = [
   { trigger: "Primeiro acesso do aluno", message: "Bem-vindo! Estamos felizes em ter você conosco.", active: true },
@@ -16,6 +16,7 @@ const MentorSettings = () => {
   const tabs = [
     { id: "visual", label: "Identidade Visual", icon: Palette },
     { id: "texts", label: "Textos e Mensagens", icon: Type },
+    { id: "checkout", label: "Checkout e Pagamentos", icon: ShoppingCart },
     { id: "general", label: "Configurações Gerais", icon: Shield },
   ];
 

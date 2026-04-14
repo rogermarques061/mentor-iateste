@@ -51,47 +51,50 @@ const MentorFinancial = () => {
   ];
 
   return (
-    <div className="space-y-8 max-w-6xl">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 sm:space-y-8 max-w-6xl">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-[28px] font-[800] tracking-tight mb-1">Financeiro</h1>
-          <p className="text-[14px] font-semibold text-muted-foreground">Visão completa da saúde financeira</p>
+          <h1 className="text-[24px] sm:text-[28px] font-[800] tracking-tight mb-1">Financeiro</h1>
+          <p className="text-[13px] sm:text-[14px] font-semibold text-muted-foreground">Visão completa da saúde financeira</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {["7d", "30d", "90d", "1y"].map(p => (
             <button key={p} onClick={() => setPeriod(p)}
-              className={`px-4 py-2 rounded-lg text-[14px] font-bold transition-all ${period === p ? 'bg-primary/20 text-primary' : 'glass text-muted-foreground hover:text-foreground'}`}>
+              className={`px-3 sm:px-4 py-2 rounded-lg text-[13px] sm:text-[14px] font-bold transition-all ${period === p ? 'bg-primary/20 text-primary' : 'glass text-muted-foreground hover:text-foreground'}`}>
               {p === "7d" ? "7 dias" : p === "30d" ? "30 dias" : p === "90d" ? "3 meses" : "1 ano"}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+      {/* KPIs */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         {kpis.map((kpi, i) => (
-          <div key={i} className="glass rounded-[16px] p-6 card-hover animate-fade-slide-in" style={{ animationDelay: `${i * 60}ms` }}>
+          <div key={i} className="glass rounded-[16px] p-5 sm:p-6 card-hover animate-fade-slide-in" style={{ animationDelay: `${i * 60}ms` }}>
             <div className="flex items-center justify-between mb-3">
-              <kpi.icon className="h-6 w-6" style={{ color: kpi.color }} strokeWidth={1.5} />
+              <kpi.icon className="h-5 w-5 sm:h-6 sm:w-6" style={{ color: kpi.color }} strokeWidth={1.5} />
               {kpi.cta && (
                 <button onClick={() => setShowWithdrawModal(true)} className="text-[13px] font-bold px-3.5 py-1.5 rounded-lg bg-[#F59E0B]/15 text-[#F59E0B] hover:bg-[#F59E0B]/25 transition-all">{kpi.cta}</button>
               )}
             </div>
-            <div className="font-mono text-[26px] font-[800]" style={{ color: kpi.color }}>{kpi.value}</div>
-            <div className="text-[13px] font-semibold text-muted-foreground mt-1">{kpi.detail}</div>
+            <div className="font-mono text-[22px] sm:text-[26px] font-[800]" style={{ color: kpi.color }}>{kpi.value}</div>
+            <div className="text-[12px] sm:text-[13px] font-semibold text-muted-foreground mt-1">{kpi.detail}</div>
             <div className="text-[12px] font-semibold text-muted-foreground mt-0.5">{kpi.label}</div>
           </div>
         ))}
       </div>
 
-      <div className="glass rounded-[16px] p-7">
-        <div className="flex items-center justify-between mb-5">
-          <h3 className="font-bold text-[18px]">Receita — Últimos 30 dias</h3>
+      {/* Chart */}
+      <div className="glass rounded-[16px] p-5 sm:p-7">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+          <h3 className="font-bold text-[16px] sm:text-[18px]">Receita — Últimos 30 dias</h3>
           <div className="flex gap-3 text-[13px] font-bold">
             <span className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-primary" /> Bruta</span>
             <span className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-success" /> Líquida</span>
           </div>
         </div>
-        <div className="h-[280px]">
+        <div className="h-[200px] sm:h-[280px]">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={revenueData}>
               <defs>
@@ -108,30 +111,55 @@ const MentorFinancial = () => {
         </div>
       </div>
 
+      {/* Transactions */}
       <div className="glass rounded-[16px] overflow-hidden">
-        <div className="p-7 pb-4 flex items-center justify-between">
-          <div><h3 className="font-bold text-[18px]">Transações</h3><p className="text-[13px] font-semibold text-muted-foreground mt-0.5">Histórico de todas as vendas</p></div>
-          <button className="glass rounded-xl px-4 py-2 text-[13px] font-bold flex items-center gap-1.5 hover:bg-[rgba(255,255,255,0.06)] transition-all"><Download className="h-4 w-4" /> CSV</button>
+        <div className="p-5 sm:p-7 pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div><h3 className="font-bold text-[16px] sm:text-[18px]">Transações</h3><p className="text-[13px] font-semibold text-muted-foreground mt-0.5">Histórico de todas as vendas</p></div>
+          <button className="glass rounded-xl px-4 py-2 text-[13px] font-bold flex items-center gap-1.5 hover:bg-[rgba(255,255,255,0.06)] transition-all self-start"><Download className="h-4 w-4" /> CSV</button>
         </div>
-        <div className="px-7 pb-4 flex gap-2">
+        <div className="px-5 sm:px-7 pb-4 flex gap-2 flex-wrap">
           {["Todos", "Aprovado", "Pendente", "Reembolsado"].map(f => (
             <button key={f} onClick={() => setTxFilter(f)}
-              className={`px-4 py-2 rounded-lg text-[14px] font-bold transition-all ${txFilter === f ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground'}`}>{f}</button>
+              className={`px-3 sm:px-4 py-2 rounded-lg text-[13px] sm:text-[14px] font-bold transition-all ${txFilter === f ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground'}`}>{f}</button>
           ))}
         </div>
-        <div className="overflow-x-auto">
+
+        {/* Mobile: Card view */}
+        <div className="block md:hidden px-4 pb-4 space-y-3">
+          {filteredTx.map((tx, i) => {
+            const MethodIcon = methodIcons[tx.method] || CreditCard;
+            return (
+              <div key={tx.id} className="glass rounded-xl p-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[13px] font-bold text-primary">{tx.id}</span>
+                  <span className={`px-3 py-1 rounded-full text-[12px] font-bold border ${getStatusBadge(tx.status)}`}>{statusLabels[tx.status]}</span>
+                </div>
+                <div className="text-[15px] font-bold">{tx.customer.name}</div>
+                <div className="text-[13px] text-muted-foreground">{tx.productName}</div>
+                <div className="grid grid-cols-3 gap-2 text-center pt-1">
+                  <div><div className="text-[11px] text-muted-foreground">Bruto</div><div className="font-mono text-[14px] font-bold text-[#F59E0B]">{formatCurrency(tx.amount)}</div></div>
+                  <div><div className="text-[11px] text-muted-foreground">Taxa</div><div className="font-mono text-[14px] font-bold text-[#F87171]">-{formatCurrency(tx.taxa)}</div></div>
+                  <div><div className="text-[11px] text-muted-foreground">Líquido</div><div className="font-mono text-[14px] font-bold text-[#34D399]">{formatCurrency(tx.liquido)}</div></div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Desktop: Table */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-[14px]">
             <thead>
               <tr className="border-t border-border/50">
                 <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5">#</th>
                 <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5">Cliente</th>
-                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5">Produto</th>
-                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5">Método</th>
+                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 hidden lg:table-cell">Produto</th>
+                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 hidden lg:table-cell">Método</th>
                 <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5">Bruto</th>
-                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5">Taxa</th>
+                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 hidden xl:table-cell">Taxa</th>
                 <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5">Líquido</th>
                 <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5">Status</th>
-                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5">Data</th>
+                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 hidden lg:table-cell">Data</th>
               </tr>
             </thead>
             <tbody>
@@ -142,22 +170,22 @@ const MentorFinancial = () => {
                     <td className="px-5 py-4 font-mono text-[13px] font-bold text-primary">{tx.id}</td>
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center text-[12px] font-bold text-primary">
+                        <div className="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center text-[12px] font-bold text-primary shrink-0">
                           {tx.customer.name.split(" ").map(n => n[0]).join("")}
                         </div>
-                        <div>
-                          <div className="text-[15px] font-bold">{tx.customer.name}</div>
-                          <div className="text-[13px] font-medium text-muted-foreground">{tx.customer.email}</div>
+                        <div className="min-w-0">
+                          <div className="text-[15px] font-bold truncate">{tx.customer.name}</div>
+                          <div className="text-[13px] font-medium text-muted-foreground truncate">{tx.customer.email}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-5 py-4 text-[14px] font-semibold">{tx.productName}</td>
-                    <td className="px-5 py-4"><div className="flex items-center gap-1.5"><MethodIcon className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} /><span className="text-[13px] font-semibold">{tx.method === "pix" ? "PIX" : tx.method === "card" ? "Cartão" : "Boleto"}</span></div></td>
+                    <td className="px-5 py-4 text-[14px] font-semibold hidden lg:table-cell">{tx.productName}</td>
+                    <td className="px-5 py-4 hidden lg:table-cell"><div className="flex items-center gap-1.5"><MethodIcon className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} /><span className="text-[13px] font-semibold">{tx.method === "pix" ? "PIX" : tx.method === "card" ? "Cartão" : "Boleto"}</span></div></td>
                     <td className="px-5 py-4 font-mono text-[15px] font-bold text-[#F59E0B]">{formatCurrency(tx.amount)}</td>
-                    <td className="px-5 py-4 font-mono text-[15px] font-bold text-[#F87171]">-{formatCurrency(tx.taxa)}</td>
+                    <td className="px-5 py-4 font-mono text-[15px] font-bold text-[#F87171] hidden xl:table-cell">-{formatCurrency(tx.taxa)}</td>
                     <td className="px-5 py-4 font-mono text-[15px] font-bold text-[#34D399]">{formatCurrency(tx.liquido)}</td>
                     <td className="px-5 py-4"><span className={`px-3 py-1 rounded-full text-[12px] font-bold border ${getStatusBadge(tx.status)}`}>{statusLabels[tx.status]}</span></td>
-                    <td className="px-5 py-4 text-[13px] font-semibold text-muted-foreground">{new Date(tx.createdAt).toLocaleDateString("pt-BR")} {new Date(tx.createdAt).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}</td>
+                    <td className="px-5 py-4 text-[13px] font-semibold text-muted-foreground hidden lg:table-cell">{new Date(tx.createdAt).toLocaleDateString("pt-BR")} {new Date(tx.createdAt).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}</td>
                   </tr>
                 );
               })}
@@ -168,14 +196,14 @@ const MentorFinancial = () => {
 
       {showWithdrawModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setShowWithdrawModal(false)}>
-          <div className="glass rounded-[16px] p-7 w-full max-w-md space-y-5 animate-fade-slide-in" onClick={e => e.stopPropagation()}>
+          <div className="glass rounded-[16px] p-5 sm:p-7 w-full max-w-md space-y-5 animate-fade-slide-in" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between">
-              <h3 className="text-[20px] font-bold">Solicitar Saque</h3>
+              <h3 className="text-[18px] sm:text-[20px] font-bold">Solicitar Saque</h3>
               <button onClick={() => setShowWithdrawModal(false)} className="p-1 hover:bg-[rgba(255,255,255,0.06)] rounded-lg transition-all"><X className="h-5 w-5" /></button>
             </div>
             <div className="glass rounded-xl p-5">
               <div className="text-[13px] font-semibold text-muted-foreground">Saldo disponível</div>
-              <div className="font-mono text-[28px] font-[800] text-[#F59E0B] mt-1">{formatCurrency(availableBalance)}</div>
+              <div className="font-mono text-[24px] sm:text-[28px] font-[800] text-[#F59E0B] mt-1">{formatCurrency(availableBalance)}</div>
             </div>
             <div>
               <label className="text-[13px] font-semibold text-muted-foreground mb-1.5 block">Chave PIX</label>

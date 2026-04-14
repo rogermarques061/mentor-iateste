@@ -24,7 +24,7 @@ export function AppLayout({ children }: AppLayoutProps) {
               </div>
             </div>
           </header>
-          <main className="flex-1 p-5 md:p-6 lg:p-10 xl:px-12 overflow-auto">
+          <main className="flex-1 p-4 sm:p-5 md:p-6 lg:p-10 xl:px-12 overflow-auto">
             {children}
           </main>
         </div>

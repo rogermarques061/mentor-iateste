@@ -50,33 +50,35 @@ const MentorStudents = () => {
   };
 
   return (
-    <div className="space-y-8 max-w-7xl">
-      <div className="flex items-start justify-between">
+    <div className="space-y-6 sm:space-y-8 max-w-7xl">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
-          <h1 className="text-[28px] font-[800] tracking-tight mb-1">Alunos</h1>
-          <p className="text-[14px] font-semibold text-muted-foreground">
+          <h1 className="text-[24px] sm:text-[28px] font-[800] tracking-tight mb-1">Alunos</h1>
+          <p className="text-[13px] sm:text-[14px] font-semibold text-muted-foreground">
             {activeCount} alunos ativos · <span className="text-warning">{riskCount} em risco</span> · {state.students.length} total
           </p>
         </div>
-        <div className="flex gap-3">
-          <button className="glass rounded-[10px] px-5 py-2.5 text-[14px] font-bold flex items-center gap-2 hover:bg-[rgba(255,255,255,0.06)] transition-all">
-            <Download className="h-4 w-4" strokeWidth={1.5} /> Exportar CSV
+        <div className="flex gap-2 sm:gap-3">
+          <button className="glass rounded-[10px] px-3 sm:px-5 py-2.5 text-[13px] sm:text-[14px] font-bold flex items-center gap-2 hover:bg-[rgba(255,255,255,0.06)] transition-all">
+            <Download className="h-4 w-4" strokeWidth={1.5} /> <span className="hidden sm:inline">Exportar</span> CSV
           </button>
-          <button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-[10px] px-5 py-2.5 text-[14px] font-bold flex items-center gap-2 glow-primary transition-all">
-            <UserPlus className="h-4 w-4" strokeWidth={1.5} /> Convidar aluno
+          <button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-[10px] px-3 sm:px-5 py-2.5 text-[13px] sm:text-[14px] font-bold flex items-center gap-2 glow-primary transition-all">
+            <UserPlus className="h-4 w-4" strokeWidth={1.5} /> <span className="hidden sm:inline">Convidar</span> aluno
           </button>
         </div>
       </div>
 
+      {/* Search + Filters */}
       <div className="space-y-4">
         <div className="relative">
-          <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" strokeWidth={1.5} />
+          <Search className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" strokeWidth={1.5} />
           <input
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Buscar por nome, e-mail ou curso..."
-            className="w-full glass rounded-[12px] pl-12 pr-5 py-3 h-[48px] text-[15px] font-medium placeholder:text-muted-foreground bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50"
+            className="w-full glass rounded-[12px] pl-11 sm:pl-12 pr-5 py-3 h-[48px] text-[15px] font-medium placeholder:text-muted-foreground bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50"
           />
         </div>
         <div className="flex flex-wrap gap-2">
@@ -84,7 +86,7 @@ const MentorStudents = () => {
             <button
               key={f}
               onClick={() => setActiveRisk(f)}
-              className={`px-5 py-2 rounded-full text-[14px] font-bold transition-all ${activeRisk === f ? 'bg-primary/20 text-primary' : 'glass text-muted-foreground hover:text-foreground'}`}
+              className={`px-4 sm:px-5 py-2 rounded-full text-[13px] sm:text-[14px] font-bold transition-all ${activeRisk === f ? 'bg-primary/20 text-primary' : 'glass text-muted-foreground hover:text-foreground'}`}
             >
               {riskFilterLabels[f]}
             </button>
@@ -93,18 +95,63 @@ const MentorStudents = () => {
         <div className="text-[13px] font-medium text-muted-foreground">Mostrando {filtered.length} de {state.students.length} alunos</div>
       </div>
 
-      <div className="glass rounded-[16px] overflow-hidden">
+      {/* Mobile: Card view */}
+      <div className="block md:hidden space-y-3">
+        {filtered.map((s, i) => {
+          const prog = avgProgress(s);
+          const isHighRisk = s.engagement.churnRisk === "high" || s.engagement.churnRisk === "critical";
+          return (
+            <div key={s.id} className={`glass rounded-[16px] p-4 space-y-3 animate-fade-slide-in ${isHighRisk ? 'border-l-[3px] border-l-destructive' : ''}`}
+              style={{ animationDelay: `${i * 40}ms` }}>
+              <Link to={`/mentor/students/${s.id}`} className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center text-[14px] font-bold text-primary shrink-0">
+                  {s.name.split(" ").map(n => n[0]).join("")}
+                </div>
+                <div className="min-w-0">
+                  <div className="text-[15px] font-bold truncate">{s.name}</div>
+                  <div className="text-[13px] font-medium text-muted-foreground truncate">{s.email}</div>
+                </div>
+              </Link>
+              <div className="grid grid-cols-3 gap-3 text-center">
+                <div>
+                  <div className="text-[12px] font-semibold text-muted-foreground">Engajamento</div>
+                  <div className={`font-mono text-[15px] font-[800] ${getEngagementColor(s.engagement.score)}`}>{s.engagement.score}</div>
+                </div>
+                <div>
+                  <div className="text-[12px] font-semibold text-muted-foreground">Risco</div>
+                  <span className={`inline-block px-3 py-0.5 rounded-full text-[12px] font-bold ${getRiskColor(s.engagement.churnRisk)}`}>
+                    {getRiskLabel(s.engagement.churnRisk)}
+                  </span>
+                </div>
+                <div>
+                  <div className="text-[12px] font-semibold text-muted-foreground">Progresso</div>
+                  <div className="font-mono text-[14px] font-bold">{prog}%</div>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[12px] font-semibold text-muted-foreground">{timeAgo(s.engagement.lastAccessAt)}</span>
+                <Link to={`/mentor/students/${s.id}`} className="px-3.5 py-1.5 rounded-lg text-[13px] font-bold glass hover:bg-primary/20 hover:text-primary transition-all">
+                  Ver perfil
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Desktop: Table view */}
+      <div className="hidden md:block glass rounded-[16px] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-[14px]">
             <thead>
               <tr className="border-b border-[rgba(255,255,255,0.05)]">
                 <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 bg-[rgba(255,255,255,0.02)]">Aluno</th>
-                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 bg-[rgba(255,255,255,0.02)]">Curso(s)</th>
+                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 bg-[rgba(255,255,255,0.02)] hidden lg:table-cell">Curso(s)</th>
                 <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 bg-[rgba(255,255,255,0.02)]">Engajamento</th>
                 <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 bg-[rgba(255,255,255,0.02)]">Risco</th>
                 <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 bg-[rgba(255,255,255,0.02)]">Progresso</th>
-                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 bg-[rgba(255,255,255,0.02)]">Último Acesso</th>
-                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 bg-[rgba(255,255,255,0.02)]">Tendência</th>
+                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 bg-[rgba(255,255,255,0.02)] hidden lg:table-cell">Último Acesso</th>
+                <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 bg-[rgba(255,255,255,0.02)] hidden xl:table-cell">Tendência</th>
                 <th className="text-left text-[13px] font-bold tracking-[0.03em] text-muted-foreground px-5 py-3.5 bg-[rgba(255,255,255,0.02)]">Ações</th>
               </tr>
             </thead>
@@ -125,13 +172,13 @@ const MentorStudents = () => {
                         <div className="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center text-[14px] font-bold text-primary shrink-0">
                           {s.name.split(" ").map(n => n[0]).join("")}
                         </div>
-                        <div>
-                          <div className="text-[15px] font-bold group-hover:text-primary transition-colors">{s.name}</div>
-                          <div className="text-[13px] font-medium text-muted-foreground">{s.email}</div>
+                        <div className="min-w-0">
+                          <div className="text-[15px] font-bold group-hover:text-primary transition-colors truncate">{s.name}</div>
+                          <div className="text-[13px] font-medium text-muted-foreground truncate">{s.email}</div>
                         </div>
                       </Link>
                     </td>
-                    <td className="px-5 py-4">
+                    <td className="px-5 py-4 hidden lg:table-cell">
                       <div className="flex flex-wrap gap-1">
                         {s.courses.map((cId) => {
                           const course = state.courses.find(c => c.id === cId);
@@ -160,8 +207,8 @@ const MentorStudents = () => {
                         <span className="font-mono text-[14px] font-bold">{prog}%</span>
                       </div>
                     </td>
-                    <td className="px-5 py-4 text-[13px] font-semibold text-muted-foreground">{timeAgo(s.engagement.lastAccessAt)}</td>
-                    <td className="px-5 py-4">
+                    <td className="px-5 py-4 text-[13px] font-semibold text-muted-foreground hidden lg:table-cell">{timeAgo(s.engagement.lastAccessAt)}</td>
+                    <td className="px-5 py-4 hidden xl:table-cell">
                       {s.engagement.trend === "growing" && <TrendingUp className="h-5 w-5 text-success" strokeWidth={1.5} />}
                       {s.engagement.trend === "stable" && <Minus className="h-5 w-5 text-info" strokeWidth={1.5} />}
                       {(s.engagement.trend === "declining" || s.engagement.trend === "critical") && <TrendingDown className="h-5 w-5 text-destructive" strokeWidth={1.5} />}

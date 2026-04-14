@@ -31,6 +31,7 @@ const LessonPlayer = () => {
   const [activeTab, setActiveTab] = useState<Tab>("materials");
   const [noteText, setNoteText] = useState("");
   const [commentText, setCommentText] = useState("");
+  const [showLessonList, setShowLessonList] = useState(false);
   const currentLesson = moduleLessons.find((l) => l.status === "current")!;
   const completedCount = moduleLessons.filter((l) => l.status === "completed").length;
   const progressPct = Math.round((completedCount / moduleLessons.length) * 100);
@@ -43,9 +44,9 @@ const LessonPlayer = () => {
   ];
 
   return (
-    <div className="space-y-0 -m-6 lg:-m-8">
+    <div className="space-y-0 -m-4 sm:-m-5 md:-m-6 lg:-m-8 xl:-mx-12">
       {/* Top bar */}
-      <div className="flex items-center gap-3 px-6 py-3 border-b border-border/30">
+      <div className="flex items-center gap-3 px-4 sm:px-6 py-3 border-b border-border/30">
         <Link to="/courses" className="text-muted-foreground hover:text-foreground transition-colors">
           <ChevronLeft className="h-5 w-5" strokeWidth={1.5} />
         </Link>
@@ -55,9 +56,12 @@ const LessonPlayer = () => {
         </div>
         <div className="flex items-center gap-2">
           <span className="font-mono text-xs text-primary">{progressPct}%</span>
-          <div className="w-20 h-1 rounded-full bg-muted overflow-hidden">
+          <div className="w-16 sm:w-20 h-1 rounded-full bg-muted overflow-hidden">
             <div className="h-full rounded-full bg-primary" style={{ width: `${progressPct}%` }} />
           </div>
+          <button onClick={() => setShowLessonList(!showLessonList)} className="lg:hidden p-2 rounded-lg hover:bg-accent/30 transition-all text-muted-foreground">
+            <AlignLeft className="h-4 w-4" />
+          </button>
         </div>
       </div>
 
@@ -66,35 +70,34 @@ const LessonPlayer = () => {
         <div className="flex-1 min-w-0">
           <div className="relative w-full aspect-video bg-gradient-to-br from-card to-background flex items-center justify-center">
             <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
-            <button className="relative z-10 w-20 h-20 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center hover:bg-primary/30 transition-all duration-200 glow-primary">
-              <Play className="h-8 w-8 text-primary-foreground ml-1" strokeWidth={1.5} />
+            <button className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center hover:bg-primary/30 transition-all duration-200 glow-primary">
+              <Play className="h-6 w-6 sm:h-8 sm:w-8 text-primary-foreground ml-1" strokeWidth={1.5} />
             </button>
-            {/* Video progress */}
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-muted">
               <div className="h-full w-[42%] bg-primary rounded-r-full" />
             </div>
           </div>
 
           {/* Action bar */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-border/30">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 sm:px-6 py-4 border-b border-border/30 gap-3">
             <div>
-              <h3 className="font-semibold">{currentLesson.title}</h3>
+              <h3 className="font-semibold text-[15px]">{currentLesson.title}</h3>
               <p className="text-xs text-muted-foreground mt-0.5">Aula {currentLesson.id} de {moduleLessons.length} · {currentLesson.duration}</p>
             </div>
-            <Button size="sm" className="gap-2">
+            <Button size="sm" className="gap-2 w-full sm:w-auto">
               <CheckCircle2 className="h-4 w-4" strokeWidth={1.5} />
               Marcar como concluída
             </Button>
           </div>
 
           {/* Tabs */}
-          <div className="px-6 pt-4">
-            <div className="flex gap-1 border-b border-border/30">
+          <div className="px-4 sm:px-6 pt-4">
+            <div className="flex gap-1 border-b border-border/30 overflow-x-auto">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-all duration-200 border-b-2 -mb-[1px] ${
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-2.5 text-sm font-medium transition-all duration-200 border-b-2 -mb-[1px] whitespace-nowrap ${
                     activeTab === tab.id
                       ? "border-primary text-primary"
                       : "border-transparent text-muted-foreground hover:text-foreground"
@@ -106,19 +109,19 @@ const LessonPlayer = () => {
               ))}
             </div>
 
-            <div className="py-6">
+            <div className="py-4 sm:py-6">
               {activeTab === "materials" && (
                 <div className="space-y-3">
                   {materials.map((mat, i) => (
-                    <div key={i} className="glass rounded-xl p-4 flex items-center gap-4 card-hover cursor-pointer">
+                    <div key={i} className="glass rounded-xl p-3 sm:p-4 flex items-center gap-3 sm:gap-4 card-hover cursor-pointer">
                       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                         <FileText className="h-5 w-5 text-primary" strokeWidth={1.5} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-medium">{mat.name}</h4>
+                        <h4 className="text-sm font-medium truncate">{mat.name}</h4>
                         <span className="text-xs text-muted-foreground">{mat.type} · {mat.size}</span>
                       </div>
-                      <Download className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
+                      <Download className="h-4 w-4 text-muted-foreground shrink-0" strokeWidth={1.5} />
                     </div>
                   ))}
                 </div>
@@ -127,14 +130,14 @@ const LessonPlayer = () => {
               {activeTab === "comments" && (
                 <div className="space-y-4">
                   {comments.map((c, i) => (
-                    <div key={i} className={`flex gap-3 ${c.isMentor ? "ml-8" : ""}`}>
+                    <div key={i} className={`flex gap-3 ${c.isMentor ? "ml-4 sm:ml-8" : ""}`}>
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-medium ${
                         c.isMentor ? "bg-primary/20 text-primary" : "bg-accent/50 text-accent-foreground"
                       }`}>
                         {c.avatar}
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
                           <span className="text-sm font-medium">{c.author}</span>
                           {c.isMentor && <span className="px-1.5 py-0.5 rounded text-[10px] bg-primary/15 text-primary">Mentor</span>}
                           <span className="text-xs text-muted-foreground">{c.time}</span>
@@ -164,7 +167,7 @@ const LessonPlayer = () => {
               )}
 
               {activeTab === "transcript" && (
-                <div className="glass rounded-xl p-6">
+                <div className="glass rounded-xl p-4 sm:p-6">
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     Olá, bem-vindos à aula sobre Técnicas de Rapport Avançado. Hoje vamos aprofundar nas estratégias
                     que os melhores vendedores do mundo utilizam para criar conexão instantânea com seus prospects...
@@ -199,8 +202,8 @@ const LessonPlayer = () => {
           </div>
         </div>
 
-        {/* Lesson list sidebar */}
-        <div className="w-full lg:w-80 border-l border-border/30 flex-shrink-0">
+        {/* Lesson list sidebar - responsive */}
+        <div className={`${showLessonList ? 'block' : 'hidden'} lg:block w-full lg:w-80 border-t lg:border-t-0 lg:border-l border-border/30 flex-shrink-0`}>
           <div className="p-4 border-b border-border/30">
             <h3 className="text-sm font-semibold">Módulo 3 — Qualificação</h3>
             <p className="text-xs text-muted-foreground mt-0.5">{completedCount}/{moduleLessons.length} aulas concluídas</p>

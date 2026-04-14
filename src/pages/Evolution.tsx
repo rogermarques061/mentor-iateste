@@ -46,34 +46,34 @@ const stats = [
 
 const Evolution = () => {
   return (
-    <div className="space-y-10 max-w-6xl">
+    <div className="space-y-8 sm:space-y-10 max-w-6xl">
       <div className="animate-fade-slide-in">
-        <h1 className="font-display text-2xl">Minha Evolução</h1>
+        <h1 className="font-display text-[22px] sm:text-2xl">Minha Evolução</h1>
         <p className="text-muted-foreground text-sm mt-1">Acompanhe seu progresso e performance.</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {stats.map((stat, i) => (
-          <div key={i} className="glass rounded-2xl p-5 card-hover animate-fade-slide-in" style={{ animationDelay: `${(i + 1) * 80}ms` }}>
+          <div key={i} className="glass rounded-2xl p-4 sm:p-5 card-hover animate-fade-slide-in" style={{ animationDelay: `${(i + 1) * 80}ms` }}>
             <div className="flex items-center gap-2 mb-3">
               <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                 <stat.icon className="h-4 w-4 text-primary" strokeWidth={1.5} />
               </div>
             </div>
-            <p className="font-mono text-2xl font-semibold">{stat.value}</p>
+            <p className="font-mono text-xl sm:text-2xl font-semibold">{stat.value}</p>
             <p className="text-xs text-muted-foreground mt-0.5">{stat.label}</p>
             <p className="text-[10px] text-primary mt-1">{stat.sublabel}</p>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8">
         {/* Heatmap */}
         <div className="lg:col-span-3 space-y-4 animate-fade-slide-in" style={{ animationDelay: "320ms" }}>
-          <h2 className="font-display text-xl">Atividade Semanal</h2>
-          <div className="glass rounded-2xl p-6">
-            <div className="flex gap-1">
+          <h2 className="font-display text-lg sm:text-xl">Atividade Semanal</h2>
+          <div className="glass rounded-2xl p-4 sm:p-6 overflow-x-auto">
+            <div className="flex gap-1 min-w-[300px]">
               <div className="flex flex-col gap-1 mr-2 pt-5">
                 {weekDays.map((d) => (
                   <span key={d} className="text-[10px] text-muted-foreground h-4 flex items-center">{d}</span>
@@ -106,14 +106,14 @@ const Evolution = () => {
 
         {/* Timeline */}
         <div className="lg:col-span-2 space-y-4 animate-fade-slide-in" style={{ animationDelay: "400ms" }}>
-          <h2 className="font-display text-xl">Marcos Recentes</h2>
+          <h2 className="font-display text-lg sm:text-xl">Marcos Recentes</h2>
           <div className="space-y-3">
             {milestones.map((m, i) => (
-              <div key={i} className="glass rounded-xl p-4 flex items-start gap-3 card-hover">
+              <div key={i} className="glass rounded-xl p-3 sm:p-4 flex items-start gap-3 card-hover">
                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <m.icon className="h-4 w-4 text-primary" strokeWidth={1.5} />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-sm font-medium">{m.text}</p>
                   <span className="text-xs text-muted-foreground">{m.date}</span>
                 </div>
@@ -125,27 +125,27 @@ const Evolution = () => {
 
       {/* Ranking */}
       <div className="space-y-4 animate-fade-slide-in" style={{ animationDelay: "480ms" }}>
-        <h2 className="font-display text-xl">Ranking da Turma</h2>
+        <h2 className="font-display text-lg sm:text-xl">Ranking da Turma</h2>
         <div className="glass rounded-2xl overflow-hidden">
           {rankingData.map((r, i) => (
             <div
               key={i}
-              className={`flex items-center gap-4 px-6 py-4 transition-all duration-200 ${
+              className={`flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-3.5 sm:py-4 transition-all duration-200 ${
                 r.isUser ? "bg-primary/10 border-l-2 border-primary" : "hover:bg-accent/10"
               } ${i < rankingData.length - 1 ? "border-b border-border/20" : ""}`}
             >
-              <span className={`font-mono text-lg font-bold w-8 text-center ${
+              <span className={`font-mono text-base sm:text-lg font-bold w-6 sm:w-8 text-center ${
                 r.pos <= 3 ? "text-warning" : "text-muted-foreground"
               }`}>
                 {r.pos}
               </span>
-              <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-medium ${
+              <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-xs font-medium ${
                 r.isUser ? "bg-primary/20 text-primary" : "bg-accent/50 text-accent-foreground"
               }`}>
                 {r.avatar}
               </div>
-              <div className="flex-1">
-                <p className={`text-sm font-medium ${r.isUser ? "text-primary" : ""}`}>
+              <div className="flex-1 min-w-0">
+                <p className={`text-sm font-medium truncate ${r.isUser ? "text-primary" : ""}`}>
                   {r.name} {r.isUser && <span className="text-xs text-primary/60">(Você)</span>}
                 </p>
               </div>

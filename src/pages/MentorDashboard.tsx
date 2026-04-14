@@ -83,13 +83,10 @@ const MentorDashboard = () => {
 
   const kpis = [
     { label: "Receita", value: formatCurrency(periodRevenue), sub: `${period.label} · ${periodSales} transações`, icon: DollarSign },
-    { label: "MRR", value: formatCurrency(mrr), sub: period.label, icon: TrendingUp },
     { label: "Vendas", value: String(periodSales), sub: `${period.label} · ${periodSales} transações`, icon: ShoppingCart },
-    { label: "Saldo Disponível", value: formatCurrency(availableBalance), sub: period.label, icon: DollarSign },
     { label: "Alunos Ativos", value: String(activeStudents), sub: `de ${state.students.length} total`, icon: Users },
     { label: "Risco de Churn", value: `${studentsAtRisk}`, sub: "alunos em risco", icon: AlertTriangle },
     { label: "Taxa Conclusão", value: `${avgCompletionRate}%`, sub: "média geral", icon: BarChart3 },
-    { label: "Score Saúde", value: String(businessHealthScore), sub: "do negócio", icon: Activity },
   ];
 
   const riskData = [

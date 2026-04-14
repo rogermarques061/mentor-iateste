@@ -79,11 +79,11 @@ const CheckoutPage = () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center space-y-4">
-          <Award className="h-12 w-12 text-gray-300 mx-auto" />
-          <h1 className="text-2xl font-bold text-gray-800">Checkout não encontrado</h1>
-          <p className="text-sm text-gray-500">Este checkout não existe ou foi removido.</p>
+          <Award className="h-12 w-12 text-muted-foreground/50 mx-auto" />
+          <h1 className="text-2xl font-bold text-foreground">Checkout não encontrado</h1>
+          <p className="text-sm text-muted-foreground">Este checkout não existe ou foi removido.</p>
           <button onClick={() => navigate("/")} className="bg-[#FFD700] text-white rounded-lg px-6 py-3 text-sm font-medium hover:bg-[#B8860B] transition-all">
             Voltar ao início
           </button>
@@ -158,27 +158,27 @@ const CheckoutPage = () => {
     mono?: boolean; valid?: boolean | null; type?: string;
   }) => (
     <div>
-      <label className="text-[13px] text-gray-600 mb-1.5 block font-medium">{label}</label>
+      <label className="text-[13px] text-muted-foreground mb-1.5 block font-medium">{label}</label>
       <div className="relative">
         <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-          className={`w-full rounded-lg px-4 py-3 text-sm bg-white border transition-all duration-200 focus:outline-none focus:ring-0 text-gray-900 placeholder:text-gray-400 ${mono ? "font-mono" : ""} ${
-            valid === true ? "border-emerald-400" : valid === false ? "border-red-400" : "border-gray-200 focus:border-[#FFD700] focus:shadow-[0_0_0_3px_rgba(255,215,0,0.1)]"
+          className={`w-full rounded-lg px-4 py-3 text-sm bg-card border transition-all duration-200 focus:outline-none focus:ring-0 text-foreground placeholder:text-muted-foreground/70 ${mono ? "font-mono" : ""} ${
+            valid === true ? "border-success" : valid === false ? "border-destructive" : "border-border focus:border-[#FFD700] focus:shadow-[0_0_0_3px_rgba(255,215,0,0.1)]"
           }`}
         />
-        {valid === true && <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-emerald-500" />}
-        {valid === false && value.length > 0 && <AlertCircle className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-red-400" />}
+        {valid === true && <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-success" />}
+        {valid === false && value.length > 0 && <AlertCircle className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-destructive" />}
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7]">
+    <div className="min-h-screen bg-background">
       {/* Countdown bar */}
       <div className="w-full py-2.5 px-4 text-center text-sm font-semibold text-white" style={{ background: accentColor }}>
         <div className="flex items-center justify-center gap-2">
           <Clock className="h-4 w-4" />
           <span>OFERTA TERMINA EM</span>
-          <span className="font-mono bg-white/20 rounded px-2 py-0.5">{formatTimer(countdown)}</span>
+          <span className="font-mono bg-card/20 rounded px-2 py-0.5">{formatTimer(countdown)}</span>
         </div>
       </div>
 
@@ -192,51 +192,51 @@ const CheckoutPage = () => {
               <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold" style={{ background: accentColor }}>
                 {(state.settings?.platformName || "M")[0]}
               </div>
-              <span className="text-sm font-semibold text-gray-700">{state.settings?.platformName || "IMPLOFY"}</span>
+              <span className="text-sm font-semibold text-foreground/80">{state.settings?.platformName || "IMPLOFY"}</span>
             </div>
 
             {/* Product card */}
-            <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm">
+            <div className="bg-card rounded-xl border border-border/50 p-6 ">
               <div className="flex gap-4 items-start">
                 <div className="w-16 h-16 rounded-xl shrink-0 flex items-center justify-center" style={{ background: `${accentColor}12` }}>
                   <Award className="h-8 w-8" style={{ color: accentColor }} />
                 </div>
                 <div className="flex-1">
-                  <h1 className="text-lg font-bold text-gray-900">{product.name}</h1>
-                  <p className="text-sm text-gray-500 mt-1">{product.description}</p>
+                  <h1 className="text-lg font-bold text-foreground">{product.name}</h1>
+                  <p className="text-sm text-muted-foreground mt-1">{product.description}</p>
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-gray-100 space-y-2">
+              <div className="mt-6 pt-4 border-t border-border/50 space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Subtotal</span>
-                  <span className="font-mono text-gray-700">{formatCurrency(product.price)}</span>
+                  <span className="text-muted-foreground">Subtotal</span>
+                  <span className="font-mono text-foreground/80">{formatCurrency(product.price)}</span>
                 </div>
                 {couponApplied && (
-                  <div className="flex justify-between text-sm text-emerald-600">
+                  <div className="flex justify-between text-sm text-success">
                     <span>Desconto (LAUNCH10)</span>
                     <span className="font-mono">-{formatCurrency(discount)}</span>
                   </div>
                 )}
-                <div className="flex justify-between pt-2 border-t border-gray-100">
-                  <span className="text-base font-bold text-gray-900">Total</span>
+                <div className="flex justify-between pt-2 border-t border-border/50">
+                  <span className="text-base font-bold text-foreground">Total</span>
                   <span className="text-2xl font-bold font-mono" style={{ color: accentColor }}>{formatCurrency(total)}</span>
                 </div>
               </div>
             </div>
 
             {/* Coupon */}
-            <div className="bg-white rounded-xl border border-gray-100 p-4 shadow-sm">
-              <label className="text-xs font-medium text-gray-500 mb-2 block">Cupom de desconto</label>
+            <div className="bg-card rounded-xl border border-border/50 p-4 ">
+              <label className="text-xs font-medium text-muted-foreground mb-2 block">Cupom de desconto</label>
               <div className="flex gap-2">
                 <input type="text" value={coupon} onChange={e => setCoupon(e.target.value)} placeholder="Código do cupom"
-                  className="flex-1 rounded-lg px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 focus:outline-none focus:border-[#FFD700] font-mono uppercase transition-all text-gray-900 placeholder:text-gray-400" />
+                  className="flex-1 rounded-lg px-3 py-2.5 text-sm bg-[#1A1A1A] border border-border focus:outline-none focus:border-[#FFD700] font-mono uppercase transition-all text-foreground placeholder:text-muted-foreground/70" />
                 <button onClick={applyCoupon} disabled={couponLoading}
                   className="rounded-lg px-4 py-2.5 text-xs font-semibold transition-all text-white" style={{ background: accentColor }}>
                   {couponLoading ? "..." : "Aplicar"}
                 </button>
               </div>
-              {couponApplied && <p className="flex items-center gap-1.5 text-xs text-emerald-600 mt-2"><Check className="h-3.5 w-3.5" /> Cupom LAUNCH10 aplicado!</p>}
+              {couponApplied && <p className="flex items-center gap-1.5 text-xs text-success mt-2"><Check className="h-3.5 w-3.5" /> Cupom LAUNCH10 aplicado!</p>}
             </div>
 
             {/* Security badges */}
@@ -247,11 +247,11 @@ const CheckoutPage = () => {
                 { icon: Shield, text: `Garantia ${product.guarantee} dias`, sub: "Dinheiro de volta" },
                 { icon: CreditCard, text: "Acesso imediato", sub: "Liberado na hora" },
               ].map((b, i) => (
-                <div key={i} className="flex items-center gap-2.5 bg-white rounded-xl border border-gray-100 p-3 shadow-sm">
-                  <b.icon className="h-4 w-4 text-gray-400 shrink-0" strokeWidth={1.5} />
+                <div key={i} className="flex items-center gap-2.5 bg-card rounded-xl border border-border/50 p-3 ">
+                  <b.icon className="h-4 w-4 text-muted-foreground/70 shrink-0" strokeWidth={1.5} />
                   <div>
-                    <div className="text-xs font-medium text-gray-700">{b.text}</div>
-                    <div className="text-[10px] text-gray-400">{b.sub}</div>
+                    <div className="text-xs font-medium text-foreground/80">{b.text}</div>
+                    <div className="text-[10px] text-muted-foreground/70">{b.sub}</div>
                   </div>
                 </div>
               ))}
@@ -259,15 +259,15 @@ const CheckoutPage = () => {
 
             {/* Reviews */}
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-gray-700">Avaliações de alunos</h3>
+              <h3 className="text-sm font-semibold text-foreground/80">Avaliações de alunos</h3>
               {reviews.map((r, i) => (
-                <div key={i} className="bg-white rounded-xl border border-gray-100 p-4 shadow-sm">
+                <div key={i} className="bg-card rounded-xl border border-border/50 p-4 ">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style={{ background: accentColor }}>
                       {r.name.split(" ").map(n => n[0]).join("")}
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-gray-800">{r.name}</div>
+                      <div className="text-sm font-medium text-foreground">{r.name}</div>
                       <div className="flex gap-0.5">
                         {Array.from({ length: r.rating }).map((_, j) => (
                           <Star key={j} className="h-3 w-3 fill-amber-400 text-amber-400" />
@@ -275,7 +275,7 @@ const CheckoutPage = () => {
                       </div>
                     </div>
                   </div>
-                  <p className="text-xs text-gray-500">"{r.text}"</p>
+                  <p className="text-xs text-muted-foreground">"{r.text}"</p>
                 </div>
               ))}
             </div>
@@ -283,19 +283,19 @@ const CheckoutPage = () => {
 
           {/* RIGHT — Payment Form */}
           <div className="order-1 lg:order-2">
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden lg:sticky lg:top-8">
+            <div className="bg-card rounded-xl border border-border/50  overflow-hidden lg:sticky lg:top-8">
               {/* Steps */}
-              <div className="flex border-b border-gray-100">
+              <div className="flex border-b border-border/50">
                 <button onClick={() => setStep(1)}
                   className={`flex-1 flex items-center justify-center gap-2 py-4 text-sm font-semibold transition-all border-b-2 ${
-                    step === 1 ? "border-[#FFD700] text-[#FFD700]" : "border-transparent text-gray-400"
+                    step === 1 ? "border-[#FFD700] text-[#FFD700]" : "border-transparent text-muted-foreground/70"
                   }`}>
                   <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ background: step === 1 ? accentColor : "#d1d5db" }}>1</span>
                   IDENTIFICAÇÃO
                 </button>
                 <button onClick={() => personalValid && setStep(2)}
                   className={`flex-1 flex items-center justify-center gap-2 py-4 text-sm font-semibold transition-all border-b-2 ${
-                    step === 2 ? "border-[#FFD700] text-[#FFD700]" : "border-transparent text-gray-400"
+                    step === 2 ? "border-[#FFD700] text-[#FFD700]" : "border-transparent text-muted-foreground/70"
                   }`}>
                   <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ background: step === 2 ? accentColor : "#d1d5db" }}>2</span>
                   PAGAMENTO
@@ -306,14 +306,14 @@ const CheckoutPage = () => {
                 {/* Step 1 — Identification */}
                 {step === 1 && (
                   <div className="space-y-4">
-                    <h2 className="text-lg font-bold text-gray-900">Seus dados</h2>
+                    <h2 className="text-lg font-bold text-foreground">Seus dados</h2>
                     <InputField label="Nome completo" value={name} onChange={setName} placeholder="Seu nome completo" valid={name.length > 2 ? true : name.length > 0 ? false : null} />
                     <InputField label="E-mail" value={email} onChange={setEmail} placeholder="seu@email.com" type="email" valid={emailValid ? true : email.length > 3 ? false : null} />
                     <InputField label="Telefone" value={phone} onChange={v => setPhone(maskPhone(v))} placeholder="(00) 00000-0000" mono valid={phoneValid ? true : phone.length > 3 ? false : null} />
                     <InputField label="CPF" value={cpf} onChange={v => setCpf(maskCpf(v))} placeholder="000.000.000-00" mono valid={cpfValid ? true : cpf.length > 3 ? false : null} />
                     <button onClick={() => setStep(2)} disabled={!personalValid}
                       className={`w-full rounded-lg py-3.5 text-sm font-semibold transition-all mt-2 ${
-                        personalValid ? "text-white hover:opacity-90" : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                        personalValid ? "text-white hover:opacity-90" : "bg-gray-100 text-muted-foreground/70 cursor-not-allowed"
                       }`}
                       style={personalValid ? { background: accentColor } : undefined}>
                       Continuar
@@ -325,20 +325,20 @@ const CheckoutPage = () => {
                 {step === 2 && (
                   <div className="space-y-5">
                     <div className="flex items-center justify-between">
-                      <h2 className="text-lg font-bold text-gray-900">Pagamento</h2>
+                      <h2 className="text-lg font-bold text-foreground">Pagamento</h2>
                       <button onClick={() => setStep(1)} className="text-xs font-medium hover:underline" style={{ color: accentColor }}>
                         ← Voltar
                       </button>
                     </div>
 
                     {/* Identified user */}
-                    <div className="bg-gray-50 rounded-lg p-3 flex items-center gap-3">
+                    <div className="bg-[#1A1A1A] rounded-lg p-3 flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ background: accentColor }}>
                         {name.split(" ").map(n => n[0]).join("").slice(0, 2)}
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-gray-800">{name}</div>
-                        <div className="text-xs text-gray-500">{email}</div>
+                        <div className="text-sm font-medium text-foreground">{name}</div>
+                        <div className="text-xs text-muted-foreground">{email}</div>
                       </div>
                     </div>
 
@@ -352,7 +352,7 @@ const CheckoutPage = () => {
                           className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium border transition-all ${
                             paymentMethod === m.id
                               ? "border-[#FFD700] bg-[#FFD700]/5 text-[#FFD700]"
-                              : "border-gray-200 text-gray-500 hover:border-gray-300"
+                              : "border-border text-muted-foreground hover:border-gray-300"
                           }`}>
                           <m.icon className="h-4 w-4" strokeWidth={1.5} /> {m.label}
                         </button>
@@ -364,7 +364,7 @@ const CheckoutPage = () => {
                       <div className="space-y-4 text-center">
                         {!pixGenerated ? (
                           <>
-                            <div className="bg-gray-50 rounded-lg p-4 text-xs text-gray-500">
+                            <div className="bg-[#1A1A1A] rounded-lg p-4 text-xs text-muted-foreground">
                               Gere o QR Code PIX, pague pelo app do seu banco e o acesso é liberado instantaneamente.
                             </div>
                             <button onClick={handlePixPayment}
@@ -375,25 +375,25 @@ const CheckoutPage = () => {
                           </>
                         ) : pixConfirmed ? (
                           <div className="space-y-4 py-6">
-                            <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center mx-auto">
-                              <Check className="h-8 w-8 text-emerald-500" strokeWidth={2.5} />
+                            <div className="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center mx-auto">
+                              <Check className="h-8 w-8 text-success" strokeWidth={2.5} />
                             </div>
-                            <h3 className="text-lg font-bold text-emerald-600">Pagamento confirmado!</h3>
-                            <p className="text-xs text-gray-500">Preparando seu acesso...</p>
+                            <h3 className="text-lg font-bold text-success">Pagamento confirmado!</h3>
+                            <p className="text-xs text-muted-foreground">Preparando seu acesso...</p>
                           </div>
                         ) : (
                           <div className="space-y-4">
-                            <div className="bg-gray-50 rounded-xl p-6 inline-block mx-auto">
-                              <div className="w-48 h-48 bg-white rounded-xl p-3 mx-auto border border-gray-200">
+                            <div className="bg-[#1A1A1A] rounded-xl p-6 inline-block mx-auto">
+                              <div className="w-48 h-48 bg-card rounded-xl p-3 mx-auto border border-border">
                                 <div className="w-full h-full bg-[repeating-conic-gradient(#000_0%_25%,#fff_0%_50%)] bg-[length:8px_8px] rounded-lg" />
                               </div>
                             </div>
-                            <div className="flex items-center justify-center gap-2 text-amber-600">
+                            <div className="flex items-center justify-center gap-2 text-warning">
                               <Clock className="h-4 w-4" />
                               <span className="font-mono text-sm font-medium">QR Code válido por {formatTimer(pixTimer)}</span>
                             </div>
-                            <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
-                              <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground/70">
+                              <div className="w-2 h-2 rounded-full bg-warning animate-pulse" />
                               Aguardando pagamento...
                             </div>
                           </div>
@@ -405,10 +405,10 @@ const CheckoutPage = () => {
                     {paymentMethod === "card" && (
                       <div className="space-y-3">
                         <div>
-                          <label className="text-[13px] text-gray-600 mb-1.5 block font-medium">Número do cartão</label>
+                          <label className="text-[13px] text-muted-foreground mb-1.5 block font-medium">Número do cartão</label>
                           <div className="relative">
                             <input type="text" value={cardNumber} onChange={e => setCardNumber(maskCard(e.target.value))} placeholder="0000 0000 0000 0000"
-                              className="w-full rounded-lg px-4 py-3 text-sm bg-white border border-gray-200 focus:outline-none focus:border-[#FFD700] focus:shadow-[0_0_0_3px_rgba(255,215,0,0.1)] font-mono transition-all text-gray-900 placeholder:text-gray-400" />
+                              className="w-full rounded-lg px-4 py-3 text-sm bg-card border border-border focus:outline-none focus:border-[#FFD700] focus:shadow-[0_0_0_3px_rgba(255,215,0,0.1)] font-mono transition-all text-foreground placeholder:text-muted-foreground/70" />
                             {brand && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-[#FFD700]/10 text-[#FFD700]">{brand}</span>}
                           </div>
                         </div>
@@ -416,27 +416,27 @@ const CheckoutPage = () => {
                         <div className="grid grid-cols-2 gap-3">
                           <InputField label="Validade" value={cardExpiry} onChange={v => setCardExpiry(maskExpiry(v))} placeholder="MM/AA" mono />
                           <div>
-                            <label className="text-[13px] text-gray-600 mb-1.5 block font-medium">CVV</label>
+                            <label className="text-[13px] text-muted-foreground mb-1.5 block font-medium">CVV</label>
                             <div className="relative">
                               <input type={showCvv ? "text" : "password"} value={cardCvv} onChange={e => setCardCvv(e.target.value.replace(/\D/g, "").slice(0, 4))} placeholder="000"
-                                className="w-full rounded-lg px-4 py-3 text-sm bg-white border border-gray-200 focus:outline-none focus:border-[#FFD700] font-mono transition-all text-gray-900 placeholder:text-gray-400" />
+                                className="w-full rounded-lg px-4 py-3 text-sm bg-card border border-border focus:outline-none focus:border-[#FFD700] font-mono transition-all text-foreground placeholder:text-muted-foreground/70" />
                               <button onClick={() => setShowCvv(!showCvv)} className="absolute right-3 top-1/2 -translate-y-1/2">
-                                {showCvv ? <EyeOff className="h-4 w-4 text-gray-400" /> : <Eye className="h-4 w-4 text-gray-400" />}
+                                {showCvv ? <EyeOff className="h-4 w-4 text-muted-foreground/70" /> : <Eye className="h-4 w-4 text-muted-foreground/70" />}
                               </button>
                             </div>
                           </div>
                         </div>
                         <div>
-                          <label className="text-[13px] text-gray-600 mb-1.5 block font-medium">Parcelas</label>
+                          <label className="text-[13px] text-muted-foreground mb-1.5 block font-medium">Parcelas</label>
                           <select value={installment} onChange={e => setInstallment(Number(e.target.value))}
-                            className="w-full rounded-lg px-4 py-3 text-sm bg-white border border-gray-200 focus:outline-none appearance-none font-mono transition-all text-gray-900">
+                            className="w-full rounded-lg px-4 py-3 text-sm bg-card border border-border focus:outline-none appearance-none font-mono transition-all text-foreground">
                             {installmentOptions.map(o => <option key={o.n} value={o.n}>{o.label}</option>)}
                           </select>
                         </div>
-                        <p className="text-[10px] text-gray-400 flex items-center gap-1"><Lock className="h-3 w-3" /> Dados criptografados com SSL 256-bit</p>
+                        <p className="text-[10px] text-muted-foreground/70 flex items-center gap-1"><Lock className="h-3 w-3" /> Dados criptografados com SSL 256-bit</p>
                         <button onClick={handleCardSubmit} disabled={processing}
                           className={`w-full rounded-lg py-4 text-sm font-semibold transition-all mt-1 ${
-                            !processing ? "text-white hover:opacity-90" : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                            !processing ? "text-white hover:opacity-90" : "bg-gray-100 text-muted-foreground/70 cursor-not-allowed"
                           }`}
                           style={!processing ? { background: accentColor } : undefined}>
                           {processing ? (
@@ -449,7 +449,7 @@ const CheckoutPage = () => {
                       </div>
                     )}
 
-                    <p className="text-[10px] text-gray-400 text-center pt-2">
+                    <p className="text-[10px] text-muted-foreground/70 text-center pt-2">
                       Ao finalizar, você concorda com os{" "}
                       <span className="cursor-pointer hover:underline" style={{ color: accentColor }}>Termos de Uso</span> e{" "}
                       <span className="cursor-pointer hover:underline" style={{ color: accentColor }}>Política de Privacidade</span>

@@ -117,7 +117,7 @@ const MentorDashboard = () => {
   const headerBadge = isLive ? "AO VIVO — HOJE" : activePeriod === "yesterday" ? "📅 ONTEM" : `📅 ${period.label}`;
 
   return (
-    <div className="flex flex-col gap-5 max-w-[1600px]">
+    <div className="flex flex-col gap-5 max-w-[1600px] mx-auto">
       {/* ── Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-2">
         <div>

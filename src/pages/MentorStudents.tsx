@@ -50,7 +50,7 @@ const MentorStudents = () => {
   };
 
   return (
-    <div className="space-y-6 sm:space-y-8 max-w-7xl">
+    <div className="space-y-6 sm:space-y-8 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>

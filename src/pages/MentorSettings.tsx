@@ -21,7 +21,7 @@ const MentorSettings = () => {
   ];
 
   return (
-    <div className="space-y-6 max-w-5xl">
+    <div className="space-y-6 max-w-6xl mx-auto">
       <div>
         <h1 className="font-display text-2xl mb-1">Configurações</h1>
         <p className="text-sm text-muted-foreground">Personalize sua plataforma</p>

@@ -206,7 +206,7 @@ const MentorCheckout = () => {
   if (view === "list") {
     const published = products.filter(p => p.status === "published");
     return (
-      <div className="space-y-8 max-w-6xl">
+      <div className="space-y-8 max-w-6xl mx-auto">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="font-display text-2xl mb-1">Checkout</h1>
@@ -301,7 +301,7 @@ const MentorCheckout = () => {
     if (!product) return <div className="text-muted-foreground text-center py-20">Nenhum checkout para analisar.</div>;
     const an = product.analytics;
     return (
-      <div className="space-y-8 max-w-6xl">
+      <div className="space-y-8 max-w-6xl mx-auto">
         <div className="flex items-center gap-3">
           <button onClick={() => setView("list")} className="glass rounded-xl px-3 py-2 text-xs hover:bg-[rgba(255,255,255,0.06)] transition-all">← Voltar</button>
           <div>

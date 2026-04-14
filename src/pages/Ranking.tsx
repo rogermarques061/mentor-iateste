@@ -34,7 +34,7 @@ const Ranking = () => {
   const userEntry = rankingData.find((r) => r.isUser);
 
   return (
-    <div className="space-y-8 sm:space-y-10 max-w-6xl">
+    <div className="space-y-8 sm:space-y-10 max-w-6xl mx-auto">
       <div className="animate-fade-slide-in">
         <h1 className="font-display text-[22px] sm:text-2xl">Ranking</h1>
         <p className="text-muted-foreground text-sm mt-1">Veja sua posição entre os colegas da turma.</p>

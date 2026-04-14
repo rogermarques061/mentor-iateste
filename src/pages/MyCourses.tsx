@@ -96,7 +96,7 @@ const MyCourses = () => {
   ];
 
   return (
-    <div className="space-y-8 max-w-6xl">
+    <div className="space-y-8 max-w-6xl mx-auto">
       <div className="animate-fade-slide-in">
         <h1 className="font-display text-2xl">Meus Cursos</h1>
         <p className="text-muted-foreground text-sm mt-1">Gerencie e acompanhe todos os seus cursos.</p>

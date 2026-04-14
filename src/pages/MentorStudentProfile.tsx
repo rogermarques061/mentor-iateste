@@ -75,7 +75,7 @@ const MentorStudentProfile = () => {
   const statusColor = s.status === "Em Risco" ? "bg-warning/15 text-warning" : s.status === "Crítico" ? "bg-destructive/15 text-destructive" : "bg-success/15 text-success";
 
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="space-y-6 max-w-6xl mx-auto">
       {/* Back */}
       <Link to="/mentor/students" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
         <ArrowLeft className="h-4 w-4" strokeWidth={1.5} /> Voltar para Alunos

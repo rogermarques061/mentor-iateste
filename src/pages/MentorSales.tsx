@@ -56,7 +56,7 @@ function getTrendIcon(trend: string) {
 
 const MentorSales = () => {
   return (
-    <div className="space-y-8 max-w-6xl">
+    <div className="space-y-8 max-w-6xl mx-auto">
       <div>
         <h1 className="font-display text-2xl mb-1">Vendas</h1>
         <p className="text-sm text-muted-foreground">Visão completa do funil de vendas e performance</p>

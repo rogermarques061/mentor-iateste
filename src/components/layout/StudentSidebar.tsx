@@ -27,7 +27,7 @@ export function StudentSidebar() {
   const collapsed = state === "collapsed";
 
   return (
-    <Sidebar collapsible="icon" className="border-r-0 w-[240px]">
+    <Sidebar collapsible="icon" className="border-r-0">
       <SidebarContent className="pt-6">
         <div className="px-4 mb-8">
           {!collapsed && (
@@ -51,8 +51,8 @@ export function StudentSidebar() {
                     <NavLink
                       to={item.url}
                       end={item.url === "/"}
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 text-[hsl(43_4%_60%)] hover:text-[hsl(43_10%_89%)] hover:bg-[rgba(255,255,255,0.04)]"
-                      activeClassName="bg-[rgba(255,255,255,0.06)] border-l-[3px] border-l-primary text-foreground font-semibold"
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 text-muted-foreground hover:text-foreground hover:bg-[rgba(255,255,255,0.03)]"
+                      activeClassName="bg-[rgba(255,215,0,0.08)] text-primary"
                     >
                       <item.icon className="h-[18px] w-[18px]" strokeWidth={1.5} />
                       {!collapsed && <span>{item.title}</span>}
@@ -71,8 +71,8 @@ export function StudentSidebar() {
             <SidebarMenuButton asChild>
               <NavLink
                 to="/mentor"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-[hsl(43_4%_60%)] hover:text-[hsl(43_10%_89%)] hover:bg-[rgba(255,255,255,0.04)] transition-all duration-200"
-                activeClassName="bg-[rgba(255,255,255,0.06)] border-l-[3px] border-l-primary text-foreground font-semibold"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:bg-[rgba(255,255,255,0.03)] transition-all duration-200"
+                activeClassName="bg-[rgba(255,215,0,0.08)] text-primary"
               >
                 <Settings className="h-[18px] w-[18px]" strokeWidth={1.5} />
                 {!collapsed && <span>Painel Mentor</span>}

@@ -17,8 +17,8 @@ class Particle {
   reset() {
     this.x = this.baseX = Math.random() * this.cw;
     this.y = this.baseY = Math.random() * this.ch;
-    this.size = Math.random() * 1.2 + 0.3;
-    this.opacity = Math.random() * 0.18 + 0.05;
+    this.size = Math.random() * 1.6 + 0.5;
+    this.opacity = Math.random() * 0.25 + 0.08;
     this.speed = Math.random() * 0.4 + 0.1;
     this.angle = Math.random() * Math.PI * 2;
     this.angleSpeed = (Math.random() - 0.5) * 0.008;
@@ -157,7 +157,7 @@ export function WaveCanvas() {
         inset: 0,
         zIndex: 1,
         pointerEvents: "none",
-        opacity: 0.18,
+        opacity: 0.26,
       }}
     />
   );

@@ -1,104 +1,80 @@
 import { useEffect, useRef } from "react";
 
 export function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const mouse = useRef({ x: 0, y: 0 });
-  const ring = useRef({ x: 0, y: 0 });
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouse = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
-    // Skip on touch devices
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
-    const dot = dotRef.current!;
-    const ringEl = ringRef.current!;
+    const el = canvasRef.current!;
+
+    // Draw golden arrow on canvas
+    const ctx = el.getContext("2d")!;
+    ctx.clearRect(0, 0, 20, 24);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, 18);
+    ctx.lineTo(4.5, 14);
+    ctx.lineTo(9, 22);
+    ctx.lineTo(11.5, 21);
+    ctx.lineTo(7, 13);
+    ctx.lineTo(12, 13);
+    ctx.closePath();
+    ctx.fillStyle = "#FFD700";
+    ctx.fill();
+    ctx.strokeStyle = "rgba(0,0,0,0.6)";
+    ctx.lineWidth = 0.8;
+    ctx.stroke();
 
     const onMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
-      dot.style.left = e.clientX + "px";
-      dot.style.top = e.clientY + "px";
-    };
-
-    let raf: number;
-    const animateRing = () => {
-      ring.current.x += (mouse.current.x - ring.current.x) * 0.12;
-      ring.current.y += (mouse.current.y - ring.current.y) * 0.12;
-      ringEl.style.left = ring.current.x + "px";
-      ringEl.style.top = ring.current.y + "px";
-      raf = requestAnimationFrame(animateRing);
+      el.style.left = e.clientX + "px";
+      el.style.top = e.clientY + "px";
     };
 
     const onEnter = () => {
-      dot.style.transform = "translate(-50%, -50%) scale(1.8)";
-      ringEl.style.width = "48px";
-      ringEl.style.height = "48px";
-      ringEl.style.borderColor = "rgba(255, 215, 0, 0.9)";
+      el.style.transform = "scale(1.2)";
+      el.style.filter = "drop-shadow(0 0 7px rgba(255, 215, 0, 0.9))";
     };
     const onLeave = () => {
-      dot.style.transform = "translate(-50%, -50%) scale(1)";
-      ringEl.style.width = "32px";
-      ringEl.style.height = "32px";
-      ringEl.style.borderColor = "rgba(255, 215, 0, 0.5)";
+      el.style.transform = "scale(1)";
+      el.style.filter = "drop-shadow(0 0 4px rgba(255, 215, 0, 0.6))";
     };
 
     const observe = () => {
-      document.querySelectorAll("a, button, [role='button'], input, label, textarea, select").forEach((el) => {
-        el.addEventListener("mouseenter", onEnter);
-        el.addEventListener("mouseleave", onLeave);
+      document.querySelectorAll("a, button, [role='button'], input, label, textarea, select").forEach((e) => {
+        e.addEventListener("mouseenter", onEnter);
+        e.addEventListener("mouseleave", onLeave);
       });
     };
 
     document.addEventListener("mousemove", onMove);
-    raf = requestAnimationFrame(animateRing);
-
-    // Observe initially + on DOM changes
     observe();
     const mo = new MutationObserver(() => observe());
     mo.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       document.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(raf);
       mo.disconnect();
     };
   }, []);
 
-  // Hide on touch devices via CSS
   return (
-    <>
-      <div
-        ref={dotRef}
-        className="hidden lg:block"
-        style={{
-          position: "fixed",
-          width: 10,
-          height: 10,
-          background: "#FFD700",
-          borderRadius: "50%",
-          pointerEvents: "none",
-          zIndex: 99999,
-          transform: "translate(-50%, -50%)",
-          transition: "transform 0.08s ease, opacity 0.2s ease",
-          mixBlendMode: "difference",
-          boxShadow: "0 0 8px rgba(255,215,0,0.8), 0 0 20px rgba(255,215,0,0.3)",
-        }}
-      />
-      <div
-        ref={ringRef}
-        className="hidden lg:block"
-        style={{
-          position: "fixed",
-          width: 32,
-          height: 32,
-          border: "1.5px solid rgba(255,215,0,0.5)",
-          borderRadius: "50%",
-          pointerEvents: "none",
-          zIndex: 99998,
-          transform: "translate(-50%, -50%)",
-          transition: "transform 0.18s ease, width 0.2s ease, height 0.2s ease, border-color 0.2s ease",
-        }}
-      />
-    </>
+    <canvas
+      ref={canvasRef}
+      width={20}
+      height={24}
+      className="hidden lg:block"
+      style={{
+        position: "fixed",
+        pointerEvents: "none",
+        zIndex: 99999,
+        transform: "scale(1)",
+        filter: "drop-shadow(0 0 4px rgba(255, 215, 0, 0.6))",
+        transition: "transform 0.15s ease, filter 0.15s ease",
+      }}
+    />
   );
 }

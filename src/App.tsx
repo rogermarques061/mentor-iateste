@@ -27,6 +27,9 @@ import ProductSalesPage from "./pages/ProductSalesPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import PurchaseSuccess from "./pages/PurchaseSuccess";
 import NotFound from "./pages/NotFound";
+import { CustomCursor } from "./components/effects/CustomCursor";
+import { BackgroundOrbs } from "./components/effects/BackgroundOrbs";
+import { WaveCanvas } from "./components/effects/WaveCanvas";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +37,9 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <PlatformProvider>
       <TooltipProvider>
+        <CustomCursor />
+        <BackgroundOrbs />
+        <WaveCanvas />
         <Toaster />
         <Sonner />
         <BrowserRouter>

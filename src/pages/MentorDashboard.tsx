@@ -195,11 +195,11 @@ const MentorDashboard = () => {
         </div>
       </div>
 
-      {/* ── TOP ROW: Metrics left | Chart right ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] xl:grid-cols-[360px_1fr] gap-4">
-        {/* Metrics column */}
+      {/* ── TOP ROW: First 4 metrics left | Chart right (aligned) ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] xl:grid-cols-[360px_1fr] gap-4 items-start">
+        {/* First 4 metrics */}
         <div className="flex flex-col gap-2">
-          {metrics.map((m, i) => (
+          {metrics.slice(0, 4).map((m, i) => (
             <div key={i} className="glass rounded-[10px] px-5 py-4 flex items-center justify-between animate-fade-slide-in hover:translate-x-0.5 transition-transform"
               style={{ animationDelay: `${i * 50}ms` }}>
               <div className="flex flex-col gap-0.5">
@@ -215,8 +215,8 @@ const MentorDashboard = () => {
           ))}
         </div>
 
-        {/* Chart panel */}
-        <div className="glass rounded-xl p-6 flex flex-col min-h-[420px]">
+        {/* Chart panel — height matches 4 cards */}
+        <div className="glass rounded-xl p-6 flex flex-col" style={{ height: 'calc((72px * 4) + (8px * 3))' }}>
           <div className="flex items-start justify-between mb-5">
             <div>
               <h3 className="text-base font-semibold" style={{ color: '#FFFFFF' }}>Transações por dia</h3>
@@ -241,6 +241,24 @@ const MentorDashboard = () => {
             </ResponsiveContainer>
           </div>
         </div>
+      </div>
+
+      {/* ── Remaining 2 metrics (Cartão + Boleto) ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[320px_320px] xl:grid-cols-[360px_360px] gap-2">
+        {metrics.slice(4).map((m, i) => (
+          <div key={i + 4} className="glass rounded-[10px] px-5 py-4 flex items-center justify-between animate-fade-slide-in hover:translate-x-0.5 transition-transform"
+            style={{ animationDelay: `${(i + 4) * 50}ms` }}>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-[0.72rem]" style={{ color: '#666666' }}>{m.label}</span>
+              <span className="text-[1.35rem] font-bold tracking-tight leading-tight" style={{ color: '#FFFFFF' }}>{m.value}</span>
+              <span className="text-[0.65rem]" style={{ color: '#3A3A3A' }}>{period.label}</span>
+            </div>
+            <div className="w-[34px] h-[34px] rounded-lg flex items-center justify-center shrink-0"
+              style={{ background: 'rgba(255,215,0,0.07)', border: '1px solid rgba(255,215,0,0.12)' }}>
+              <m.icon className="h-4 w-4" style={{ color: '#FFD700', opacity: 0.75 }} strokeWidth={1.5} />
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* ── BOTTOM ROW: Products left | Conversions right ── */}

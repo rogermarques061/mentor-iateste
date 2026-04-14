@@ -19,7 +19,7 @@ const recommended = [
 
 const StudentHome = () => {
   return (
-    <div className="space-y-10 max-w-6xl">
+    <div className="space-y-10 max-w-6xl mx-auto">
       <HeroBanner />
 
       {/* Continue Watching + Missions */}

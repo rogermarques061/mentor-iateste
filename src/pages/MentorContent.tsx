@@ -56,7 +56,7 @@ const MentorContent = () => {
   if (selectedCourse) {
     const course = coursesData.find(c => c.id === selectedCourse);
     return (
-      <div className="space-y-6 max-w-6xl">
+      <div className="space-y-6 max-w-6xl mx-auto">
         <button onClick={() => { setSelectedCourse(null); setEditingLesson(null); }} className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
           ← Voltar para Cursos
         </button>
@@ -243,7 +243,7 @@ const MentorContent = () => {
   }
 
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="space-y-6 max-w-6xl mx-auto">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-2xl mb-1">Conteúdo</h1>

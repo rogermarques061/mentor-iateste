@@ -34,7 +34,7 @@ const Achievements = () => {
   const locked = allBadges.filter((b) => !b.unlocked);
 
   return (
-    <div className="space-y-10 max-w-6xl">
+    <div className="space-y-10 max-w-6xl mx-auto">
       <div className="animate-fade-slide-in">
         <h1 className="font-display text-2xl">Conquistas</h1>
         <p className="text-muted-foreground text-sm mt-1">

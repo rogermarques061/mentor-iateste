@@ -75,7 +75,7 @@ const MentorProducts = () => {
 
   if (view === "editor") {
     return (
-      <div className="flex gap-6 max-w-6xl">
+      <div className="flex gap-6 max-w-6xl mx-auto">
         {/* Editor Sidebar */}
         <div className="w-56 shrink-0 space-y-1">
           <button onClick={() => setView("list")} className="text-xs text-muted-foreground hover:text-foreground mb-4 flex items-center gap-1 transition-all">
@@ -418,7 +418,7 @@ const MentorProducts = () => {
   }
 
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="space-y-6 max-w-6xl mx-auto">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-2xl mb-1">Produtos</h1>

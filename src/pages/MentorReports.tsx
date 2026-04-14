@@ -72,7 +72,7 @@ const MentorReports = () => {
   ];
 
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="space-y-6 max-w-6xl mx-auto">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-2xl mb-1">Relatórios</h1>

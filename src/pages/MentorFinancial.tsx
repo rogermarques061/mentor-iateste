@@ -51,7 +51,7 @@ const MentorFinancial = () => {
   ];
 
   return (
-    <div className="space-y-6 sm:space-y-8 max-w-6xl">
+    <div className="space-y-6 sm:space-y-8 max-w-6xl mx-auto">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>

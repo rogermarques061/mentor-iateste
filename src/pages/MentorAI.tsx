@@ -104,7 +104,7 @@ const MentorAI = () => {
   });
 
   return (
-    <div className="space-y-6 sm:space-y-8 max-w-6xl">
+    <div className="space-y-6 sm:space-y-8 max-w-6xl mx-auto">
       {/* Header */}
       <div>
         <h1 className="text-[24px] sm:text-[28px] font-[800] tracking-tight mb-1">Inteligência IA</h1>

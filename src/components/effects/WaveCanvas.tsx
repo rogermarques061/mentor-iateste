@@ -17,8 +17,8 @@ class Particle {
   reset() {
     this.x = this.baseX = Math.random() * this.cw;
     this.y = this.baseY = Math.random() * this.ch;
-    this.size = Math.random() * 2 + 0.5;
-    this.opacity = Math.random() * 0.4 + 0.1;
+    this.size = Math.random() * 1.2 + 0.3;
+    this.opacity = Math.random() * 0.18 + 0.05;
     this.speed = Math.random() * 0.4 + 0.1;
     this.angle = Math.random() * Math.PI * 2;
     this.angleSpeed = (Math.random() - 0.5) * 0.008;
@@ -46,8 +46,8 @@ class Particle {
       const a = Math.atan2(dy, dx);
       this.x = this.baseX + Math.cos(a) * wave * 2;
       this.y = this.baseY + Math.sin(a) * wave * 2;
-      this.currentOpacity = Math.min(this.opacity + force * 0.5, 0.9);
-      this.currentSize = this.size + force * 2.5;
+      this.currentOpacity = Math.min(this.opacity + force * 0.3, 0.6);
+      this.currentSize = this.size + force * 1.5;
     } else {
       this.x += (this.baseX - this.x) * 0.05;
       this.y += (this.baseY - this.y) * 0.05;
@@ -60,8 +60,8 @@ class Particle {
     ctx.save();
     ctx.globalAlpha = this.currentOpacity;
     ctx.fillStyle = "#FFD700";
-    ctx.shadowBlur = 6;
-    ctx.shadowColor = "rgba(255,215,0,0.6)";
+    ctx.shadowBlur = 4;
+    ctx.shadowColor = "rgba(255,215,0,0.4)";
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.currentSize, 0, Math.PI * 2);
     ctx.fill();
@@ -73,16 +73,17 @@ export function WaveCanvas() {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    if (isMobile()) return;
+
     const canvas = ref.current!;
     const ctx = canvas.getContext("2d")!;
     let w = (canvas.width = window.innerWidth);
     let h = (canvas.height = window.innerHeight);
 
-    const count = isMobile() ? 40 : 80;
+    const count = 45;
     const particles = Array.from({ length: count }, () => new Particle(w, h));
     const mouse = { x: w / 2, y: h / 2 };
     let waveRadius = 0;
-    const mobile = isMobile();
 
     const onResize = () => {
       w = canvas.width = window.innerWidth;
@@ -100,7 +101,6 @@ export function WaveCanvas() {
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
 
-      // Connections
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
@@ -108,7 +108,7 @@ export function WaveCanvas() {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 100) {
             ctx.save();
-            ctx.globalAlpha = (1 - dist / 100) * 0.12;
+            ctx.globalAlpha = (1 - dist / 100) * 0.05;
             ctx.strokeStyle = "#FFD700";
             ctx.lineWidth = 0.5;
             ctx.beginPath();
@@ -120,20 +120,17 @@ export function WaveCanvas() {
         }
       }
 
-      // Mouse wave (desktop only)
-      if (!mobile) {
-        waveRadius += 1.5;
-        const op = Math.max(0, 0.25 - waveRadius / 200);
-        ctx.save();
-        ctx.globalAlpha = op;
-        ctx.strokeStyle = "#FFD700";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, waveRadius, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.restore();
-        if (waveRadius > 200) waveRadius = 0;
-      }
+      waveRadius += 1.5;
+      const op = Math.max(0, 0.12 - waveRadius / 200);
+      ctx.save();
+      ctx.globalAlpha = op;
+      ctx.strokeStyle = "#FFD700";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, waveRadius, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+      if (waveRadius > 200) waveRadius = 0;
 
       particles.forEach((p) => {
         p.update(mouse.x, mouse.y);
@@ -154,11 +151,13 @@ export function WaveCanvas() {
   return (
     <canvas
       ref={ref}
+      className="hidden md:block"
       style={{
         position: "fixed",
         inset: 0,
         zIndex: 1,
         pointerEvents: "none",
+        opacity: 0.18,
       }}
     />
   );

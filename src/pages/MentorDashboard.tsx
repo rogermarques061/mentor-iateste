@@ -11,7 +11,7 @@ const tooltipStyle = {
   background: '#111111',
   border: '1px solid rgba(255,215,0,0.2)',
   borderRadius: '8px',
-  fontSize: '12px',
+  fontSize: '13px',
   color: '#FFFFFF',
 };
 
@@ -32,18 +32,18 @@ function getPeriodRange(key: PeriodKey): { from: Date; to: Date; label: string }
 
 /* ── Ring SVG component ── */
 function ConversionRing({ percent }: { percent: number }) {
-  const r = 16;
+  const r = 18;
   const circ = 2 * Math.PI * r;
   const offset = circ - (percent / 100) * circ;
   return (
-    <div className="relative w-[42px] h-[42px] shrink-0">
-      <svg width="42" height="42" className="-rotate-90">
-        <circle cx="21" cy="21" r={r} stroke="#1E1E1E" strokeWidth="3" fill="none" />
-        <circle cx="21" cy="21" r={r} stroke={percent === 0 ? '#2A2A2A' : '#FFD700'} strokeWidth="3" fill="none"
+    <div className="relative w-[48px] h-[48px] shrink-0">
+      <svg width="48" height="48" className="-rotate-90">
+        <circle cx="24" cy="24" r={r} stroke="#1E1E1E" strokeWidth="3" fill="none" />
+        <circle cx="24" cy="24" r={r} stroke={percent === 0 ? '#2A2A2A' : '#FFD700'} strokeWidth="3" fill="none"
           strokeLinecap="round" strokeDasharray={circ} strokeDashoffset={offset}
           className="transition-all duration-700" />
       </svg>
-      <span className="absolute inset-0 flex items-center justify-center text-[0.6rem] font-bold" style={{ color: '#FFFFFF' }}>
+      <span className="absolute inset-0 flex items-center justify-center text-[12px] font-bold" style={{ color: '#FFFFFF' }}>
         {percent}%
       </span>
     </div>
@@ -117,9 +117,9 @@ const MentorDashboard = () => {
   const headerBadge = isLive ? "AO VIVO — HOJE" : activePeriod === "yesterday" ? "📅 ONTEM" : `📅 ${period.label}`;
 
   return (
-    <div className="flex flex-col gap-4 max-w-[1600px]">
+    <div className="flex flex-col gap-5 max-w-[1600px]">
       {/* ── Header ── */}
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-2">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
             {isLive && (
@@ -128,24 +128,24 @@ const MentorDashboard = () => {
                 <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: '#FFD700' }} />
               </span>
             )}
-            <span className="text-[0.65rem] font-bold tracking-[0.12em] uppercase" style={{ color: '#FFD700' }}>{headerBadge}</span>
+            <span className="text-[12px] font-bold tracking-[0.12em] uppercase" style={{ color: '#FFD700' }}>{headerBadge}</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight capitalize" style={{ color: '#FFFFFF' }}>
+          <h1 className="text-[28px] font-bold tracking-tight capitalize" style={{ color: '#FFFFFF' }}>
             {format(clock, "EEEE, dd 'de' MMMM", { locale: ptBR })}
           </h1>
-          <p className="text-xs mt-1" style={{ color: '#555555' }}>Atualizado às {format(clock, "HH:mm")} · dados em tempo real</p>
+          <p className="text-[13px] font-medium mt-1" style={{ color: '#555555' }}>Atualizado às {format(clock, "HH:mm")} · dados em tempo real</p>
         </div>
 
         <div className="flex flex-col items-start sm:items-end gap-2.5">
           <div className="flex gap-1.5 flex-wrap sm:justify-end">
             {periodButtons.map((pb) => (
               <button key={pb.key} onClick={() => setActivePeriod(pb.key)}
-                className="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
+                className="px-4 py-2 rounded-lg text-[14px] font-semibold transition-all duration-200"
                 style={{
                   background: activePeriod === pb.key ? 'rgba(255,215,0,0.08)' : 'transparent',
                   border: `1px solid ${activePeriod === pb.key ? 'rgba(255,215,0,0.35)' : '#2A2A2A'}`,
                   color: activePeriod === pb.key ? '#FFD700' : '#666666',
-                  fontWeight: activePeriod === pb.key ? 600 : 500,
+                  fontWeight: activePeriod === pb.key ? 700 : 600,
                 }}>
                 {pb.label}
               </button>
@@ -153,21 +153,21 @@ const MentorDashboard = () => {
             <Popover>
               <PopoverTrigger asChild>
                 <button onClick={() => setActivePeriod("custom")}
-                  className="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-lg text-[14px] font-semibold transition-all duration-200 flex items-center gap-1.5"
                   style={{
                     background: activePeriod === "custom" ? 'rgba(255,215,0,0.08)' : 'transparent',
                     border: `1px solid ${activePeriod === "custom" ? 'rgba(255,215,0,0.35)' : '#2A2A2A'}`,
                     color: activePeriod === "custom" ? '#FFD700' : '#666666',
                   }}>
-                  <Calendar className="h-3 w-3" /> Personalizado
+                  <Calendar className="h-4 w-4" /> Personalizado
                 </button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-4" align="end" style={{ background: '#111111', border: '1px solid #2A2A2A' }}>
                 <div className="flex flex-col sm:flex-row gap-3 items-end">
                   <div className="flex flex-col gap-1">
-                    <label className="text-[0.7rem] uppercase tracking-widest" style={{ color: '#555555' }}>De</label>
+                    <label className="text-[12px] font-semibold uppercase tracking-widest" style={{ color: '#555555' }}>De</label>
                     <Popover><PopoverTrigger asChild>
-                      <button className="text-xs px-3 py-2 rounded-lg text-left min-w-[130px]" style={{ background: '#1A1A1A', border: '1px solid #333333', color: '#FFFFFF' }}>
+                      <button className="text-[13px] font-medium px-3 py-2 rounded-lg text-left min-w-[130px]" style={{ background: '#1A1A1A', border: '1px solid #333333', color: '#FFFFFF' }}>
                         {customFrom ? format(customFrom, "dd/MM/yyyy") : "Selecionar"}
                       </button>
                     </PopoverTrigger><PopoverContent className="w-auto p-0" align="start">
@@ -176,9 +176,9 @@ const MentorDashboard = () => {
                   </div>
                   <span style={{ color: '#333333', paddingBottom: 8 }}>→</span>
                   <div className="flex flex-col gap-1">
-                    <label className="text-[0.7rem] uppercase tracking-widest" style={{ color: '#555555' }}>Até</label>
+                    <label className="text-[12px] font-semibold uppercase tracking-widest" style={{ color: '#555555' }}>Até</label>
                     <Popover><PopoverTrigger asChild>
-                      <button className="text-xs px-3 py-2 rounded-lg text-left min-w-[130px]" style={{ background: '#1A1A1A', border: '1px solid #333333', color: '#FFFFFF' }}>
+                      <button className="text-[13px] font-medium px-3 py-2 rounded-lg text-left min-w-[130px]" style={{ background: '#1A1A1A', border: '1px solid #333333', color: '#FFFFFF' }}>
                         {customTo ? format(customTo, "dd/MM/yyyy") : "Selecionar"}
                       </button>
                     </PopoverTrigger><PopoverContent className="w-auto p-0" align="start">
@@ -186,7 +186,7 @@ const MentorDashboard = () => {
                     </PopoverContent></Popover>
                   </div>
                   <button onClick={() => { if (customFrom && customTo) setActivePeriod("custom"); }}
-                    className="px-5 py-2 rounded-lg text-xs font-bold transition-opacity hover:opacity-85"
+                    className="px-5 py-2 rounded-lg text-[13px] font-bold transition-opacity hover:opacity-85"
                     style={{ background: '#FFD700', color: '#000000' }}>Aplicar</button>
                 </div>
               </PopoverContent>
@@ -196,34 +196,34 @@ const MentorDashboard = () => {
       </div>
 
       {/* ── TOP ROW: First 4 metrics left | Chart right (aligned) ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] xl:grid-cols-[360px_1fr] gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] xl:grid-cols-[360px_1fr] gap-5">
         {/* First 4 metrics */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           {metrics.slice(0, 4).map((m, i) => (
-            <div key={i} className="glass rounded-[10px] px-5 py-4 flex items-center justify-between animate-fade-slide-in hover:translate-x-0.5 transition-transform"
+            <div key={i} className="glass rounded-[16px] px-6 py-6 min-h-[100px] flex items-center justify-between animate-fade-slide-in hover:translate-x-0.5 transition-transform"
               style={{ animationDelay: `${i * 50}ms` }}>
-              <div className="flex flex-col gap-0.5">
-                <span className="text-[0.72rem]" style={{ color: '#666666' }}>{m.label}</span>
-                <span className="text-[1.35rem] font-bold tracking-tight leading-tight" style={{ color: '#FFFFFF' }}>{m.value}</span>
-                <span className="text-[0.65rem]" style={{ color: '#3A3A3A' }}>{period.label}</span>
+              <div className="flex flex-col gap-1">
+                <span className="text-[13px] font-semibold" style={{ color: '#666666' }}>{m.label}</span>
+                <span className="text-[28px] font-[800] tracking-tight leading-tight" style={{ color: '#FFFFFF' }}>{m.value}</span>
+                <span className="text-[12px] font-semibold" style={{ color: '#3A3A3A' }}>{period.label}</span>
               </div>
-              <div className="w-[34px] h-[34px] rounded-lg flex items-center justify-center shrink-0"
+              <div className="w-[44px] h-[44px] rounded-lg flex items-center justify-center shrink-0"
                 style={{ background: 'rgba(255,215,0,0.07)', border: '1px solid rgba(255,215,0,0.12)' }}>
-                <m.icon className="h-4 w-4" style={{ color: '#FFD700', opacity: 0.75 }} strokeWidth={1.5} />
+                <m.icon className="h-6 w-6" style={{ color: '#FFD700', opacity: 0.75 }} strokeWidth={1.5} />
               </div>
             </div>
           ))}
         </div>
 
-        {/* Chart panel — height matches 4 cards */}
-        <div className="glass rounded-xl p-6 flex flex-col py-[24px] my-0">
+        {/* Chart panel */}
+        <div className="glass rounded-[16px] p-7 flex flex-col">
           <div className="flex items-start justify-between mb-5">
             <div>
-              <h3 className="text-base font-semibold" style={{ color: '#FFFFFF' }}>Transações por dia</h3>
-              <p className="text-xs mt-0.5" style={{ color: '#555555' }}>{period.label}</p>
+              <h3 className="text-[18px] font-bold" style={{ color: '#FFFFFF' }}>Transações por dia</h3>
+              <p className="text-[13px] font-semibold mt-0.5" style={{ color: '#555555' }}>{period.label}</p>
             </div>
           </div>
-          <div className="flex-1 min-h-0">
+          <div className="flex-1 min-h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={revenueData}>
                 <defs>
@@ -232,8 +232,8 @@ const MentorDashboard = () => {
                     <stop offset="100%" stopColor="#FFD700" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: '#444444', fontSize: 10 }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#444444', fontSize: 10 }} tickFormatter={v => `${(v / 1000).toFixed(0)}K`} />
+                <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: '#444444', fontSize: 13, fontWeight: 600 }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#444444', fontSize: 13, fontWeight: 600 }} tickFormatter={v => `${(v / 1000).toFixed(0)}K`} />
                 <Tooltip contentStyle={tooltipStyle} />
                 <Area type="monotone" dataKey="receita" stroke="#FFD700" strokeWidth={1.5} fill="url(#recGrad)"
                   dot={{ fill: '#FFD700', r: 3, strokeWidth: 0 }} activeDot={{ fill: '#FFD700', r: 4, strokeWidth: 0 }} />
@@ -244,53 +244,53 @@ const MentorDashboard = () => {
       </div>
 
       {/* ── Remaining 2 metrics (Cartão + Boleto) ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[320px_320px] xl:grid-cols-[360px_360px] gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[320px_320px] xl:grid-cols-[360px_360px] gap-3">
         {metrics.slice(4).map((m, i) => (
-          <div key={i + 4} className="glass rounded-[10px] px-5 py-4 flex items-center justify-between animate-fade-slide-in hover:translate-x-0.5 transition-transform"
+          <div key={i + 4} className="glass rounded-[16px] px-6 py-6 min-h-[100px] flex items-center justify-between animate-fade-slide-in hover:translate-x-0.5 transition-transform"
             style={{ animationDelay: `${(i + 4) * 50}ms` }}>
-            <div className="flex flex-col gap-0.5">
-              <span className="text-[0.72rem]" style={{ color: '#666666' }}>{m.label}</span>
-              <span className="text-[1.35rem] font-bold tracking-tight leading-tight" style={{ color: '#FFFFFF' }}>{m.value}</span>
-              <span className="text-[0.65rem]" style={{ color: '#3A3A3A' }}>{period.label}</span>
+            <div className="flex flex-col gap-1">
+              <span className="text-[13px] font-semibold" style={{ color: '#666666' }}>{m.label}</span>
+              <span className="text-[28px] font-[800] tracking-tight leading-tight" style={{ color: '#FFFFFF' }}>{m.value}</span>
+              <span className="text-[12px] font-semibold" style={{ color: '#3A3A3A' }}>{period.label}</span>
             </div>
-            <div className="w-[34px] h-[34px] rounded-lg flex items-center justify-center shrink-0"
+            <div className="w-[44px] h-[44px] rounded-lg flex items-center justify-center shrink-0"
               style={{ background: 'rgba(255,215,0,0.07)', border: '1px solid rgba(255,215,0,0.12)' }}>
-              <m.icon className="h-4 w-4" style={{ color: '#FFD700', opacity: 0.75 }} strokeWidth={1.5} />
+              <m.icon className="h-6 w-6" style={{ color: '#FFD700', opacity: 0.75 }} strokeWidth={1.5} />
             </div>
           </div>
         ))}
       </div>
 
       {/* ── BOTTOM ROW: Products left | Conversions right ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-5">
         {/* Products panel */}
-        <div className="glass rounded-xl p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold" style={{ color: '#FFFFFF' }}>Produtos mais vendidos</h3>
-            <span className="text-xs cursor-pointer transition-colors hover:text-primary" style={{ color: '#555555' }}>Ver todos</span>
+        <div className="glass rounded-[16px] p-7">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-[18px] font-bold" style={{ color: '#FFFFFF' }}>Produtos mais vendidos</h3>
+            <span className="text-[13px] font-semibold cursor-pointer transition-colors hover:text-primary" style={{ color: '#555555' }}>Ver todos</span>
           </div>
           {topProducts.length > 0 ? (
             <div className="space-y-3">
               {topProducts.map((p, i) => (
-                <div key={p.id} className="flex items-center justify-between py-2 border-b" style={{ borderColor: '#1A1A1A' }}>
+                <div key={p.id} className="flex items-center justify-between py-3 border-b" style={{ borderColor: '#1A1A1A' }}>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono w-5" style={{ color: '#444444' }}>#{i + 1}</span>
-                    <span className="text-sm" style={{ color: '#FFFFFF' }}>{p.name}</span>
+                    <span className="text-[14px] font-bold font-mono w-6" style={{ color: '#444444' }}>#{i + 1}</span>
+                    <span className="text-[15px] font-bold" style={{ color: '#FFFFFF' }}>{p.name}</span>
                   </div>
-                  <span className="text-sm font-semibold" style={{ color: '#FFFFFF' }}>{formatCurrency(p.price)}</span>
+                  <span className="text-[15px] font-[800]" style={{ color: '#FFFFFF' }}>{formatCurrency(p.price)}</span>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-sm" style={{ color: '#444444' }}>Nenhum produto cadastrado ainda.</p>
+            <p className="text-[15px] font-medium" style={{ color: '#444444' }}>Nenhum produto cadastrado ainda.</p>
           )}
         </div>
 
         {/* Conversions column */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           {conversions.map((c, i) => (
-            <div key={i} className="glass rounded-[10px] px-5 py-4 flex items-center justify-between">
-              <span className="text-[0.82rem]" style={{ color: '#888888' }}>{c.label}</span>
+            <div key={i} className="glass rounded-[16px] px-6 py-5 flex items-center justify-between">
+              <span className="text-[14px] font-semibold" style={{ color: '#888888' }}>{c.label}</span>
               <ConversionRing percent={c.percent} />
             </div>
           ))}
@@ -298,17 +298,17 @@ const MentorDashboard = () => {
       </div>
 
       {/* ── Activity Feed ── */}
-      <div className="glass rounded-xl p-6">
-        <h3 className="text-sm font-semibold mb-4" style={{ color: '#FFFFFF' }}>Atividade Recente</h3>
+      <div className="glass rounded-[16px] p-7">
+        <h3 className="text-[18px] font-bold mb-5" style={{ color: '#FFFFFF' }}>Atividade Recente</h3>
         <div className="space-y-2">
           {state.notifications.slice(0, 8).map((item, i) => (
-            <div key={item.id} className="glass rounded-xl p-3 border-l-[3px] animate-fade-slide-in" style={{
+            <div key={item.id} className="glass rounded-xl p-4 border-l-[3px] animate-fade-slide-in" style={{
               animationDelay: `${i * 40}ms`,
               borderLeftColor: item.type === 'sale' ? '#FFD700' : item.type === 'alert' ? 'hsl(0, 84%, 60%)' : '#666666'
             }}>
               <div className="flex items-center justify-between">
-                <span className="text-xs" style={{ color: '#FFFFFF' }}>{item.title} {item.message}</span>
-                <span className="text-[10px] shrink-0 ml-3" style={{ color: '#555555' }}>
+                <span className="text-[14px] font-semibold" style={{ color: '#FFFFFF' }}>{item.title} {item.message}</span>
+                <span className="text-[12px] font-semibold shrink-0 ml-3" style={{ color: '#555555' }}>
                   {new Date(item.timestamp).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}
                 </span>
               </div>

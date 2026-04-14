@@ -31,7 +31,7 @@ export function MentorSidebar() {
   const collapsed = state === "collapsed";
 
   return (
-    <Sidebar collapsible="icon" className="border-r-0">
+    <Sidebar collapsible="icon" className="border-r-0 w-[240px]">
       <SidebarContent className="pt-6">
         <div className="px-4 mb-8">
           {!collapsed && (
@@ -39,7 +39,7 @@ export function MentorSidebar() {
               <h2 className="font-display text-lg font-bold tracking-tight">
                 <span className="text-foreground">IMPLOF</span><span style={{ color: '#FFD700' }}>Y</span>
               </h2>
-              <span className="text-xs text-muted-foreground">Painel de Performance</span>
+              <span className="text-sm text-muted-foreground">Painel de Performance</span>
             </div>
           )}
           {collapsed && (
@@ -58,8 +58,8 @@ export function MentorSidebar() {
                     <NavLink
                       to={item.url}
                       end={item.url === "/mentor"}
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200 text-muted-foreground hover:text-foreground hover:bg-[rgba(255,255,255,0.03)]"
-                      activeClassName="bg-[rgba(255,215,0,0.08)] border-l-[3px] border-l-primary text-foreground"
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-[hsl(43_4%_60%)] hover:text-[hsl(43_10%_89%)] hover:bg-[rgba(255,255,255,0.04)]"
+                      activeClassName="bg-[rgba(255,255,255,0.06)] border-l-[3px] border-l-primary text-foreground font-semibold"
                     >
                       <item.icon className="h-[18px] w-[18px] shrink-0" strokeWidth={1.5} />
                       {!collapsed && (
@@ -89,7 +89,7 @@ export function MentorSidebar() {
               {!collapsed && (
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-medium truncate">Marcos Costa</div>
-                  <div className="text-[11px] text-muted-foreground">Mentor</div>
+                  <div className="text-xs text-muted-foreground">Mentor</div>
                 </div>
               )}
             </div>
@@ -98,7 +98,7 @@ export function MentorSidebar() {
             <SidebarMenuButton asChild>
               <NavLink
                 to="/"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:bg-[rgba(255,255,255,0.03)] transition-all duration-200"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[hsl(43_4%_60%)] hover:text-[hsl(43_10%_89%)] hover:bg-[rgba(255,255,255,0.04)] transition-all duration-200"
                 activeClassName=""
               >
                 <GraduationCap className="h-[18px] w-[18px]" strokeWidth={1.5} />

@@ -507,7 +507,7 @@ const MentorCheckout = () => {
                   <input value={accentColor} onChange={e => setAccentColor(e.target.value)} className="glass rounded-lg px-2 py-1.5 text-[10px] font-mono w-20 bg-transparent focus:outline-none" />
                 </div>
                 <div className="flex gap-1 mt-2">
-                  {["#FFD700", "#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#FFD700"].map(c => (
+                  {["#FFD700", "#B8860B", "#22C55E", "#F59E0B", "#EF4444", "#3B82F6"].map(c => (
                     <button key={c} onClick={() => setAccentColor(c)} className={`w-5 h-5 rounded-full border-2 transition-all ${accentColor === c ? "border-white scale-110" : "border-transparent"}`} style={{ background: c }} />
                   ))}
                 </div>

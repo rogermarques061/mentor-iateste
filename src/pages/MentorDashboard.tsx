@@ -52,7 +52,7 @@ const MentorDashboard = () => {
     <div className="space-y-8 max-w-6xl">
       <div>
         <h1 className="font-display text-2xl mb-1">Visão Geral</h1>
-        <p className="text-sm text-muted-foreground">Painel executivo do seu negócio de IMPLOFY</p>
+        <p className="text-sm text-muted-foreground">Painel executivo do seu negócio</p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

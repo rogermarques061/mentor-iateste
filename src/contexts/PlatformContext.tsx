@@ -350,7 +350,7 @@ const SEED_TRANSACTIONS: Transaction[] = [
 ];
 
 const INITIAL_STATE: PlatformState = {
-  mentor: { id: "mentor_001", name: "Carlos Mendes", email: "carlos@IMPLOFY.com", avatar: null, platformName: "Academia Mentor Pro" },
+  mentor: { id: "mentor_001", name: "Carlos Mendes", email: "carlos@implofy.com", avatar: null, platformName: "IMPLOFY" },
   courses: SEED_COURSES,
   products: SEED_PRODUCTS,
   students: SEED_STUDENTS,
@@ -363,8 +363,8 @@ const INITIAL_STATE: PlatformState = {
   settings: {
     accentColor: "#FFD700",
     logo: null,
-    platformName: "Academia Mentor Pro",
-    welcomeMessage: "Bem-vindo ao seu programa de transformação",
+    platformName: "IMPLOFY",
+    welcomeMessage: "Bem-vindo à sua jornada de performance",
     gamificationEnabled: true,
   },
   currentRole: "mentor",

@@ -47,13 +47,13 @@ const PurchaseSuccess = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#050508] flex items-center justify-center p-4 md:p-8 relative overflow-hidden">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 md:p-8 relative overflow-hidden">
       {confetti && (
         <div className="fixed inset-0 pointer-events-none z-50">
           {Array.from({ length: 40 }).map((_, i) => (
             <div key={i} className="absolute w-2 h-2 rounded-full animate-bounce"
               style={{ left: `${Math.random() * 100}%`, top: `-${Math.random() * 20}%`,
-                background: ["#FFD700", "#F59E0B", "#34D399", "#60A5FA", "#FFD700"][i % 5],
+                background: ["#FFD700", "#B8860B", "#34D399", "#60A5FA", "#F59E0B"][i % 5],
                 animationDelay: `${Math.random() * 2}s`, animationDuration: `${2 + Math.random() * 3}s`, opacity: 1 - (i / 40) * 0.5 }} />
           ))}
         </div>

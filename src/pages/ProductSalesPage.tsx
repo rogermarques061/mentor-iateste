@@ -45,7 +45,7 @@ const ProductSalesPage = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#050508]">
+    <div className="min-h-screen bg-background">
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent" />

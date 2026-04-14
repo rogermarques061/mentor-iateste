@@ -690,7 +690,7 @@ const MentorCheckout = () => {
       </div>
 
       {/* RIGHT: Live Preview */}
-      <div className="flex-1 flex flex-col overflow-hidden bg-[#050508]">
+      <div className="flex-1 flex flex-col overflow-hidden bg-background">
         {/* Preview header */}
         <div className="flex items-center justify-between px-4 py-2 border-b border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
           <span className="text-[10px] text-muted-foreground">Preview em tempo real</span>

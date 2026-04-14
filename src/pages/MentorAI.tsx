@@ -130,7 +130,7 @@ const MentorAI = () => {
               <c.icon className="h-5 w-5 sm:h-6 sm:w-6 text-muted-foreground mb-2" strokeWidth={1.5} />
               <div className="text-[20px] sm:text-[28px] font-[800] tracking-tight">{c.value}</div>
               <div className="text-[12px] sm:text-[13px] font-semibold text-muted-foreground">{c.label}</div>
-              <button className="mt-2 text-[12px] sm:text-[13px] font-bold text-primary hover:underline flex items-center gap-1">{c.cta} <ChevronRight className="h-3.5 w-3.5" /></button>
+              <button onClick={() => toast.info(c.cta + " — funcionalidade em breve!")} className="mt-2 text-[12px] sm:text-[13px] font-bold text-primary hover:underline flex items-center gap-1">{c.cta} <ChevronRight className="h-3.5 w-3.5" /></button>
             </div>
           ))}
         </div>
@@ -162,13 +162,13 @@ const MentorAI = () => {
                   <p className="text-[13px] sm:text-[14px] font-medium text-muted-foreground leading-[1.6]">{a.desc}</p>
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <button className="px-3 sm:px-4 py-2 rounded-lg text-[12px] sm:text-[13px] font-bold bg-primary/20 text-primary hover:bg-primary/30 transition-all flex items-center gap-1">
+                  <button onClick={() => toast.success("Mensagem enviada para " + a.student)} className="px-3 sm:px-4 py-2 rounded-lg text-[12px] sm:text-[13px] font-bold bg-primary/20 text-primary hover:bg-primary/30 transition-all flex items-center gap-1">
                     <Mail className="h-4 w-4" /> <span className="hidden sm:inline">Enviar</span> mensagem
                   </button>
-                  <button className="p-2 rounded-lg hover:bg-success/10 text-muted-foreground hover:text-success transition-all" title="Marcar como resolvido">
+                  <button onClick={() => toast.success("Alerta de " + a.student + " marcado como resolvido")} className="p-2 rounded-lg hover:bg-success/10 text-muted-foreground hover:text-success transition-all" title="Marcar como resolvido">
                     <Check className="h-4 w-4" />
                   </button>
-                  <button className="p-2 rounded-lg hover:bg-[rgba(255,255,255,0.05)] text-muted-foreground transition-all" title="Ignorar por 7 dias">
+                  <button onClick={() => toast.info("Alerta ignorado por 7 dias")} className="p-2 rounded-lg hover:bg-[rgba(255,255,255,0.05)] text-muted-foreground transition-all" title="Ignorar por 7 dias">
                     <Clock className="h-4 w-4" />
                   </button>
                 </div>
@@ -203,13 +203,13 @@ const MentorAI = () => {
                     <p className="text-[13px] sm:text-[14px] font-medium text-muted-foreground italic leading-[1.7]">"{s.message}"</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-3 sm:px-4 py-2 text-[12px] sm:text-[13px] font-bold glow-primary transition-all">
+                    <button onClick={() => toast.success("Mensagem enviada para " + s.student)} className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-3 sm:px-4 py-2 text-[12px] sm:text-[13px] font-bold glow-primary transition-all">
                       Enviar esta mensagem
                     </button>
-                    <button className="glass rounded-lg px-3 sm:px-4 py-2 text-[12px] sm:text-[13px] font-bold hover:bg-[rgba(255,255,255,0.06)] transition-all">
+                    <button onClick={() => toast.info("Abrindo editor de mensagem...")} className="glass rounded-lg px-3 sm:px-4 py-2 text-[12px] sm:text-[13px] font-bold hover:bg-[rgba(255,255,255,0.06)] transition-all">
                       Editar antes
                     </button>
-                    <button className="text-[12px] sm:text-[13px] font-bold text-muted-foreground hover:text-foreground transition-all px-3">
+                    <button onClick={() => toast.info("Sugestão ignorada")} className="text-[12px] sm:text-[13px] font-bold text-muted-foreground hover:text-foreground transition-all px-3">
                       Ignorar
                     </button>
                   </div>
@@ -248,7 +248,7 @@ const MentorAI = () => {
                 </div>
               ))}
             </div>
-            <button className="w-full mt-3 glass rounded-lg py-2.5 text-[13px] font-bold text-destructive hover:bg-destructive/10 transition-all">
+            <button onClick={() => toast.success("Intervenção enviada para todos os alunos de alto risco")} className="w-full mt-3 glass rounded-lg py-2.5 text-[13px] font-bold text-destructive hover:bg-destructive/10 transition-all">
               Intervir em todos
             </button>
           </div>
@@ -273,7 +273,7 @@ const MentorAI = () => {
                 </div>
               ))}
             </div>
-            <button className="w-full mt-3 glass rounded-lg py-2.5 text-[13px] font-bold text-warning hover:bg-warning/10 transition-all">
+            <button onClick={() => toast.success("Mensagem enviada para o grupo de atenção necessária")} className="w-full mt-3 glass rounded-lg py-2.5 text-[13px] font-bold text-warning hover:bg-warning/10 transition-all">
               Enviar mensagem ao grupo
             </button>
           </div>
@@ -299,7 +299,7 @@ const MentorAI = () => {
                 </div>
               ))}
             </div>
-            <button className="w-full mt-3 glass rounded-lg py-2.5 text-[13px] font-bold text-success hover:bg-success/10 transition-all">
+            <button onClick={() => toast.info("Analisando oportunidades de upsell...")} className="w-full mt-3 glass rounded-lg py-2.5 text-[13px] font-bold text-success hover:bg-success/10 transition-all">
               Identificar oportunidades de upsell
             </button>
           </div>
@@ -322,7 +322,7 @@ const MentorAI = () => {
                 </div>
                 <p className="text-[13px] sm:text-[14px] font-medium text-muted-foreground">{u.suggestion}</p>
                 <div className="text-[13px] sm:text-[14px] font-bold"><strong>Produto:</strong> {u.product}</div>
-                <button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 py-2 text-[13px] font-bold glow-primary transition-all w-full sm:w-auto">
+                <button onClick={() => toast.success("Oferta personalizada enviada para " + u.name)} className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 py-2 text-[13px] font-bold glow-primary transition-all w-full sm:w-auto">
                   Fazer oferta personalizada
                 </button>
               </div>
@@ -404,7 +404,7 @@ const MentorAI = () => {
                   <div className="text-[12px] font-medium text-muted-foreground">{s.product}</div>
                 </div>
                 <span className="text-[14px] text-success font-[800]">{s.score}%</span>
-                <button className="px-3 py-1.5 rounded-lg text-[12px] sm:text-[13px] font-bold bg-primary/20 text-primary hover:bg-primary/30 transition-all hidden sm:block">Oferta</button>
+                <button onClick={() => toast.success("Oferta enviada para " + s.name)} className="px-3 py-1.5 rounded-lg text-[12px] sm:text-[13px] font-bold bg-primary/20 text-primary hover:bg-primary/30 transition-all hidden sm:block">Oferta</button>
               </div>
             ))}
           </div>

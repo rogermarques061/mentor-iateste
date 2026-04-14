@@ -54,9 +54,9 @@ export function CustomCursor() {
   return (
     <svg
       ref={svgRef}
-      width="22"
-      height="26"
-      viewBox="0 0 22 26"
+      width="14"
+      height="18"
+      viewBox="0 0 14 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="hidden lg:block"
@@ -70,26 +70,23 @@ export function CustomCursor() {
       }}
     >
       <defs>
-        <filter id="gold-glow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="2.5" result="blur1" />
-          <feGaussianBlur stdDeviation="5" result="blur2" />
+        <filter id="gold-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1.5" result="blur1" />
           <feMerge>
-            <feMergeNode in="blur2" />
             <feMergeNode in="blur1" />
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
         <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#FFF5A0" />
-          <stop offset="45%" stopColor="#FFD700" />
-          <stop offset="100%" stopColor="#B8860B" />
+          <stop offset="0%" stopColor="#FFE17A" />
+          <stop offset="100%" stopColor="#FFD700" />
         </linearGradient>
       </defs>
       <path
-        d="M2 1 L2 22 L8 16.5 L14 24 L17 22.5 L11 15 L20 15 Z"
+        d="M1 1 L1 14.5 L5 11 L8.5 16.5 L10.5 15.5 L7 10 L12.5 10 Z"
         fill="url(#gold-grad)"
-        stroke="rgba(0,0,0,0.35)"
-        strokeWidth="0.6"
+        stroke="rgba(0,0,0,0.3)"
+        strokeWidth="0.5"
         strokeLinejoin="round"
         filter="url(#gold-glow)"
       />

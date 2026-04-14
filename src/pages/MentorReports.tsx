@@ -145,7 +145,7 @@ const MentorReports = () => {
                     <span className="text-xs text-muted-foreground font-mono w-4">{i + 1}</span>
                     <span className="text-sm">{s.name}</span>
                   </div>
-                  <span className="font-mono text-xs text-success">{s.engagement}</span>
+                  <span className="text-xs font-[800] text-success">{s.engagement}</span>
                 </div>
               ))}
             </div>
@@ -154,7 +154,7 @@ const MentorReports = () => {
               {bottomStudents.map((s, i) => (
                 <div key={i} className="flex items-center justify-between py-2 border-b border-[rgba(255,255,255,0.04)] last:border-0">
                   <span className="text-sm">{s.name}</span>
-                  <span className="font-mono text-xs text-destructive">{s.engagement}</span>
+                  <span className="text-xs font-[800] text-destructive">{s.engagement}</span>
                 </div>
               ))}
             </div>
@@ -181,7 +181,7 @@ const MentorReports = () => {
                     <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
                       <div className={`h-full rounded-full ${isBottleneck ? 'bg-destructive' : 'bg-primary'}`} style={{ width: `${m.completion}%` }} />
                     </div>
-                    <span className={`font-mono text-xs w-10 text-right ${isBottleneck ? 'text-destructive font-medium' : ''}`}>{m.completion}%</span>
+                    <span className={`text-xs font-[800] w-10 text-right ${isBottleneck ? 'text-destructive font-medium' : ''}`}>{m.completion}%</span>
                     {isBottleneck && <span className="text-[9px] text-destructive">⚠ Gargalo</span>}
                   </div>
                 );
@@ -237,11 +237,11 @@ const MentorReports = () => {
           <div className="grid grid-cols-2 gap-4">
             <div className="glass rounded-2xl p-5">
               <div className="text-[11px] text-muted-foreground mb-1">Alunos que abandonaram (30d)</div>
-              <div className="font-mono text-2xl font-medium text-destructive">12</div>
+              <div className="text-2xl font-[800] text-destructive">12</div>
             </div>
             <div className="glass rounded-2xl p-5">
               <div className="text-[11px] text-muted-foreground mb-1">Taxa de retenção</div>
-              <div className="font-mono text-2xl font-medium text-success">91.6%</div>
+              <div className="text-2xl font-[800] text-success">91.6%</div>
               <div className="text-[10px] text-muted-foreground">Benchmark do setor: 85%</div>
             </div>
           </div>
@@ -282,7 +282,7 @@ const MentorReports = () => {
                     <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-mono font-medium ${i < 3 ? 'bg-primary/20 text-primary' : 'bg-muted text-muted-foreground'}`}>{i + 1}</span>
                     <span className="text-sm">{s.name}</span>
                   </div>
-                  <span className="font-mono text-xs text-primary font-medium">{s.xp.toLocaleString()} XP</span>
+                  <span className="text-xs font-[800] text-primary">{s.xp.toLocaleString()} XP</span>
                 </div>
               ))}
             </div>

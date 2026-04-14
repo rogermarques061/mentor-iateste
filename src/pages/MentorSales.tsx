@@ -68,9 +68,9 @@ const MentorSales = () => {
           <div key={i} className="glass rounded-xl p-4 card-hover animate-fade-slide-in" style={{ animationDelay: `${i * 60}ms` }}>
             <div className="flex items-center justify-between mb-3">
               <kpi.icon className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
-              <span className={`text-[10px] font-mono font-medium ${kpi.up ? "text-success" : "text-destructive"}`}>{kpi.change}</span>
+              <span className={`text-[10px] font-[800] ${kpi.up ? "text-success" : "text-destructive"}`}>{kpi.change}</span>
             </div>
-            <div className="font-mono text-xl font-medium">{kpi.value}</div>
+            <div className="text-xl font-[800] tracking-tight">{kpi.value}</div>
             <div className="text-[11px] text-muted-foreground mt-0.5">{kpi.label}</div>
           </div>
         ))}
@@ -85,7 +85,7 @@ const MentorSales = () => {
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs">{step.label}</span>
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-medium">{step.value.toLocaleString('pt-BR')}</span>
+                  <span className="font-[800] text-xs">{step.value.toLocaleString('pt-BR')}</span>
                   {i > 0 && <span className="text-[10px] text-muted-foreground">({step.pct}%)</span>}
                 </div>
               </div>
@@ -142,10 +142,10 @@ const MentorSales = () => {
               {productSales.map((p, i) => (
                 <tr key={i} className="border-t border-border/30 hover:bg-accent/30 transition-colors">
                   <td className="px-6 py-3.5 font-medium">{p.name}</td>
-                  <td className="px-6 py-3.5 font-mono">{p.sales}</td>
-                  <td className="px-6 py-3.5 font-mono text-[#F59E0B] font-medium">R$ {p.revenue.toLocaleString('pt-BR')}</td>
-                  <td className="px-6 py-3.5 font-mono">R$ {p.ticket}</td>
-                  <td className="px-6 py-3.5 font-mono">{p.conversion}%</td>
+                  <td className="px-6 py-3.5 font-[800]">{p.sales}</td>
+                  <td className="px-6 py-3.5 font-[800] text-[#F59E0B]">R$ {p.revenue.toLocaleString('pt-BR')}</td>
+                  <td className="px-6 py-3.5 font-[800]">R$ {p.ticket}</td>
+                  <td className="px-6 py-3.5 font-[800]">{p.conversion}%</td>
                   <td className="px-6 py-3.5">{getTrendIcon(p.trend)}</td>
                 </tr>
               ))}
@@ -180,7 +180,7 @@ const MentorSales = () => {
                   <td className="px-6 py-3.5">
                     <span className="px-2 py-0.5 rounded-lg text-[10px] font-medium bg-warning/15 text-warning">{c.stage}</span>
                   </td>
-                  <td className="px-6 py-3.5 font-mono text-[#F59E0B]">R$ {c.value}</td>
+                  <td className="px-6 py-3.5 font-[800] text-[#F59E0B]">R$ {c.value}</td>
                   <td className="px-6 py-3.5 text-muted-foreground text-xs">{c.time}</td>
                   <td className="px-6 py-3.5">
                     <button className="px-2.5 py-1.5 rounded-lg text-[11px] bg-primary/20 text-primary hover:bg-primary/30 transition-all flex items-center gap-1">

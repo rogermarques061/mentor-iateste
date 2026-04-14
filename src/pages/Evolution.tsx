@@ -61,7 +61,7 @@ const Evolution = () => {
                 <stat.icon className="h-4 w-4 text-primary" strokeWidth={1.5} />
               </div>
             </div>
-            <p className="font-mono text-xl sm:text-2xl font-semibold">{stat.value}</p>
+            <p className="text-xl sm:text-2xl font-[800] tracking-tight">{stat.value}</p>
             <p className="text-xs text-muted-foreground mt-0.5">{stat.label}</p>
             <p className="text-[10px] text-primary mt-1">{stat.sublabel}</p>
           </div>

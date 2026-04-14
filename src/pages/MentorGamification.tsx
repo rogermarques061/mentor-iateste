@@ -75,7 +75,7 @@ const MentorGamification = () => {
           {overviewCards.map((c, i) => (
             <div key={i} className="glass rounded-2xl p-5 card-hover animate-fade-slide-in" style={{ animationDelay: `${i * 60}ms` }}>
               <c.icon className="h-5 w-5 text-primary mb-3" strokeWidth={1.5} />
-              <div className="font-mono text-lg font-medium">{c.value}</div>
+              <div className="text-lg font-[800] tracking-tight">{c.value}</div>
               <div className="text-[11px] text-muted-foreground mt-0.5">{c.label}</div>
             </div>
           ))}
@@ -144,7 +144,7 @@ const MentorGamification = () => {
                   <tr key={i} className="border-t border-[rgba(255,255,255,0.04)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
                     <td className="px-5 py-3 font-mono text-xs text-muted-foreground">{l.num}</td>
                     <td className="px-5 py-3 font-medium">{l.name}</td>
-                    <td className="px-5 py-3 font-mono text-xs">{l.xp.toLocaleString()} XP</td>
+                    <td className="px-5 py-3 text-xs font-[800]">{l.xp.toLocaleString()} XP</td>
                     <td className="px-5 py-3">{l.icon}</td>
                     <td className="px-5 py-3">
                       <div className="flex gap-1">

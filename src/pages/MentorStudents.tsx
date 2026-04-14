@@ -115,7 +115,7 @@ const MentorStudents = () => {
               <div className="grid grid-cols-3 gap-3 text-center">
                 <div>
                   <div className="text-[12px] font-semibold text-muted-foreground">Engajamento</div>
-                  <div className={`font-mono text-[15px] font-[800] ${getEngagementColor(s.engagement.score)}`}>{s.engagement.score}</div>
+                  <div className={`text-[15px] font-[800] ${getEngagementColor(s.engagement.score)}`}>{s.engagement.score}</div>
                 </div>
                 <div>
                   <div className="text-[12px] font-semibold text-muted-foreground">Risco</div>
@@ -125,7 +125,7 @@ const MentorStudents = () => {
                 </div>
                 <div>
                   <div className="text-[12px] font-semibold text-muted-foreground">Progresso</div>
-                  <div className="font-mono text-[14px] font-bold">{prog}%</div>
+                  <div className="text-[14px] font-[800]">{prog}%</div>
                 </div>
               </div>
               <div className="flex items-center justify-between">
@@ -191,7 +191,7 @@ const MentorStudents = () => {
                         <div className="w-12 h-[6px] rounded-[3px] bg-muted overflow-hidden">
                           <div className={`h-full rounded-[3px] ${getEngagementBg(s.engagement.score)}`} style={{ width: `${s.engagement.score}%` }} />
                         </div>
-                        <span className={`font-mono text-[15px] font-[800] ${getEngagementColor(s.engagement.score)}`}>{s.engagement.score}</span>
+                        <span className={`text-[15px] font-[800] ${getEngagementColor(s.engagement.score)}`}>{s.engagement.score}</span>
                       </div>
                     </td>
                     <td className="px-5 py-4">
@@ -204,7 +204,7 @@ const MentorStudents = () => {
                         <div className="w-14 h-[6px] rounded-[3px] bg-muted overflow-hidden">
                           <div className="h-full rounded-[3px] bg-primary" style={{ width: `${prog}%` }} />
                         </div>
-                        <span className="font-mono text-[14px] font-bold">{prog}%</span>
+                        <span className="text-[14px] font-[800]">{prog}%</span>
                       </div>
                     </td>
                     <td className="px-5 py-4 text-[13px] font-semibold text-muted-foreground hidden lg:table-cell">{timeAgo(s.engagement.lastAccessAt)}</td>

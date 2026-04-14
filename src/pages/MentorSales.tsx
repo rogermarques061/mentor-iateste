@@ -94,7 +94,7 @@ const MentorSales = () => {
                   className="h-full rounded-xl transition-all duration-700 ease-out"
                   style={{
                     width: `${(step.value / funnelSteps[0].value) * 100}%`,
-                    background: `linear-gradient(90deg, hsl(51, 100%, 50%) 0%, hsl(263, 70%, ${58 - i * 6}%) 100%)`,
+                    background: `linear-gradient(90deg, hsl(51, 100%, 50%) 0%, hsl(43, 74%, ${49 - i * 5}%) 100%)`,
                     opacity: 1 - i * 0.12,
                   }}
                 />

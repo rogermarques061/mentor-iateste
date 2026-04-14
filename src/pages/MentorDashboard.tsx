@@ -216,7 +216,7 @@ const MentorDashboard = () => {
         </div>
 
         {/* Chart panel — height matches 4 cards */}
-        <div className="glass rounded-xl p-6 flex flex-col" style={{ height: 'calc((72px * 4) + (8px * 3))' }}>
+        <div className="glass rounded-xl p-6 flex flex-col py-[24px] my-0" style={{ height: 'calc((72px * 4) + (8px * 3))' }}>
           <div className="flex items-start justify-between mb-5">
             <div>
               <h3 className="text-base font-semibold" style={{ color: '#FFFFFF' }}>Transações por dia</h3>

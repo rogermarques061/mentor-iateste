@@ -285,12 +285,12 @@ const SEED_STUDENTS: Student[] = [
 
 const SEED_PRODUCTS: CheckoutProduct[] = [
   {
-    id: "prod_001", slug: "mentoria-patron", name: "Mentoria PATRON",
+    id: "prod_001", slug: "IMPLOFY-patron", name: "Mentoria PATRON",
     description: "O programa definitivo para vendedores de alto ticket",
     headline: "Transforme sua carreira em 90 dias",
     subheadline: "O método comprovado que já ajudou +500 profissionais a triplicar seus resultados",
     ctaText: "Quero começar agora", price: 997, originalPrice: 1497, guarantee: 7,
-    accentColor: "#8B5CF6", status: "published", type: "Mentoria",
+    accentColor: "#FFD700", status: "published", type: "Mentoria",
     linkedCourseId: "course_001", paymentType: "single", installments: true, maxInstallments: 12,
     thumbnail: null,
     testimonials: [
@@ -314,7 +314,7 @@ const SEED_PRODUCTS: CheckoutProduct[] = [
     headline: "Descubra quem você realmente é",
     subheadline: "Um programa de autoconhecimento e transformação pessoal",
     ctaText: "Quero me transformar", price: 199, originalPrice: 397, guarantee: 15,
-    accentColor: "#8B5CF6", status: "published", type: "Curso Online",
+    accentColor: "#FFD700", status: "published", type: "Curso Online",
     linkedCourseId: "course_002", paymentType: "single", installments: true, maxInstallments: 6,
     thumbnail: null,
     testimonials: [
@@ -330,9 +330,9 @@ const SEED_PRODUCTS: CheckoutProduct[] = [
     id: "prod_003", slug: "imersao-presencial-sp", name: "Imersão Presencial SP",
     description: "3 dias de imersão intensiva em São Paulo",
     headline: "3 dias que vão mudar sua vida",
-    subheadline: "Imersão presencial com mentorias ao vivo",
+    subheadline: "Imersão presencial com IMPLOFYs ao vivo",
     ctaText: "Garantir minha vaga", price: 1990, originalPrice: 2990, guarantee: 7,
-    accentColor: "#8B5CF6", status: "draft", type: "Imersão",
+    accentColor: "#FFD700", status: "draft", type: "Imersão",
     linkedCourseId: null, paymentType: "single", installments: true, maxInstallments: 12,
     thumbnail: null, testimonials: [], faq: [], benefits: [],
     sections: { paraQuem: true, beneficios: true, conteudo: false, mentor: true, garantia: true, faq: true, depoimentos: false },
@@ -350,7 +350,7 @@ const SEED_TRANSACTIONS: Transaction[] = [
 ];
 
 const INITIAL_STATE: PlatformState = {
-  mentor: { id: "mentor_001", name: "Carlos Mendes", email: "carlos@mentoria.com", avatar: null, platformName: "Academia Mentor Pro" },
+  mentor: { id: "mentor_001", name: "Carlos Mendes", email: "carlos@IMPLOFY.com", avatar: null, platformName: "Academia Mentor Pro" },
   courses: SEED_COURSES,
   products: SEED_PRODUCTS,
   students: SEED_STUDENTS,
@@ -361,7 +361,7 @@ const INITIAL_STATE: PlatformState = {
     { id: "n_003", type: "badge", title: "🏆 Badge desbloqueada", message: "Ana Silva conquistou: Módulo Completo", timestamp: hoursAgo(3), read: true },
   ],
   settings: {
-    accentColor: "#8B5CF6",
+    accentColor: "#FFD700",
     logo: null,
     platformName: "Academia Mentor Pro",
     welcomeMessage: "Bem-vindo ao seu programa de transformação",
@@ -419,7 +419,7 @@ export const PlatformProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       price: data.price || 0,
       originalPrice: data.originalPrice || 0,
       guarantee: data.guarantee || 7,
-      accentColor: data.accentColor || "#8B5CF6",
+      accentColor: data.accentColor || "#FFD700",
       status: "draft",
       type: data.type || "Curso Online",
       linkedCourseId: data.linkedCourseId || null,

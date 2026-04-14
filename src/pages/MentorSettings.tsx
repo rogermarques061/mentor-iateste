@@ -24,7 +24,7 @@ const MentorSettings = () => {
     <div className="space-y-6 max-w-5xl">
       <div>
         <h1 className="font-display text-2xl mb-1">Configurações</h1>
-        <p className="text-sm text-muted-foreground">Personalize sua plataforma de mentoria</p>
+        <p className="text-sm text-muted-foreground">Personalize sua plataforma de IMPLOFY</p>
       </div>
 
       <div className="flex gap-1 glass rounded-xl p-1">
@@ -47,13 +47,13 @@ const MentorSettings = () => {
                 <label className="text-xs text-muted-foreground mb-2 block">Cor de destaque principal</label>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-primary border border-[rgba(255,255,255,0.1)] cursor-pointer glow-primary" />
-                  <input type="text" defaultValue="#8B5CF6" className="glass rounded-xl px-4 py-2.5 text-sm font-mono bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 w-32" />
+                  <input type="text" defaultValue="#FFD700" className="glass rounded-xl px-4 py-2.5 text-sm font-mono bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 w-32" />
                 </div>
               </div>
               <div>
                 <label className="text-xs text-muted-foreground mb-2 block">Cor secundária</label>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[hsl(280,80%,70%)] border border-[rgba(255,255,255,0.1)] cursor-pointer" />
+                  <div className="w-10 h-10 rounded-xl bg-[hsl(43,74%,49%)] border border-[rgba(255,255,255,0.1)] cursor-pointer" />
                   <input type="text" defaultValue="#C084FC" className="glass rounded-xl px-4 py-2.5 text-sm font-mono bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 w-32" />
                 </div>
               </div>
@@ -83,7 +83,7 @@ const MentorSettings = () => {
               </div>
               <div>
                 <label className="text-xs text-muted-foreground mb-2 block">Nome da plataforma</label>
-                <input type="text" defaultValue="MentorIA" className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50" />
+                <input type="text" defaultValue="IMPLOFY" className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50" />
                 <label className="text-xs text-muted-foreground mb-2 block mt-4">Favicon</label>
                 <div className="glass rounded-xl p-3 border-dashed border-2 border-[rgba(255,255,255,0.1)] flex items-center gap-2 cursor-pointer hover:border-primary/30 transition-all">
                   <Upload className="h-4 w-4 text-muted-foreground/40" strokeWidth={1.5} />
@@ -164,13 +164,13 @@ const MentorSettings = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs text-muted-foreground mb-1.5 block">Nome exibido no checkout</label>
-                <input type="text" defaultValue="MentorIA" className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50" />
+                <input type="text" defaultValue="IMPLOFY" className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50" />
               </div>
               <div>
                 <label className="text-xs text-muted-foreground mb-1.5 block">Cor de destaque</label>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-primary border border-[rgba(255,255,255,0.1)] cursor-pointer glow-primary" />
-                  <input type="text" defaultValue="#8B5CF6" className="glass rounded-xl px-4 py-2.5 text-sm font-mono bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 w-32" />
+                  <input type="text" defaultValue="#FFD700" className="glass rounded-xl px-4 py-2.5 text-sm font-mono bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 w-32" />
                 </div>
               </div>
             </div>
@@ -287,7 +287,7 @@ const MentorSettings = () => {
               </div>
               <div>
                 <label className="text-xs text-muted-foreground mb-1.5 block">E-mail</label>
-                <input type="email" defaultValue="marcos@mentoria.com" className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50" />
+                <input type="email" defaultValue="marcos@IMPLOFY.com" className="w-full glass rounded-xl px-4 py-2.5 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50" />
               </div>
             </div>
             <div>

@@ -9,7 +9,7 @@ interface CheckoutPreviewProps {
 }
 
 const CheckoutPreview = ({ product, courses, previewMode }: CheckoutPreviewProps) => {
-  const accent = product.accentColor || "#8B5CF6";
+  const accent = product.accentColor || "#FFD700";
   const testimonials = product.testimonials || [];
   const isMobile = previewMode === "mobile";
 
@@ -37,7 +37,7 @@ const CheckoutPreview = ({ product, courses, previewMode }: CheckoutPreviewProps
               <div className="w-5 h-5 rounded flex items-center justify-center text-white text-[8px] font-bold" style={{ background: accent }}>
                 {(product.name || "M")[0]}
               </div>
-              <span className="text-[10px] font-semibold text-gray-600">MentorIA</span>
+              <span className="text-[10px] font-semibold text-gray-600">IMPLOFY</span>
             </div>
 
             {/* Product card */}

@@ -5,7 +5,7 @@ const products = [
   {
     id: "1", name: "Mentoria PATRON", subtitle: "Mentoria de alto ticket para vendedores", type: "Mentoria", status: "Publicado",
     price: 997, originalPrice: 1497, sales: 34, revenue: 33966, conversion: 8.2,
-    thumbnail: null, slug: "mentoria-patron",
+    thumbnail: null, slug: "IMPLOFY-patron",
   },
   {
     id: "2", name: "Curso Identidade Restaurada", subtitle: "Descubra seu potencial interior", type: "Curso", status: "Publicado",
@@ -13,7 +13,7 @@ const products = [
     thumbnail: null, slug: "identidade-restaurada",
   },
   {
-    id: "3", name: "Bundle Premium Completo", subtitle: "Todos os cursos + mentoria", type: "Bundle", status: "Rascunho",
+    id: "3", name: "Bundle Premium Completo", subtitle: "Todos os cursos + IMPLOFY", type: "Bundle", status: "Rascunho",
     price: 1990, originalPrice: 2990, sales: 12, revenue: 23880, conversion: 3.4,
     thumbnail: null, slug: "bundle-premium",
   },
@@ -40,7 +40,7 @@ function getStatusBadge(status: string) {
 function getTypePill(type: string) {
   const colors: Record<string, string> = {
     Curso: "bg-primary/15 text-primary",
-    Mentoria: "bg-[rgba(139,92,246,0.2)] text-[#A78BFA]",
+    Mentoria: "bg-[rgba(255,215,0,0.2)] text-[#FFD700]",
     Imersão: "bg-info/15 text-info",
     Assinatura: "bg-success/15 text-success",
     Bundle: "bg-warning/15 text-warning",
@@ -393,7 +393,7 @@ const MentorProducts = () => {
                 <h3 className="font-semibold text-sm">Link de venda</h3>
                 <div className="flex items-center gap-3">
                   <div className="flex-1 glass rounded-xl px-4 py-2.5 text-sm font-mono text-muted-foreground">
-                    plataforma.com/p/mentoria-patron
+                    plataforma.com/p/IMPLOFY-patron
                   </div>
                   <button className="glass rounded-xl p-2.5 hover:bg-[rgba(255,255,255,0.06)] transition-all" title="Copiar">
                     <Copy className="h-4 w-4" />
@@ -444,7 +444,7 @@ const MentorProducts = () => {
         {filteredProducts.map((product, i) => (
           <div key={product.id} className="glass rounded-2xl overflow-hidden card-hover animate-fade-slide-in" style={{ animationDelay: `${i * 60}ms` }}>
             {/* Thumbnail */}
-            <div className="h-36 bg-gradient-to-br from-primary/20 via-[rgba(139,92,246,0.1)] to-transparent flex items-center justify-center">
+            <div className="h-36 bg-gradient-to-br from-primary/20 via-[rgba(255,215,0,0.1)] to-transparent flex items-center justify-center">
               <Package className="h-10 w-10 text-primary/30" strokeWidth={1} />
             </div>
 

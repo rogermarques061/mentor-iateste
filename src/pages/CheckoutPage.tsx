@@ -84,7 +84,7 @@ const CheckoutPage = () => {
           <Award className="h-12 w-12 text-gray-300 mx-auto" />
           <h1 className="text-2xl font-bold text-gray-800">Checkout não encontrado</h1>
           <p className="text-sm text-gray-500">Este checkout não existe ou foi removido.</p>
-          <button onClick={() => navigate("/")} className="bg-[#8B5CF6] text-white rounded-lg px-6 py-3 text-sm font-medium hover:bg-[#7C3AED] transition-all">
+          <button onClick={() => navigate("/")} className="bg-[#FFD700] text-white rounded-lg px-6 py-3 text-sm font-medium hover:bg-[#B8860B] transition-all">
             Voltar ao início
           </button>
         </div>
@@ -145,7 +145,7 @@ const CheckoutPage = () => {
       })
     : [{ n: 1, value: total, label: `1x de ${formatCurrency(total)}` }];
 
-  const accentColor = product.accentColor || "#8B5CF6";
+  const accentColor = product.accentColor || "#FFD700";
 
   const reviews = product.testimonials?.slice(0, 3) || [
     { name: "Ana Costa", rating: 5, text: "Transformou completamente minha forma de vender." },
@@ -162,7 +162,7 @@ const CheckoutPage = () => {
       <div className="relative">
         <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
           className={`w-full rounded-lg px-4 py-3 text-sm bg-white border transition-all duration-200 focus:outline-none focus:ring-0 text-gray-900 placeholder:text-gray-400 ${mono ? "font-mono" : ""} ${
-            valid === true ? "border-emerald-400" : valid === false ? "border-red-400" : "border-gray-200 focus:border-[#8B5CF6] focus:shadow-[0_0_0_3px_rgba(139,92,246,0.1)]"
+            valid === true ? "border-emerald-400" : valid === false ? "border-red-400" : "border-gray-200 focus:border-[#FFD700] focus:shadow-[0_0_0_3px_rgba(255,215,0,0.1)]"
           }`}
         />
         {valid === true && <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-emerald-500" />}
@@ -192,7 +192,7 @@ const CheckoutPage = () => {
               <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold" style={{ background: accentColor }}>
                 {(state.settings?.platformName || "M")[0]}
               </div>
-              <span className="text-sm font-semibold text-gray-700">{state.settings?.platformName || "MentorIA"}</span>
+              <span className="text-sm font-semibold text-gray-700">{state.settings?.platformName || "IMPLOFY"}</span>
             </div>
 
             {/* Product card */}
@@ -230,7 +230,7 @@ const CheckoutPage = () => {
               <label className="text-xs font-medium text-gray-500 mb-2 block">Cupom de desconto</label>
               <div className="flex gap-2">
                 <input type="text" value={coupon} onChange={e => setCoupon(e.target.value)} placeholder="Código do cupom"
-                  className="flex-1 rounded-lg px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 focus:outline-none focus:border-[#8B5CF6] font-mono uppercase transition-all text-gray-900 placeholder:text-gray-400" />
+                  className="flex-1 rounded-lg px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 focus:outline-none focus:border-[#FFD700] font-mono uppercase transition-all text-gray-900 placeholder:text-gray-400" />
                 <button onClick={applyCoupon} disabled={couponLoading}
                   className="rounded-lg px-4 py-2.5 text-xs font-semibold transition-all text-white" style={{ background: accentColor }}>
                   {couponLoading ? "..." : "Aplicar"}
@@ -288,14 +288,14 @@ const CheckoutPage = () => {
               <div className="flex border-b border-gray-100">
                 <button onClick={() => setStep(1)}
                   className={`flex-1 flex items-center justify-center gap-2 py-4 text-sm font-semibold transition-all border-b-2 ${
-                    step === 1 ? "border-[#8B5CF6] text-[#8B5CF6]" : "border-transparent text-gray-400"
+                    step === 1 ? "border-[#FFD700] text-[#FFD700]" : "border-transparent text-gray-400"
                   }`}>
                   <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ background: step === 1 ? accentColor : "#d1d5db" }}>1</span>
                   IDENTIFICAÇÃO
                 </button>
                 <button onClick={() => personalValid && setStep(2)}
                   className={`flex-1 flex items-center justify-center gap-2 py-4 text-sm font-semibold transition-all border-b-2 ${
-                    step === 2 ? "border-[#8B5CF6] text-[#8B5CF6]" : "border-transparent text-gray-400"
+                    step === 2 ? "border-[#FFD700] text-[#FFD700]" : "border-transparent text-gray-400"
                   }`}>
                   <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ background: step === 2 ? accentColor : "#d1d5db" }}>2</span>
                   PAGAMENTO
@@ -351,7 +351,7 @@ const CheckoutPage = () => {
                         <button key={m.id} onClick={() => setPaymentMethod(m.id)}
                           className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium border transition-all ${
                             paymentMethod === m.id
-                              ? "border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#8B5CF6]"
+                              ? "border-[#FFD700] bg-[#FFD700]/5 text-[#FFD700]"
                               : "border-gray-200 text-gray-500 hover:border-gray-300"
                           }`}>
                           <m.icon className="h-4 w-4" strokeWidth={1.5} /> {m.label}
@@ -408,8 +408,8 @@ const CheckoutPage = () => {
                           <label className="text-[13px] text-gray-600 mb-1.5 block font-medium">Número do cartão</label>
                           <div className="relative">
                             <input type="text" value={cardNumber} onChange={e => setCardNumber(maskCard(e.target.value))} placeholder="0000 0000 0000 0000"
-                              className="w-full rounded-lg px-4 py-3 text-sm bg-white border border-gray-200 focus:outline-none focus:border-[#8B5CF6] focus:shadow-[0_0_0_3px_rgba(139,92,246,0.1)] font-mono transition-all text-gray-900 placeholder:text-gray-400" />
-                            {brand && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-[#8B5CF6]/10 text-[#8B5CF6]">{brand}</span>}
+                              className="w-full rounded-lg px-4 py-3 text-sm bg-white border border-gray-200 focus:outline-none focus:border-[#FFD700] focus:shadow-[0_0_0_3px_rgba(255,215,0,0.1)] font-mono transition-all text-gray-900 placeholder:text-gray-400" />
+                            {brand && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-[#FFD700]/10 text-[#FFD700]">{brand}</span>}
                           </div>
                         </div>
                         <InputField label="Nome no cartão" value={cardName} onChange={v => setCardName(v.toUpperCase())} placeholder="Como está no cartão" />
@@ -419,7 +419,7 @@ const CheckoutPage = () => {
                             <label className="text-[13px] text-gray-600 mb-1.5 block font-medium">CVV</label>
                             <div className="relative">
                               <input type={showCvv ? "text" : "password"} value={cardCvv} onChange={e => setCardCvv(e.target.value.replace(/\D/g, "").slice(0, 4))} placeholder="000"
-                                className="w-full rounded-lg px-4 py-3 text-sm bg-white border border-gray-200 focus:outline-none focus:border-[#8B5CF6] font-mono transition-all text-gray-900 placeholder:text-gray-400" />
+                                className="w-full rounded-lg px-4 py-3 text-sm bg-white border border-gray-200 focus:outline-none focus:border-[#FFD700] font-mono transition-all text-gray-900 placeholder:text-gray-400" />
                               <button onClick={() => setShowCvv(!showCvv)} className="absolute right-3 top-1/2 -translate-y-1/2">
                                 {showCvv ? <EyeOff className="h-4 w-4 text-gray-400" /> : <Eye className="h-4 w-4 text-gray-400" />}
                               </button>

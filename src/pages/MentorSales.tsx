@@ -94,7 +94,7 @@ const MentorSales = () => {
                   className="h-full rounded-xl transition-all duration-700 ease-out"
                   style={{
                     width: `${(step.value / funnelSteps[0].value) * 100}%`,
-                    background: `linear-gradient(90deg, hsl(263, 70%, 58%) 0%, hsl(263, 70%, ${58 - i * 6}%) 100%)`,
+                    background: `linear-gradient(90deg, hsl(51, 100%, 50%) 0%, hsl(263, 70%, ${58 - i * 6}%) 100%)`,
                     opacity: 1 - i * 0.12,
                   }}
                 />
@@ -113,7 +113,7 @@ const MentorSales = () => {
               <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'hsl(240, 8%, 55%)', fontSize: 11 }} />
               <YAxis axisLine={false} tickLine={false} tick={{ fill: 'hsl(240, 8%, 55%)', fontSize: 11 }} tickFormatter={v => `${(v/1000).toFixed(0)}K`} />
               <Tooltip contentStyle={tooltipStyle} />
-              <Bar dataKey="Mentoria PATRON" fill="hsl(263, 70%, 58%)" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="Mentoria PATRON" fill="hsl(51, 100%, 50%)" radius={[4, 4, 0, 0]} />
               <Bar dataKey="Curso Identidade" fill="hsl(210, 100%, 60%)" radius={[4, 4, 0, 0]} />
               <Bar dataKey="Bundle Premium" fill="hsl(38, 92%, 50%)" radius={[4, 4, 0, 0]} />
             </BarChart>

@@ -34,7 +34,7 @@ const riskOverTime = [
 
 const levelDistribution = [
   { name: "Iniciante", value: 35, color: "hsl(240,8%,55%)" },
-  { name: "Aprendiz", value: 28, color: "hsl(263,70%,58%)" },
+  { name: "Aprendiz", value: 28, color: "hsl(51,100%,50%)" },
   { name: "Praticante", value: 20, color: "hsl(210,100%,60%)" },
   { name: "Avançado", value: 12, color: "hsl(142,70%,45%)" },
   { name: "Expert", value: 4, color: "hsl(38,92%,50%)" },
@@ -111,14 +111,14 @@ const MentorReports = () => {
                 <AreaChart data={engagementOverTime}>
                   <defs>
                     <linearGradient id="engGrad2" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="hsl(263,70%,58%)" stopOpacity={0.3} />
-                      <stop offset="100%" stopColor="hsl(263,70%,58%)" stopOpacity={0} />
+                      <stop offset="0%" stopColor="hsl(51,100%,50%)" stopOpacity={0.3} />
+                      <stop offset="100%" stopColor="hsl(51,100%,50%)" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: 'hsl(240,8%,55%)', fontSize: 11 }} />
                   <YAxis axisLine={false} tickLine={false} tick={{ fill: 'hsl(240,8%,55%)', fontSize: 11 }} />
                   <Tooltip contentStyle={tooltipStyle} />
-                  <Area type="monotone" dataKey="value" stroke="hsl(263,70%,58%)" strokeWidth={2} fill="url(#engGrad2)" />
+                  <Area type="monotone" dataKey="value" stroke="hsl(51,100%,50%)" strokeWidth={2} fill="url(#engGrad2)" />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -131,7 +131,7 @@ const MentorReports = () => {
                   <XAxis dataKey="range" axisLine={false} tickLine={false} tick={{ fill: 'hsl(240,8%,55%)', fontSize: 11 }} />
                   <YAxis axisLine={false} tickLine={false} tick={{ fill: 'hsl(240,8%,55%)', fontSize: 11 }} />
                   <Tooltip contentStyle={tooltipStyle} />
-                  <Bar dataKey="count" fill="hsl(263,70%,58%)" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="count" fill="hsl(51,100%,50%)" radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

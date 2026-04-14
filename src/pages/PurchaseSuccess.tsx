@@ -53,7 +53,7 @@ const PurchaseSuccess = () => {
           {Array.from({ length: 40 }).map((_, i) => (
             <div key={i} className="absolute w-2 h-2 rounded-full animate-bounce"
               style={{ left: `${Math.random() * 100}%`, top: `-${Math.random() * 20}%`,
-                background: ["#8B5CF6", "#F59E0B", "#34D399", "#60A5FA", "#EC4899"][i % 5],
+                background: ["#FFD700", "#F59E0B", "#34D399", "#60A5FA", "#FFD700"][i % 5],
                 animationDelay: `${Math.random() * 2}s`, animationDuration: `${2 + Math.random() * 3}s`, opacity: 1 - (i / 40) * 0.5 }} />
           ))}
         </div>
@@ -80,7 +80,7 @@ const PurchaseSuccess = () => {
             ].map((row, i) => (
               <div key={i} className="flex justify-between text-sm">
                 <span className="text-[#9B9AA8]">{row.label}</span>
-                <span className={`${row.mono ? "font-mono" : ""} ${row.gold ? "text-[#F59E0B] font-medium" : ""} ${row.primary ? "text-[#8B5CF6] text-xs" : ""}`}>{row.value}</span>
+                <span className={`${row.mono ? "font-mono" : ""} ${row.gold ? "text-[#F59E0B] font-medium" : ""} ${row.primary ? "text-[#FFD700] text-xs" : ""}`}>{row.value}</span>
               </div>
             ))}
           </div>
@@ -91,7 +91,7 @@ const PurchaseSuccess = () => {
         </div>
 
         <button onClick={handleAccessCourse}
-          className="w-full bg-[#8B5CF6] hover:bg-[#8B5CF6]/90 text-white rounded-xl py-4 text-base font-semibold glow-primary transition-all flex items-center justify-center gap-2 animate-fade-slide-in active:scale-[0.98]"
+          className="w-full bg-[#FFD700] hover:bg-[#FFD700]/90 text-white rounded-xl py-4 text-base font-semibold glow-primary transition-all flex items-center justify-center gap-2 animate-fade-slide-in active:scale-[0.98]"
           style={{ animationDelay: "300ms" }}>
           Acessar meu curso agora <ExternalLink className="h-4 w-4" />
         </button>

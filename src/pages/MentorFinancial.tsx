@@ -116,7 +116,7 @@ const MentorFinancial = () => {
       <div className="glass rounded-[16px] overflow-hidden">
         <div className="p-5 sm:p-7 pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div><h3 className="font-bold text-[16px] sm:text-[18px]">Transações</h3><p className="text-[13px] font-semibold text-muted-foreground mt-0.5">Histórico de todas as vendas</p></div>
-          <button className="glass rounded-xl px-4 py-2 text-[13px] font-bold flex items-center gap-1.5 hover:bg-[rgba(255,255,255,0.06)] transition-all self-start"><Download className="h-4 w-4" /> CSV</button>
+          <button onClick={() => toast.success("Exportando transações em CSV...")} className="glass rounded-xl px-4 py-2 text-[13px] font-bold flex items-center gap-1.5 hover:bg-[rgba(255,255,255,0.06)] transition-all self-start"><Download className="h-4 w-4" /> CSV</button>
         </div>
         <div className="px-5 sm:px-7 pb-4 flex gap-2 flex-wrap">
           {["Todos", "Aprovado", "Pendente", "Reembolsado"].map(f => (
@@ -217,7 +217,7 @@ const MentorFinancial = () => {
                 <input type="text" placeholder="0,00" className="w-full glass rounded-xl pl-12 pr-4 py-3 text-[15px] font-medium bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono" />
               </div>
             </div>
-            <button className="w-full bg-[#F59E0B] hover:bg-[#F59E0B]/90 text-black rounded-xl py-3 text-[15px] font-bold transition-all">Confirmar saque</button>
+            <button onClick={() => { toast.success("Saque solicitado com sucesso!"); setShowWithdrawModal(false); }} className="w-full bg-[#F59E0B] hover:bg-[#F59E0B]/90 text-black rounded-xl py-3 text-[15px] font-bold transition-all">Confirmar saque</button>
           </div>
         </div>
       )}

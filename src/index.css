@@ -70,35 +70,38 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Montserrat", "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
   }
 
   h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
     color: hsl(var(--foreground));
   }
 
   h2 {
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-size: 20px;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     color: hsl(var(--foreground));
   }
 
   h3, h4 {
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: -0.01em;
     color: hsl(var(--foreground));
   }
 
   p, span, li {
-    line-height: 1.65;
+    line-height: 1.6;
+    font-weight: 500;
   }
 
   label {
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 600;
   }
 }
 

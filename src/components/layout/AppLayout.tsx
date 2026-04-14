@@ -20,11 +20,11 @@ export function AppLayout({ children }: AppLayoutProps) {
             <SidebarTrigger className="text-muted-foreground hover:text-foreground" />
             <div className="ml-auto flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                <span className="text-xs font-medium text-primary">JS</span>
+                <span className="text-xs font-bold text-primary">JS</span>
               </div>
             </div>
           </header>
-          <main className="flex-1 p-6 lg:p-8 overflow-auto">
+          <main className="flex-1 p-5 md:p-6 lg:p-10 xl:px-12 overflow-auto">
             {children}
           </main>
         </div>

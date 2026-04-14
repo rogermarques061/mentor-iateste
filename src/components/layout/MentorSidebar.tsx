@@ -36,10 +36,10 @@ export function MentorSidebar() {
         <div className="px-4 mb-8">
           {!collapsed && (
             <div>
-              <h2 className="font-display text-lg font-bold tracking-tight">
+              <h2 className="text-[20px] font-[800] tracking-[0.05em] leading-none">
                 <span className="text-foreground">IMPLOF</span><span style={{ color: '#FFD700' }}>Y</span>
               </h2>
-              <span className="text-xs text-muted-foreground">Painel de Performance</span>
+              <span className="text-[13px] font-semibold text-muted-foreground mt-1 block">Painel de Performance</span>
             </div>
           )}
           {collapsed && (
@@ -51,22 +51,22 @@ export function MentorSidebar() {
 
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-1">
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
                       end={item.url === "/mentor"}
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200 text-muted-foreground hover:text-foreground hover:bg-[rgba(255,255,255,0.03)]"
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl text-[15px] font-semibold transition-all duration-200 text-muted-foreground hover:text-foreground hover:bg-[rgba(255,255,255,0.03)]"
                       activeClassName="bg-[rgba(255,215,0,0.08)] border-l-[3px] border-l-primary text-foreground"
                     >
-                      <item.icon className="h-[18px] w-[18px] shrink-0" strokeWidth={1.5} />
+                      <item.icon className="h-5 w-5 shrink-0" strokeWidth={1.5} />
                       {!collapsed && (
                         <span className="flex-1">{item.title}</span>
                       )}
                       {!collapsed && item.badge && (
-                        <span className="ml-auto min-w-5 h-5 flex items-center justify-center rounded-full bg-destructive text-[10px] font-mono font-medium text-destructive-foreground animate-fade-slide-in">
+                        <span className="ml-auto min-w-5 h-5 flex items-center justify-center rounded-full bg-destructive text-[11px] font-mono font-bold text-destructive-foreground animate-fade-slide-in">
                           {item.badge}
                         </span>
                       )}
@@ -83,13 +83,13 @@ export function MentorSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <div className={`px-3 py-3 ${!collapsed ? 'flex items-center gap-3' : 'flex flex-col items-center gap-2'}`}>
-              <div className="w-9 h-9 rounded-full bg-primary/15 flex items-center justify-center text-xs font-medium text-primary shrink-0">
+              <div className="w-9 h-9 rounded-full bg-primary/15 flex items-center justify-center text-xs font-bold text-primary shrink-0">
                 MC
               </div>
               {!collapsed && (
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium truncate">Marcos Costa</div>
-                  <div className="text-[11px] text-muted-foreground">Mentor</div>
+                  <div className="text-[14px] font-bold truncate">Marcos Costa</div>
+                  <div className="text-[12px] font-semibold text-muted-foreground">Mentor</div>
                 </div>
               )}
             </div>
@@ -98,10 +98,10 @@ export function MentorSidebar() {
             <SidebarMenuButton asChild>
               <NavLink
                 to="/"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:bg-[rgba(255,255,255,0.03)] transition-all duration-200"
+                className="flex items-center gap-3 px-4 py-3 rounded-xl text-[15px] font-semibold text-muted-foreground hover:bg-[rgba(255,255,255,0.03)] transition-all duration-200"
                 activeClassName=""
               >
-                <GraduationCap className="h-[18px] w-[18px]" strokeWidth={1.5} />
+                <GraduationCap className="h-5 w-5" strokeWidth={1.5} />
                 {!collapsed && <span>Área do Aluno</span>}
               </NavLink>
             </SidebarMenuButton>

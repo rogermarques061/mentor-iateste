@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { ShoppingCart, TrendingUp, TrendingDown, DollarSign, Users, BarChart3, ChevronRight, Mail, Eye, ArrowRight, CreditCard, Smartphone, FileText } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 
@@ -183,7 +184,7 @@ const MentorSales = () => {
                   <td className="px-6 py-3.5 font-[800] text-[#F59E0B]">R$ {c.value}</td>
                   <td className="px-6 py-3.5 text-muted-foreground text-xs">{c.time}</td>
                   <td className="px-6 py-3.5">
-                    <button className="px-2.5 py-1.5 rounded-lg text-[11px] bg-primary/20 text-primary hover:bg-primary/30 transition-all flex items-center gap-1">
+                    <button onClick={() => toast.success("E-mail de recuperação enviado para " + c.email)} className="px-2.5 py-1.5 rounded-lg text-[11px] bg-primary/20 text-primary hover:bg-primary/30 transition-all flex items-center gap-1">
                       <Mail className="h-3 w-3" /> Recuperar
                     </button>
                   </td>

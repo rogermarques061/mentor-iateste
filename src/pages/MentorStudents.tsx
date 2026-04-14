@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { Search, Download, UserPlus, TrendingUp, TrendingDown, Minus, MoreHorizontal, Mail, Calendar, StickyNote, Trash2, History, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePlatform, timeAgo } from "@/contexts/PlatformContext";
@@ -60,10 +61,10 @@ const MentorStudents = () => {
           </p>
         </div>
         <div className="flex gap-2 sm:gap-3">
-          <button className="glass rounded-[10px] px-3 sm:px-5 py-2.5 text-[13px] sm:text-[14px] font-bold flex items-center gap-2 hover:bg-[rgba(255,255,255,0.06)] transition-all">
+          <button onClick={() => toast.success("Exportando CSV dos alunos...")} className="glass rounded-[10px] px-3 sm:px-5 py-2.5 text-[13px] sm:text-[14px] font-bold flex items-center gap-2 hover:bg-[rgba(255,255,255,0.06)] transition-all">
             <Download className="h-4 w-4" strokeWidth={1.5} /> <span className="hidden sm:inline">Exportar</span> CSV
           </button>
-          <button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-[10px] px-3 sm:px-5 py-2.5 text-[13px] sm:text-[14px] font-bold flex items-center gap-2 glow-primary transition-all">
+          <button onClick={() => toast.info("Funcionalidade de convite em breve!")} className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-[10px] px-3 sm:px-5 py-2.5 text-[13px] sm:text-[14px] font-bold flex items-center gap-2 glow-primary transition-all">
             <UserPlus className="h-4 w-4" strokeWidth={1.5} /> <span className="hidden sm:inline">Convidar</span> aluno
           </button>
         </div>
@@ -224,20 +225,20 @@ const MentorStudents = () => {
                           </button>
                           {openMenu === s.id && (
                             <div className="absolute right-0 top-full mt-1 w-52 glass rounded-xl p-2 z-50 shadow-xl animate-fade-slide-in">
-                              <button className="w-full text-left px-3 py-2.5 rounded-lg text-[13px] font-semibold hover:bg-[rgba(255,255,255,0.05)] flex items-center gap-2 transition-all">
+                              <button onClick={() => { toast.success("Mensagem enviada para " + s.name); setOpenMenu(null); }} className="w-full text-left px-3 py-2.5 rounded-lg text-[13px] font-semibold hover:bg-[rgba(255,255,255,0.05)] flex items-center gap-2 transition-all">
                                 <Mail className="h-4 w-4" strokeWidth={1.5} /> Enviar mensagem
                               </button>
-                              <button className="w-full text-left px-3 py-2.5 rounded-lg text-[13px] font-semibold hover:bg-[rgba(255,255,255,0.05)] flex items-center gap-2 transition-all">
+                              <button onClick={() => { toast.info("Check-in agendado para " + s.name); setOpenMenu(null); }} className="w-full text-left px-3 py-2.5 rounded-lg text-[13px] font-semibold hover:bg-[rgba(255,255,255,0.05)] flex items-center gap-2 transition-all">
                                 <Calendar className="h-4 w-4" strokeWidth={1.5} /> Agendar check-in
                               </button>
-                              <button className="w-full text-left px-3 py-2.5 rounded-lg text-[13px] font-semibold hover:bg-[rgba(255,255,255,0.05)] flex items-center gap-2 transition-all">
+                              <button onClick={() => { toast.success("Nota adicionada ao perfil de " + s.name); setOpenMenu(null); }} className="w-full text-left px-3 py-2.5 rounded-lg text-[13px] font-semibold hover:bg-[rgba(255,255,255,0.05)] flex items-center gap-2 transition-all">
                                 <StickyNote className="h-4 w-4" strokeWidth={1.5} /> Adicionar nota
                               </button>
-                              <button className="w-full text-left px-3 py-2.5 rounded-lg text-[13px] font-semibold hover:bg-[rgba(255,255,255,0.05)] flex items-center gap-2 transition-all">
+                              <button onClick={() => { toast.info("Abrindo histórico de " + s.name); setOpenMenu(null); }} className="w-full text-left px-3 py-2.5 rounded-lg text-[13px] font-semibold hover:bg-[rgba(255,255,255,0.05)] flex items-center gap-2 transition-all">
                                 <History className="h-4 w-4" strokeWidth={1.5} /> Ver histórico
                               </button>
                               <div className="border-t border-[rgba(255,255,255,0.06)] my-1" />
-                              <button className="w-full text-left px-3 py-2.5 rounded-lg text-[13px] font-semibold text-destructive hover:bg-destructive/10 flex items-center gap-2 transition-all">
+                              <button onClick={() => { toast.error(s.name + " removido do programa"); setOpenMenu(null); }} className="w-full text-left px-3 py-2.5 rounded-lg text-[13px] font-semibold text-destructive hover:bg-destructive/10 flex items-center gap-2 transition-all">
                                 <Trash2 className="h-4 w-4" strokeWidth={1.5} /> Remover do programa
                               </button>
                             </div>

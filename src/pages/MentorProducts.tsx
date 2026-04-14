@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { Plus, Package, Eye, Copy, Share2, MoreHorizontal, Edit, Archive, TrendingUp, ShoppingCart, DollarSign, Image, Video, FileText, ChevronRight, Check, X, Upload, GripVertical } from "lucide-react";
 
 const products = [
@@ -395,10 +396,10 @@ const MentorProducts = () => {
                   <div className="flex-1 glass rounded-xl px-4 py-2.5 text-sm font-mono text-muted-foreground">
                     plataforma.com/p/IMPLOFY-patron
                   </div>
-                  <button className="glass rounded-xl p-2.5 hover:bg-[rgba(255,255,255,0.06)] transition-all" title="Copiar">
+                  <button onClick={() => { navigator.clipboard.writeText("plataforma.com/p/IMPLOFY-patron"); toast.success("Link copiado!"); }} className="glass rounded-xl p-2.5 hover:bg-[rgba(255,255,255,0.06)] transition-all" title="Copiar">
                     <Copy className="h-4 w-4" />
                   </button>
-                  <button className="glass rounded-xl p-2.5 hover:bg-[rgba(255,255,255,0.06)] transition-all" title="Compartilhar">
+                  <button onClick={() => toast.info("Compartilhando link...")} className="glass rounded-xl p-2.5 hover:bg-[rgba(255,255,255,0.06)] transition-all" title="Compartilhar">
                     <Share2 className="h-4 w-4" />
                   </button>
                 </div>
@@ -406,7 +407,7 @@ const MentorProducts = () => {
 
               <div className="flex gap-3 justify-end">
                 <button onClick={() => setEditorStep(6)} className="glass rounded-xl px-5 py-2.5 text-sm hover:bg-[rgba(255,255,255,0.06)] transition-all">Voltar</button>
-                <button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-6 py-2.5 text-sm font-medium glow-primary transition-all">
+                <button onClick={() => toast.success("🚀 Produto publicado com sucesso!")} className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-6 py-2.5 text-sm font-medium glow-primary transition-all">
                   🚀 Publicar produto
                 </button>
               </div>
@@ -482,13 +483,13 @@ const MentorProducts = () => {
               </div>
 
               <div className="flex gap-2 pt-1">
-                <button className="flex-1 glass rounded-xl py-2 text-xs flex items-center justify-center gap-1.5 hover:bg-[rgba(255,255,255,0.06)] transition-all">
+                <button onClick={() => { setView("editor"); setEditorStep(1); }} className="flex-1 glass rounded-xl py-2 text-xs flex items-center justify-center gap-1.5 hover:bg-[rgba(255,255,255,0.06)] transition-all">
                   <Edit className="h-3 w-3" /> Editar
                 </button>
-                <button className="glass rounded-xl px-3 py-2 hover:bg-[rgba(255,255,255,0.06)] transition-all" title="Ver página">
+                <button onClick={() => toast.info("Abrindo página de vendas...")} className="glass rounded-xl px-3 py-2 hover:bg-[rgba(255,255,255,0.06)] transition-all" title="Ver página">
                   <Eye className="h-3.5 w-3.5" />
                 </button>
-                <button className="glass rounded-xl px-3 py-2 hover:bg-[rgba(255,255,255,0.06)] transition-all" title="Mais">
+                <button onClick={() => toast.info("Mais opções em breve!")} className="glass rounded-xl px-3 py-2 hover:bg-[rgba(255,255,255,0.06)] transition-all" title="Mais">
                   <MoreHorizontal className="h-3.5 w-3.5" />
                 </button>
               </div>

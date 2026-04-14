@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { ShoppingCart, TrendingUp, TrendingDown, DollarSign, Users, BarChart3, ChevronRight, Mail, Eye, ArrowRight, CreditCard, Smartphone, FileText } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 

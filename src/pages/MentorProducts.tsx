@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { Plus, Package, Eye, Copy, Share2, MoreHorizontal, Edit, Archive, TrendingUp, ShoppingCart, DollarSign, Image, Video, FileText, ChevronRight, Check, X, Upload, GripVertical } from "lucide-react";
 
 const products = [

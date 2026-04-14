@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { DollarSign, Clock, TrendingUp, ShoppingCart, ArrowUpRight, Download, CreditCard, Smartphone, FileText, X } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { usePlatform, formatCurrency, daysBetween } from "@/contexts/PlatformContext";

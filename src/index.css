@@ -237,7 +237,7 @@
 .orb {
   position: absolute;
   border-radius: 50%;
-  opacity: 0.06;
+  opacity: 0.09;
   animation: float-orb linear infinite;
   will-change: transform;
 }

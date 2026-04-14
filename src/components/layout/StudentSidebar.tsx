@@ -31,11 +31,13 @@ export function StudentSidebar() {
       <SidebarContent className="pt-6">
         <div className="px-4 mb-8">
           {!collapsed && (
-            <h2 className="font-display text-lg text-gradient">MentorIA</h2>
+            <h2 className="font-display text-lg font-bold tracking-tight">
+              <span className="text-foreground">IMPLOF</span><span style={{ color: '#FFD700' }}>Y</span>
+            </h2>
           )}
           {collapsed && (
             <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-              <span className="text-sm font-display text-gradient">M</span>
+              <span className="text-sm font-bold" style={{ color: '#FFD700' }}>I</span>
             </div>
           )}
         </div>
@@ -49,8 +51,8 @@ export function StudentSidebar() {
                     <NavLink
                       to={item.url}
                       end={item.url === "/"}
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 hover:bg-accent/50"
-                      activeClassName="bg-accent text-accent-foreground"
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 text-muted-foreground hover:text-foreground hover:bg-[rgba(255,255,255,0.03)]"
+                      activeClassName="bg-[rgba(255,215,0,0.08)] text-primary"
                     >
                       <item.icon className="h-[18px] w-[18px]" strokeWidth={1.5} />
                       {!collapsed && <span>{item.title}</span>}
@@ -69,8 +71,8 @@ export function StudentSidebar() {
             <SidebarMenuButton asChild>
               <NavLink
                 to="/mentor"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:bg-accent/50 transition-all duration-200"
-                activeClassName="bg-accent text-accent-foreground"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:bg-[rgba(255,255,255,0.03)] transition-all duration-200"
+                activeClassName="bg-[rgba(255,215,0,0.08)] text-primary"
               >
                 <Settings className="h-[18px] w-[18px]" strokeWidth={1.5} />
                 {!collapsed && <span>Painel Mentor</span>}

@@ -59,7 +59,7 @@ const MentorCheckout = () => {
   const [paymentType, setPaymentType] = useState<"single" | "recurring">("single");
   const [installments, setInstallments] = useState(true);
   const [maxInstallments, setMaxInstallments] = useState(12);
-  const [accentColor, setAccentColor] = useState("#8B5CF6");
+  const [accentColor, setAccentColor] = useState("#FFD700");
   const [buttonStyle, setButtonStyle] = useState<"default" | "rounded" | "square">("default");
   const [headline, setHeadline] = useState("");
   const [subheadline, setSubheadline] = useState("");
@@ -313,7 +313,7 @@ const MentorCheckout = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {[
             { label: "Acessos", value: an.visits.toLocaleString(), icon: Eye, color: "#60A5FA" },
-            { label: "Checkouts iniciados", value: an.checkoutsStarted.toLocaleString(), icon: ShoppingCart, color: "#A78BFA" },
+            { label: "Checkouts iniciados", value: an.checkoutsStarted.toLocaleString(), icon: ShoppingCart, color: "#FFD700" },
             { label: "Vendas", value: String(an.sales), icon: Check, color: "#34D399" },
             { label: "Faturamento", value: formatCurrency(an.revenue), icon: TrendingUp, color: "#F59E0B" },
             { label: "Abandono", value: an.checkoutsStarted ? `${(100 - an.conversionRate).toFixed(1)}%` : "0%", icon: TrendingDown, color: "#F87171" },
@@ -338,7 +338,7 @@ const MentorCheckout = () => {
                 </div>
                 <div className="h-7 rounded-lg overflow-hidden glass">
                   <div className="h-full rounded-lg transition-all duration-700 ease-out"
-                    style={{ width: `${step.pct}%`, background: `linear-gradient(90deg, rgba(139,92,246,${0.15 + (step.pct / 100) * 0.4}), rgba(139,92,246,${0.1 + (step.pct / 100) * 0.25}))` }} />
+                    style={{ width: `${step.pct}%`, background: `linear-gradient(90deg, rgba(255,215,0,${0.15 + (step.pct / 100) * 0.4}), rgba(255,215,0,${0.1 + (step.pct / 100) * 0.25}))` }} />
                 </div>
               </div>
             ))}
@@ -351,7 +351,7 @@ const MentorCheckout = () => {
             <div className="space-y-3">
               {[
                 { method: "PIX", pct: 52, icon: Smartphone, color: "#34D399" },
-                { method: "Cartão", pct: 41, icon: CreditCard, color: "#8B5CF6" },
+                { method: "Cartão", pct: 41, icon: CreditCard, color: "#FFD700" },
                 { method: "Boleto", pct: 7, icon: FileText, color: "#FBBF24" },
               ].map((m, i) => (
                 <div key={i} className="flex items-center gap-3">
@@ -411,7 +411,7 @@ const MentorCheckout = () => {
         <nav className="px-3 py-2 space-y-0.5">
           {steps.map((s, i) => (
             <button key={i} onClick={() => setEditorStep(i)}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-all ${editorStep === i ? "bg-[rgba(139,92,246,0.12)] border-l-[3px] border-l-primary text-foreground" : "text-muted-foreground hover:text-foreground hover:bg-[rgba(255,255,255,0.03)]"}`}>
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-all ${editorStep === i ? "bg-[rgba(255,215,0,0.12)] border-l-[3px] border-l-primary text-foreground" : "text-muted-foreground hover:text-foreground hover:bg-[rgba(255,255,255,0.03)]"}`}>
               <s.icon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.5} />
               <span>{s.label}</span>
               {i < editorStep && <Check className="h-3 w-3 ml-auto text-[#34D399]" />}
@@ -507,7 +507,7 @@ const MentorCheckout = () => {
                   <input value={accentColor} onChange={e => setAccentColor(e.target.value)} className="glass rounded-lg px-2 py-1.5 text-[10px] font-mono w-20 bg-transparent focus:outline-none" />
                 </div>
                 <div className="flex gap-1 mt-2">
-                  {["#8B5CF6", "#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#EC4899"].map(c => (
+                  {["#FFD700", "#B8860B", "#22C55E", "#F59E0B", "#EF4444", "#3B82F6"].map(c => (
                     <button key={c} onClick={() => setAccentColor(c)} className={`w-5 h-5 rounded-full border-2 transition-all ${accentColor === c ? "border-white scale-110" : "border-transparent"}`} style={{ background: c }} />
                   ))}
                 </div>
@@ -690,7 +690,7 @@ const MentorCheckout = () => {
       </div>
 
       {/* RIGHT: Live Preview */}
-      <div className="flex-1 flex flex-col overflow-hidden bg-[#050508]">
+      <div className="flex-1 flex flex-col overflow-hidden bg-background">
         {/* Preview header */}
         <div className="flex items-center justify-between px-4 py-2 border-b border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
           <span className="text-[10px] text-muted-foreground">Preview em tempo real</span>

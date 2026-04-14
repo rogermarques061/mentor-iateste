@@ -47,7 +47,7 @@ const MentorFinancial = () => {
     { label: "Saldo Disponível", value: formatCurrency(availableBalance), detail: "Disponível para saque", icon: DollarSign, color: "#F59E0B", cta: "Sacar" },
     { label: "Saldo Pendente", value: formatCurrency(pendingBalance), detail: "Em processamento", icon: Clock, color: "#9B9AA8" },
     { label: "Receita Total", value: formatCurrency(totalRevenue), detail: `${salesCount} vendas realizadas`, icon: TrendingUp, color: "#34D399" },
-    { label: "Vendas", value: `${salesCount} vendas`, detail: `Ticket médio: ${formatCurrency(avgTicket)}`, icon: ShoppingCart, color: "#8B5CF6" },
+    { label: "Vendas", value: `${salesCount} vendas`, detail: `Ticket médio: ${formatCurrency(avgTicket)}`, icon: ShoppingCart, color: "#FFD700" },
   ];
 
   return (
@@ -95,13 +95,13 @@ const MentorFinancial = () => {
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={revenueData}>
               <defs>
-                <linearGradient id="brutaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="hsl(263, 70%, 58%)" stopOpacity={0.25} /><stop offset="100%" stopColor="hsl(263, 70%, 58%)" stopOpacity={0} /></linearGradient>
+                <linearGradient id="brutaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="hsl(51, 100%, 50%)" stopOpacity={0.25} /><stop offset="100%" stopColor="hsl(51, 100%, 50%)" stopOpacity={0} /></linearGradient>
                 <linearGradient id="liquidaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="hsl(142, 70%, 45%)" stopOpacity={0.15} /><stop offset="100%" stopColor="hsl(142, 70%, 45%)" stopOpacity={0} /></linearGradient>
               </defs>
               <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: 'hsl(240, 8%, 55%)', fontSize: 11 }} />
               <YAxis axisLine={false} tickLine={false} tick={{ fill: 'hsl(240, 8%, 55%)', fontSize: 11 }} tickFormatter={v => `${(v/1000).toFixed(0)}K`} />
               <Tooltip contentStyle={tooltipStyle} formatter={(val: number) => formatCurrency(val)} />
-              <Area type="monotone" dataKey="bruta" stroke="hsl(263, 70%, 58%)" strokeWidth={2} fill="url(#brutaGrad)" />
+              <Area type="monotone" dataKey="bruta" stroke="hsl(51, 100%, 50%)" strokeWidth={2} fill="url(#brutaGrad)" />
               <Area type="monotone" dataKey="liquida" stroke="hsl(142, 70%, 45%)" strokeWidth={2} fill="url(#liquidaGrad)" />
             </AreaChart>
           </ResponsiveContainer>

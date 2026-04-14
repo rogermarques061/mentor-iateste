@@ -40,8 +40,8 @@ const suggestions = [
   {
     student: "Ana Silva", risk: "Baixo", avatar: "AS",
     context: "Ana está com 90% do programa concluído e engajamento de 95.",
-    action: "Ofereça o upgrade para mentoria individual.",
-    message: "Ana, parabéns pelo progresso incrível! Você está entre os top 5% da turma. Tenho uma oportunidade exclusiva de mentoria individual que pode acelerar ainda mais seus resultados. Quer saber mais?",
+    action: "Ofereça o upgrade para IMPLOFY individual.",
+    message: "Ana, parabéns pelo progresso incrível! Você está entre os top 5% da turma. Tenho uma oportunidade exclusiva de IMPLOFY individual que pode acelerar ainda mais seus resultados. Quer saber mais?",
     category: "Upsell",
   },
 ];
@@ -65,7 +65,7 @@ const highEngagement = [
 ];
 
 const upsellOpps = [
-  { name: "Ana Silva", avatar: "AS", completion: 90, suggestion: "Ofereça a mentoria individual — Ana está próximo de concluir e demonstra alto engajamento.", product: "Mentoria Individual Premium" },
+  { name: "Ana Silva", avatar: "AS", completion: 90, suggestion: "Ofereça a IMPLOFY individual — Ana está próximo de concluir e demonstra alto engajamento.", product: "Mentoria Individual Premium" },
   { name: "Lucas Ferreira", avatar: "LF", completion: 94, suggestion: "Lucas está quase concluindo. Ofereça o programa avançado.", product: "Programa Avançado de Vendas" },
 ];
 
@@ -110,7 +110,7 @@ const MentorAI = () => {
       {/* Header */}
       <div>
         <h1 className="font-display text-2xl mb-1">Inteligência IA</h1>
-        <p className="text-sm text-muted-foreground">Seu copiloto de mentoria — análises e ações automatizadas</p>
+        <p className="text-sm text-muted-foreground">Seu copiloto de IMPLOFY — análises e ações automatizadas</p>
       </div>
 
       {/* Daily Report */}
@@ -346,7 +346,7 @@ const MentorAI = () => {
                   <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: 'hsl(240,8%,55%)', fontSize: 11 }} />
                   <YAxis axisLine={false} tickLine={false} tick={{ fill: 'hsl(240,8%,55%)', fontSize: 11 }} />
                   <Tooltip contentStyle={tooltipStyle} />
-                  <Bar dataKey="engajamento" fill="hsl(263,70%,58%)" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="engajamento" fill="hsl(51,100%,50%)" radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

@@ -36,13 +36,15 @@ export function MentorSidebar() {
         <div className="px-4 mb-8">
           {!collapsed && (
             <div>
-              <h2 className="font-display text-lg text-gradient">MentorIA</h2>
-              <span className="text-xs text-muted-foreground">Painel do Mentor</span>
+              <h2 className="font-display text-lg font-bold tracking-tight">
+                <span className="text-foreground">IMPLOF</span><span style={{ color: '#FFD700' }}>Y</span>
+              </h2>
+              <span className="text-xs text-muted-foreground">Painel de Performance</span>
             </div>
           )}
           {collapsed && (
             <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-              <span className="text-sm font-display text-gradient">M</span>
+              <span className="text-sm font-bold" style={{ color: '#FFD700' }}>I</span>
             </div>
           )}
         </div>
@@ -56,8 +58,8 @@ export function MentorSidebar() {
                     <NavLink
                       to={item.url}
                       end={item.url === "/mentor"}
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200 text-[hsl(240,8%,42%)] hover:text-[hsl(240,8%,65%)] hover:bg-[rgba(255,255,255,0.03)]"
-                      activeClassName="bg-[rgba(139,92,246,0.12)] border-l-[3px] border-l-primary text-[hsl(260,20%,96%)]"
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200 text-muted-foreground hover:text-foreground hover:bg-[rgba(255,255,255,0.03)]"
+                      activeClassName="bg-[rgba(255,215,0,0.08)] border-l-[3px] border-l-primary text-foreground"
                     >
                       <item.icon className="h-[18px] w-[18px] shrink-0" strokeWidth={1.5} />
                       {!collapsed && (

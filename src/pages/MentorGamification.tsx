@@ -32,7 +32,7 @@ const badges = [
   { name: "7 Dias Seguidos", criteria: "Estudar 7 dias consecutivos", type: "Automática", status: "Ativa", students: 48, category: "Consistência", color: "bg-success" },
   { name: "Módulo Completo", criteria: "Concluir qualquer módulo", type: "Automática", status: "Ativa", students: 89, category: "Progresso", color: "bg-info" },
   { name: "Top 10 Ranking", criteria: "Estar entre os 10 primeiros", type: "Automática", status: "Ativa", students: 10, category: "Desafio", color: "bg-warning" },
-  { name: "Social Star", criteria: "Postar 20 comentários", type: "Automática", status: "Ativa", students: 15, category: "Social", color: "bg-[hsl(280,80%,60%)]" },
+  { name: "Social Star", criteria: "Postar 20 comentários", type: "Automática", status: "Ativa", students: 15, category: "Social", color: "bg-[hsl(43,74%,49%)]" },
   { name: "Aluno Destaque", criteria: "Concedida pelo mentor", type: "Manual", status: "Ativa", students: 5, category: "Especial", color: "bg-destructive" },
 ];
 

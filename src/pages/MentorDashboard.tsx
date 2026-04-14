@@ -20,7 +20,7 @@ const MentorDashboard = () => {
   const kpis = [
     { label: "Receita (mês)", value: formatCurrency(totalRevenue), change: "+18%", up: true, icon: DollarSign, color: "#F59E0B" },
     { label: "MRR", value: formatCurrency(mrr), change: "+12%", up: true, icon: TrendingUp, color: "#34D399" },
-    { label: "Vendas Hoje", value: String(todaySales), change: `+${todaySales}`, up: true, icon: ShoppingCart, color: "#8B5CF6" },
+    { label: "Vendas Hoje", value: String(todaySales), change: `+${todaySales}`, up: true, icon: ShoppingCart, color: "#FFD700" },
     { label: "Saldo Disponível", value: formatCurrency(availableBalance), change: "", up: true, icon: DollarSign, color: "#F59E0B" },
     { label: "Alunos Ativos", value: String(activeStudents), change: `de ${state.students.length}`, up: true, icon: Users },
     { label: "Risco de Churn", value: `${studentsAtRisk}`, change: "alunos", up: false, icon: AlertTriangle },
@@ -52,7 +52,7 @@ const MentorDashboard = () => {
     <div className="space-y-8 max-w-6xl">
       <div>
         <h1 className="font-display text-2xl mb-1">Visão Geral</h1>
-        <p className="text-sm text-muted-foreground">Painel executivo do seu negócio de mentoria</p>
+        <p className="text-sm text-muted-foreground">Painel executivo do seu negócio</p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -96,7 +96,7 @@ const MentorDashboard = () => {
                 <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{ fill: 'hsl(240, 8%, 55%)', fontSize: 11 }} />
                 <Tooltip contentStyle={tooltipStyle} />
                 <Area yAxisId="left" type="monotone" dataKey="receita" stroke="#F59E0B" strokeWidth={2} fill="url(#recGrad)" />
-                <Line yAxisId="right" type="monotone" dataKey="engajamento" stroke="hsl(263, 70%, 58%)" strokeWidth={2} dot={false} />
+                <Line yAxisId="right" type="monotone" dataKey="engajamento" stroke="hsl(51, 100%, 50%)" strokeWidth={2} dot={false} />
               </AreaChart>
             </ResponsiveContainer>
           </div>

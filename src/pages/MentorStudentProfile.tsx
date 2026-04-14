@@ -151,8 +151,8 @@ const MentorStudentProfile = () => {
             <AreaChart data={activityData}>
               <defs>
                 <linearGradient id="aulaG" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="hsl(263,70%,58%)" stopOpacity={0.3} />
-                  <stop offset="100%" stopColor="hsl(263,70%,58%)" stopOpacity={0} />
+                  <stop offset="0%" stopColor="hsl(51,100%,50%)" stopOpacity={0.3} />
+                  <stop offset="100%" stopColor="hsl(51,100%,50%)" stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="commentG" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="hsl(210,100%,60%)" stopOpacity={0.3} />
@@ -162,7 +162,7 @@ const MentorStudentProfile = () => {
               <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: 'hsl(240,8%,55%)', fontSize: 11 }} />
               <YAxis axisLine={false} tickLine={false} tick={{ fill: 'hsl(240,8%,55%)', fontSize: 11 }} />
               <Tooltip contentStyle={tooltipStyle} />
-              <Area type="monotone" dataKey="aulas" name="🎬 Aulas" stroke="hsl(263,70%,58%)" strokeWidth={2} fill="url(#aulaG)" />
+              <Area type="monotone" dataKey="aulas" name="🎬 Aulas" stroke="hsl(51,100%,50%)" strokeWidth={2} fill="url(#aulaG)" />
               <Area type="monotone" dataKey="comments" name="💬 Comentários" stroke="hsl(210,100%,60%)" strokeWidth={2} fill="url(#commentG)" />
               <Area type="monotone" dataKey="downloads" name="📥 Downloads" stroke="hsl(142,70%,45%)" strokeWidth={2} fill="transparent" />
               <Area type="monotone" dataKey="lives" name="📡 Lives" stroke="hsl(38,92%,50%)" strokeWidth={2} fill="transparent" />
@@ -202,7 +202,7 @@ const MentorStudentProfile = () => {
               <div className="font-medium text-sm">{c.name}</div>
               <div className="flex items-center gap-2">
                 <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
-                  <div className="h-full rounded-full bg-gradient-to-r from-primary to-[hsl(280,80%,70%)]" style={{ width: `${c.progress}%` }} />
+                  <div className="h-full rounded-full bg-gradient-to-r from-primary to-[hsl(43,74%,49%)]" style={{ width: `${c.progress}%` }} />
                 </div>
                 <span className="font-mono text-xs">{c.progress}%</span>
               </div>

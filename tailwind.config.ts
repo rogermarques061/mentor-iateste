@@ -14,18 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["DM Sans", "sans-serif"],
-        display: ["Syne", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
-      },
-      fontSize: {
-        "xs": ["12px", { lineHeight: "16px" }],
-        "sm": ["14px", { lineHeight: "20px" }],
-        "base": ["16px", { lineHeight: "24px" }],
-        "lg": ["20px", { lineHeight: "28px" }],
-        "xl": ["24px", { lineHeight: "32px" }],
-        "2xl": ["32px", { lineHeight: "40px" }],
-        "3xl": ["48px", { lineHeight: "56px" }],
+        sans: ['"SF Pro Display"', '"SF Pro Text"', '-apple-system', 'BlinkMacSystemFont', '"Montserrat"', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+        display: ['"SF Pro Display"', '"Montserrat"', 'sans-serif'],
+        mono: ['"SF Mono"', '"JetBrains Mono"', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",

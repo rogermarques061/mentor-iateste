@@ -3,7 +3,7 @@ import { Plus, Package, Eye, Copy, Share2, MoreHorizontal, Edit, Archive, Trendi
 
 const products = [
   {
-    id: "1", name: "Mentoria PATRON", subtitle: "Mentoria de alto ticket para vendedores", type: "Mentoria", status: "Publicado",
+    id: "1", name: "Programa PATRON", subtitle: "Mentoria de alto ticket para vendedores", type: "Mentoria", status: "Publicado",
     price: 997, originalPrice: 1497, sales: 34, revenue: 33966, conversion: 8.2,
     thumbnail: null, slug: "IMPLOFY-patron",
   },

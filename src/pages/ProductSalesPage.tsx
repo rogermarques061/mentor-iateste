@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Play, Check, Shield, Lock, ChevronDown, Star, Clock, Users, Award } from "lucide-react";
 
 const product = {
-  name: "Mentoria PATRON",
+  name: "Programa PATRON",
   subtitle: "O programa definitivo para vendedores de alto ticket que querem faturar R$ 100K/mês",
   price: 997,
   originalPrice: 1497,

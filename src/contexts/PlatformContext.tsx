@@ -213,7 +213,7 @@ const hoursAgo = (h: number) => new Date(now.getTime() - h * 3600000).toISOStrin
 
 const SEED_COURSES: Course[] = [
   {
-    id: "course_001", title: "Mentoria PATRON", description: "O programa definitivo para vendedores de alto ticket",
+    id: "course_001", title: "Programa PATRON", description: "O programa definitivo para vendedores de alto ticket",
     thumbnail: null, status: "published", totalModules: 6, totalLessons: 34, totalDuration: "18h 40min",
     modules: [
       { id: "mod_001", title: "Fundamentos da Venda", order: 1, status: "published", lessons: [
@@ -285,7 +285,7 @@ const SEED_STUDENTS: Student[] = [
 
 const SEED_PRODUCTS: CheckoutProduct[] = [
   {
-    id: "prod_001", slug: "IMPLOFY-patron", name: "Mentoria PATRON",
+    id: "prod_001", slug: "IMPLOFY-patron", name: "Programa PATRON",
     description: "O programa definitivo para vendedores de alto ticket",
     headline: "Transforme sua carreira em 90 dias",
     subheadline: "O método comprovado que já ajudou +500 profissionais a triplicar seus resultados",
@@ -342,11 +342,11 @@ const SEED_PRODUCTS: CheckoutProduct[] = [
 ];
 
 const SEED_TRANSACTIONS: Transaction[] = [
-  { id: "txn_001", checkoutId: "prod_001", productName: "Mentoria PATRON", customer: { name: "Carlos Mendes", email: "carlos@email.com", cpf: "123.456.789-00", phone: "(11) 99999-0001" }, method: "card", installments: 1, amount: 997, taxa: 49.85, liquido: 947.15, status: "paid", createdAt: hoursAgo(1), paidAt: hoursAgo(1) },
-  { id: "txn_002", checkoutId: "prod_001", productName: "Mentoria PATRON", customer: { name: "Ana Paula Reis", email: "anapaula@email.com", cpf: "987.654.321-00", phone: "(21) 98888-0002" }, method: "pix", installments: 1, amount: 997, taxa: 9.97, liquido: 987.03, status: "paid", createdAt: hoursAgo(4), paidAt: hoursAgo(4) },
+  { id: "txn_001", checkoutId: "prod_001", productName: "Programa PATRON", customer: { name: "Carlos Mendes", email: "carlos@email.com", cpf: "123.456.789-00", phone: "(11) 99999-0001" }, method: "card", installments: 1, amount: 997, taxa: 49.85, liquido: 947.15, status: "paid", createdAt: hoursAgo(1), paidAt: hoursAgo(1) },
+  { id: "txn_002", checkoutId: "prod_001", productName: "Programa PATRON", customer: { name: "Ana Paula Reis", email: "anapaula@email.com", cpf: "987.654.321-00", phone: "(21) 98888-0002" }, method: "pix", installments: 1, amount: 997, taxa: 9.97, liquido: 987.03, status: "paid", createdAt: hoursAgo(4), paidAt: hoursAgo(4) },
   { id: "txn_003", checkoutId: "prod_002", productName: "Curso Identidade", customer: { name: "Juliana Costa", email: "juliana.c@email.com", cpf: "111.222.333-44", phone: "(31) 97777-0003" }, method: "card", installments: 3, amount: 199, taxa: 9.95, liquido: 189.05, status: "paid", createdAt: daysAgo(1), paidAt: daysAgo(1) },
-  { id: "txn_004", checkoutId: "prod_001", productName: "Mentoria PATRON", customer: { name: "Roberto Lima", email: "roberto@email.com", cpf: "555.666.777-88", phone: "(41) 96666-0004" }, method: "pix", installments: 1, amount: 997, taxa: 9.97, liquido: 987.03, status: "pending", createdAt: daysAgo(1), paidAt: null },
-  { id: "txn_005", checkoutId: "prod_001", productName: "Mentoria PATRON", customer: { name: "Fernanda Alves", email: "fernanda@email.com", cpf: "999.888.777-66", phone: "(51) 95555-0005" }, method: "card", installments: 6, amount: 997, taxa: 49.85, liquido: 947.15, status: "refunded", createdAt: daysAgo(2), paidAt: daysAgo(2) },
+  { id: "txn_004", checkoutId: "prod_001", productName: "Programa PATRON", customer: { name: "Roberto Lima", email: "roberto@email.com", cpf: "555.666.777-88", phone: "(41) 96666-0004" }, method: "pix", installments: 1, amount: 997, taxa: 9.97, liquido: 987.03, status: "pending", createdAt: daysAgo(1), paidAt: null },
+  { id: "txn_005", checkoutId: "prod_001", productName: "Programa PATRON", customer: { name: "Fernanda Alves", email: "fernanda@email.com", cpf: "999.888.777-66", phone: "(51) 95555-0005" }, method: "card", installments: 6, amount: 997, taxa: 49.85, liquido: 947.15, status: "refunded", createdAt: daysAgo(2), paidAt: daysAgo(2) },
 ];
 
 const INITIAL_STATE: PlatformState = {
@@ -356,7 +356,7 @@ const INITIAL_STATE: PlatformState = {
   students: SEED_STUDENTS,
   transactions: SEED_TRANSACTIONS,
   notifications: [
-    { id: "n_001", type: "sale", title: "💰 Nova venda!", message: "Carlos Mendes comprou Mentoria PATRON — R$ 997,00", timestamp: hoursAgo(1), read: false },
+    { id: "n_001", type: "sale", title: "💰 Nova venda!", message: "Carlos Mendes comprou Programa PATRON — R$ 997,00", timestamp: hoursAgo(1), read: false },
     { id: "n_002", type: "alert", title: "🤖 Alerta de IA", message: "João Oliveira sem acesso há 8 dias — risco alto", timestamp: hoursAgo(2), read: false },
     { id: "n_003", type: "badge", title: "🏆 Badge desbloqueada", message: "Ana Silva conquistou: Módulo Completo", timestamp: hoursAgo(3), read: true },
   ],

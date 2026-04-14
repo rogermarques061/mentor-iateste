@@ -18,7 +18,7 @@ const funnelSteps = [
 ];
 
 const productSales = [
-  { name: "Mentoria PATRON", sales: 34, revenue: 33966, ticket: 999, conversion: 8.2, trend: "up" },
+  { name: "Programa PATRON", sales: 34, revenue: 33966, ticket: 999, conversion: 8.2, trend: "up" },
   { name: "Curso Identidade", sales: 78, revenue: 15522, ticket: 199, conversion: 12.1, trend: "stable" },
   { name: "Bundle Premium", sales: 12, revenue: 23880, ticket: 1990, conversion: 3.4, trend: "up" },
   { name: "Imersão VIP", sales: 8, revenue: 19976, ticket: 2497, conversion: 5.7, trend: "down" },
@@ -26,19 +26,19 @@ const productSales = [
 ];
 
 const revenueByProduct = [
-  { month: "Nov", "Mentoria PATRON": 8200, "Curso Identidade": 3800, "Bundle Premium": 5900 },
-  { month: "Dez", "Mentoria PATRON": 10400, "Curso Identidade": 4200, "Bundle Premium": 7800 },
-  { month: "Jan", "Mentoria PATRON": 7800, "Curso Identidade": 3600, "Bundle Premium": 3960 },
-  { month: "Fev", "Mentoria PATRON": 9960, "Curso Identidade": 4800, "Bundle Premium": 5940 },
-  { month: "Mar", "Mentoria PATRON": 11960, "Curso Identidade": 5100, "Bundle Premium": 7920 },
-  { month: "Abr", "Mentoria PATRON": 13970, "Curso Identidade": 5400, "Bundle Premium": 9900 },
+  { month: "Nov", "Programa PATRON": 8200, "Curso Identidade": 3800, "Bundle Premium": 5900 },
+  { month: "Dez", "Programa PATRON": 10400, "Curso Identidade": 4200, "Bundle Premium": 7800 },
+  { month: "Jan", "Programa PATRON": 7800, "Curso Identidade": 3600, "Bundle Premium": 3960 },
+  { month: "Fev", "Programa PATRON": 9960, "Curso Identidade": 4800, "Bundle Premium": 5940 },
+  { month: "Mar", "Programa PATRON": 11960, "Curso Identidade": 5100, "Bundle Premium": 7920 },
+  { month: "Abr", "Programa PATRON": 13970, "Curso Identidade": 5400, "Bundle Premium": 9900 },
 ];
 
 const abandonedCheckouts = [
-  { email: "joao@email.com", product: "Mentoria PATRON", stage: "Seleção de parcelas", value: 997, time: "4min 32s" },
+  { email: "joao@email.com", product: "Programa PATRON", stage: "Seleção de parcelas", value: 997, time: "4min 32s" },
   { email: "maria@email.com", product: "Bundle Premium", stage: "Dados pessoais", value: 1990, time: "1min 15s" },
   { email: "pedro@email.com", product: "Curso Identidade", stage: "Pagamento", value: 199, time: "6min 08s" },
-  { email: "ana@email.com", product: "Mentoria PATRON", stage: "Pagamento PIX", value: 997, time: "8min 22s" },
+  { email: "ana@email.com", product: "Programa PATRON", stage: "Pagamento PIX", value: 997, time: "8min 22s" },
 ];
 
 const tooltipStyle = {
@@ -113,7 +113,7 @@ const MentorSales = () => {
               <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'hsl(240, 8%, 55%)', fontSize: 11 }} />
               <YAxis axisLine={false} tickLine={false} tick={{ fill: 'hsl(240, 8%, 55%)', fontSize: 11 }} tickFormatter={v => `${(v/1000).toFixed(0)}K`} />
               <Tooltip contentStyle={tooltipStyle} />
-              <Bar dataKey="Mentoria PATRON" fill="hsl(51, 100%, 50%)" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="Programa PATRON" fill="hsl(51, 100%, 50%)" radius={[4, 4, 0, 0]} />
               <Bar dataKey="Curso Identidade" fill="hsl(210, 100%, 60%)" radius={[4, 4, 0, 0]} />
               <Bar dataKey="Bundle Premium" fill="hsl(38, 92%, 50%)" radius={[4, 4, 0, 0]} />
             </BarChart>

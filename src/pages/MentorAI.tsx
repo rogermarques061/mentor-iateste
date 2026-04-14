@@ -127,7 +127,7 @@ const MentorAI = () => {
           {dailySummary.cards.map((c, i) => (
             <div key={i} className="glass rounded-[16px] p-4 sm:p-5 card-hover animate-fade-slide-in" style={{ animationDelay: `${i * 60}ms` }}>
               <c.icon className="h-5 w-5 sm:h-6 sm:w-6 text-muted-foreground mb-2" strokeWidth={1.5} />
-              <div className="font-mono text-[20px] sm:text-[28px] font-[800]">{c.value}</div>
+              <div className="text-[20px] sm:text-[28px] font-[800] tracking-tight">{c.value}</div>
               <div className="text-[12px] sm:text-[13px] font-semibold text-muted-foreground">{c.label}</div>
               <button className="mt-2 text-[12px] sm:text-[13px] font-bold text-primary hover:underline flex items-center gap-1">{c.cta} <ChevronRight className="h-3.5 w-3.5" /></button>
             </div>
@@ -231,7 +231,7 @@ const MentorAI = () => {
             <div className="flex items-center gap-2 mb-4">
               <div className="w-2.5 h-2.5 rounded-full bg-destructive" />
               <h4 className="text-[14px] sm:text-[15px] font-bold">Alto Risco</h4>
-              <span className="ml-auto text-[13px] font-mono font-bold text-destructive">{highRisk.length}</span>
+              <span className="ml-auto text-[13px] font-[800] text-destructive">{highRisk.length}</span>
             </div>
             <div className="space-y-3">
               {highRisk.map((s, i) => (
@@ -242,7 +242,7 @@ const MentorAI = () => {
                       <div className="text-[13px] sm:text-[14px] font-semibold truncate">{s.name}</div>
                       <div className="text-[12px] font-medium text-muted-foreground">{s.factor}</div>
                     </div>
-                    <span className="font-mono text-[14px] text-destructive font-[800]">{s.riskScore}%</span>
+                    <span className="text-[14px] text-destructive font-[800]">{s.riskScore}%</span>
                   </div>
                 </div>
               ))}
@@ -257,7 +257,7 @@ const MentorAI = () => {
             <div className="flex items-center gap-2 mb-4">
               <div className="w-2.5 h-2.5 rounded-full bg-warning" />
               <h4 className="text-[14px] sm:text-[15px] font-bold">Atenção Necessária</h4>
-              <span className="ml-auto text-[13px] font-mono font-bold text-warning">{mediumRisk.length}</span>
+              <span className="ml-auto text-[13px] font-[800] text-warning">{mediumRisk.length}</span>
             </div>
             <div className="space-y-3">
               {mediumRisk.map((s, i) => (
@@ -282,7 +282,7 @@ const MentorAI = () => {
             <div className="flex items-center gap-2 mb-4">
               <div className="w-2.5 h-2.5 rounded-full bg-success" />
               <h4 className="text-[14px] sm:text-[15px] font-bold">Alto Engajamento</h4>
-              <span className="ml-auto text-[13px] font-mono font-bold text-success">{highEngagement.length}</span>
+              <span className="ml-auto text-[13px] font-[800] text-success">{highEngagement.length}</span>
             </div>
             <div className="space-y-3">
               {highEngagement.map((s, i) => (
@@ -293,7 +293,7 @@ const MentorAI = () => {
                       <div className="text-[13px] sm:text-[14px] font-semibold truncate">{s.name}</div>
                       <div className="text-[12px] font-medium text-muted-foreground">{s.badge}</div>
                     </div>
-                    <span className="font-mono text-[14px] text-success font-[800]">{s.engagement}</span>
+                    <span className="text-[14px] text-success font-[800]">{s.engagement}</span>
                   </div>
                 </div>
               ))}
@@ -317,7 +317,7 @@ const MentorAI = () => {
               <div className="flex-1 space-y-2 min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="font-bold text-[15px]">{u.name}</span>
-                  <span className="font-mono text-[14px] font-bold text-success">{u.completion}% concluído</span>
+                  <span className="text-[14px] font-[800] text-success">{u.completion}% concluído</span>
                 </div>
                 <p className="text-[13px] sm:text-[14px] font-medium text-muted-foreground">{u.suggestion}</p>
                 <div className="text-[13px] sm:text-[14px] font-bold"><strong>Produto:</strong> {u.product}</div>
@@ -402,7 +402,7 @@ const MentorAI = () => {
                   <div className="text-[13px] sm:text-[14px] font-bold truncate">{s.name}</div>
                   <div className="text-[12px] font-medium text-muted-foreground">{s.product}</div>
                 </div>
-                <span className="font-mono text-[14px] text-success font-[800]">{s.score}%</span>
+                <span className="text-[14px] text-success font-[800]">{s.score}%</span>
                 <button className="px-3 py-1.5 rounded-lg text-[12px] sm:text-[13px] font-bold bg-primary/20 text-primary hover:bg-primary/30 transition-all hidden sm:block">Oferta</button>
               </div>
             ))}

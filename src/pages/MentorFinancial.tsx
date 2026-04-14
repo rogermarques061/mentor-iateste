@@ -78,7 +78,7 @@ const MentorFinancial = () => {
                 <button onClick={() => setShowWithdrawModal(true)} className="text-[13px] font-bold px-3.5 py-1.5 rounded-lg bg-[#F59E0B]/15 text-[#F59E0B] hover:bg-[#F59E0B]/25 transition-all">{kpi.cta}</button>
               )}
             </div>
-            <div className="font-mono text-[22px] sm:text-[26px] font-[800]" style={{ color: kpi.color }}>{kpi.value}</div>
+            <div className="text-[22px] sm:text-[26px] font-[800] tracking-tight" style={{ color: kpi.color }}>{kpi.value}</div>
             <div className="text-[12px] sm:text-[13px] font-semibold text-muted-foreground mt-1">{kpi.detail}</div>
             <div className="text-[12px] font-semibold text-muted-foreground mt-0.5">{kpi.label}</div>
           </div>
@@ -137,9 +137,9 @@ const MentorFinancial = () => {
                 <div className="text-[15px] font-bold">{tx.customer.name}</div>
                 <div className="text-[13px] text-muted-foreground">{tx.productName}</div>
                 <div className="grid grid-cols-3 gap-2 text-center pt-1">
-                  <div><div className="text-[11px] text-muted-foreground">Bruto</div><div className="font-mono text-[14px] font-bold text-[#F59E0B]">{formatCurrency(tx.amount)}</div></div>
-                  <div><div className="text-[11px] text-muted-foreground">Taxa</div><div className="font-mono text-[14px] font-bold text-[#F87171]">-{formatCurrency(tx.taxa)}</div></div>
-                  <div><div className="text-[11px] text-muted-foreground">Líquido</div><div className="font-mono text-[14px] font-bold text-[#34D399]">{formatCurrency(tx.liquido)}</div></div>
+                  <div><div className="text-[11px] text-muted-foreground">Bruto</div><div className="text-[14px] font-[800] text-[#F59E0B]">{formatCurrency(tx.amount)}</div></div>
+                  <div><div className="text-[11px] text-muted-foreground">Taxa</div><div className="text-[14px] font-[800] text-[#F87171]">-{formatCurrency(tx.taxa)}</div></div>
+                  <div><div className="text-[11px] text-muted-foreground">Líquido</div><div className="text-[14px] font-[800] text-[#34D399]">{formatCurrency(tx.liquido)}</div></div>
                 </div>
               </div>
             );
@@ -181,9 +181,9 @@ const MentorFinancial = () => {
                     </td>
                     <td className="px-5 py-4 text-[14px] font-semibold hidden lg:table-cell">{tx.productName}</td>
                     <td className="px-5 py-4 hidden lg:table-cell"><div className="flex items-center gap-1.5"><MethodIcon className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} /><span className="text-[13px] font-semibold">{tx.method === "pix" ? "PIX" : tx.method === "card" ? "Cartão" : "Boleto"}</span></div></td>
-                    <td className="px-5 py-4 font-mono text-[15px] font-bold text-[#F59E0B]">{formatCurrency(tx.amount)}</td>
-                    <td className="px-5 py-4 font-mono text-[15px] font-bold text-[#F87171] hidden xl:table-cell">-{formatCurrency(tx.taxa)}</td>
-                    <td className="px-5 py-4 font-mono text-[15px] font-bold text-[#34D399]">{formatCurrency(tx.liquido)}</td>
+                    <td className="px-5 py-4 text-[15px] font-[800] text-[#F59E0B]">{formatCurrency(tx.amount)}</td>
+                    <td className="px-5 py-4 text-[15px] font-[800] text-[#F87171] hidden xl:table-cell">-{formatCurrency(tx.taxa)}</td>
+                    <td className="px-5 py-4 text-[15px] font-[800] text-[#34D399]">{formatCurrency(tx.liquido)}</td>
                     <td className="px-5 py-4"><span className={`px-3 py-1 rounded-full text-[12px] font-bold border ${getStatusBadge(tx.status)}`}>{statusLabels[tx.status]}</span></td>
                     <td className="px-5 py-4 text-[13px] font-semibold text-muted-foreground hidden lg:table-cell">{new Date(tx.createdAt).toLocaleDateString("pt-BR")} {new Date(tx.createdAt).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}</td>
                   </tr>
@@ -203,7 +203,7 @@ const MentorFinancial = () => {
             </div>
             <div className="glass rounded-xl p-5">
               <div className="text-[13px] font-semibold text-muted-foreground">Saldo disponível</div>
-              <div className="font-mono text-[24px] sm:text-[28px] font-[800] text-[#F59E0B] mt-1">{formatCurrency(availableBalance)}</div>
+              <div className="text-[24px] sm:text-[28px] font-[800] tracking-tight text-[#F59E0B] mt-1">{formatCurrency(availableBalance)}</div>
             </div>
             <div>
               <label className="text-[13px] font-semibold text-muted-foreground mb-1.5 block">Chave PIX</label>

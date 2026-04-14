@@ -460,23 +460,23 @@ const MentorProducts = () => {
               </div>
 
               <div className="flex items-baseline gap-2">
-                <span className="font-mono text-xl font-bold text-[#F59E0B]">R$ {product.price.toLocaleString('pt-BR')}</span>
+                <span className="text-xl font-[800] text-[#F59E0B]">R$ {product.price.toLocaleString('pt-BR')}</span>
                 {product.originalPrice && (
-                  <span className="font-mono text-xs text-muted-foreground line-through">R$ {product.originalPrice.toLocaleString('pt-BR')}</span>
+                  <span className="text-xs text-muted-foreground line-through">R$ {product.originalPrice.toLocaleString('pt-BR')}</span>
                 )}
               </div>
 
               <div className="flex items-center gap-4 pt-2 border-t border-[rgba(255,255,255,0.05)]">
                 <div className="text-center flex-1">
-                  <div className="font-mono text-sm font-medium">{product.sales}</div>
+                  <div className="text-sm font-[800]">{product.sales}</div>
                   <div className="text-[10px] text-muted-foreground">vendas</div>
                 </div>
                 <div className="text-center flex-1">
-                  <div className="font-mono text-sm font-medium text-[#F59E0B]">R$ {(product.revenue / 1000).toFixed(1)}K</div>
+                  <div className="text-sm font-[800] text-[#F59E0B]">R$ {(product.revenue / 1000).toFixed(1)}K</div>
                   <div className="text-[10px] text-muted-foreground">receita</div>
                 </div>
                 <div className="text-center flex-1">
-                  <div className="font-mono text-sm font-medium">{product.conversion}%</div>
+                  <div className="text-sm font-[800]">{product.conversion}%</div>
                   <div className="text-[10px] text-muted-foreground">conversão</div>
                 </div>
               </div>

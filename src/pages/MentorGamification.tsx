@@ -75,7 +75,7 @@ const MentorGamification = () => {
           {overviewCards.map((c, i) => (
             <div key={i} className="glass rounded-2xl p-5 card-hover animate-fade-slide-in" style={{ animationDelay: `${i * 60}ms` }}>
               <c.icon className="h-5 w-5 text-primary mb-3" strokeWidth={1.5} />
-              <div className="font-mono text-lg font-medium">{c.value}</div>
+              <div className="text-lg font-[800] tracking-tight">{c.value}</div>
               <div className="text-[11px] text-muted-foreground mt-0.5">{c.label}</div>
             </div>
           ))}
@@ -144,7 +144,7 @@ const MentorGamification = () => {
                   <tr key={i} className="border-t border-[rgba(255,255,255,0.04)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
                     <td className="px-5 py-3 font-mono text-xs text-muted-foreground">{l.num}</td>
                     <td className="px-5 py-3 font-medium">{l.name}</td>
-                    <td className="px-5 py-3 font-mono text-xs">{l.xp.toLocaleString()} XP</td>
+                    <td className="px-5 py-3 text-xs font-[800]">{l.xp.toLocaleString()} XP</td>
                     <td className="px-5 py-3">{l.icon}</td>
                     <td className="px-5 py-3">
                       <div className="flex gap-1">
@@ -213,13 +213,13 @@ const MentorGamification = () => {
                     <h4 className="font-medium text-sm">{m.name}</h4>
                     <p className="text-[11px] text-muted-foreground mt-0.5">{m.criteria}</p>
                   </div>
-                  <span className="text-[10px] font-mono text-muted-foreground">{m.daysLeft} dias restantes</span>
+                  <span className="text-[10px] text-muted-foreground font-[800]">{m.daysLeft} dias restantes</span>
                 </div>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
                     <div className="h-full rounded-full bg-primary" style={{ width: `${m.completion}%` }} />
                   </div>
-                  <span className="font-mono text-xs">{m.completion}%</span>
+                  <span className="text-xs font-[800]">{m.completion}%</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] text-primary font-medium">Recompensa: {m.reward}</span>

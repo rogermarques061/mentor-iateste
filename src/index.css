@@ -151,11 +151,92 @@
   }
 }
 
+/* Custom cursor — hide default on desktop */
+@media (min-width: 1024px) {
+  * { cursor: none !important; }
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #111111; }
 ::-webkit-scrollbar-thumb { background: #333333; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #FFD700; }
+
+/* Background Orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.12;
+  animation: float-orb linear infinite;
+  will-change: transform;
+}
+.orb-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, #FFD700, transparent 70%);
+  top: -15%; left: -10%;
+  animation-duration: 28s;
+}
+.orb-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, #B8860B, transparent 70%);
+  top: 50%; right: -10%;
+  animation-duration: 35s;
+  animation-delay: -10s;
+}
+.orb-3 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, #FFD700, transparent 70%);
+  bottom: -10%; left: 30%;
+  animation-duration: 22s;
+  animation-delay: -5s;
+}
+.orb-4 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, #B8860B, transparent 70%);
+  top: 20%; left: 50%;
+  animation-duration: 40s;
+  animation-delay: -18s;
+}
+
+@keyframes float-orb {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  25%  { transform: translate(60px, -80px) scale(1.05); }
+  50%  { transform: translate(-40px, 60px) scale(0.95); }
+  75%  { transform: translate(80px, 40px) scale(1.03); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+/* Glassmorphism for cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 215, 0, 0.08) !important;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.3) inset;
+  position: relative;
+  overflow: hidden;
+}
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.15), transparent);
+  pointer-events: none;
+}
+.glass-card:hover {
+  border-color: rgba(255, 215, 0, 0.2) !important;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 215, 0, 0.1),
+    0 1px 0 rgba(255, 255, 255, 0.07) inset;
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
 
 /* Selection */
 ::selection { background: rgba(255, 215, 0, 0.25); color: #FFFFFF; }

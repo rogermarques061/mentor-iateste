@@ -134,7 +134,7 @@ const Evolution = () => {
                 r.isUser ? "bg-primary/10 border-l-2 border-primary" : "hover:bg-accent/10"
               } ${i < rankingData.length - 1 ? "border-b border-border/20" : ""}`}
             >
-              <span className={`font-mono text-base sm:text-lg font-bold w-6 sm:w-8 text-center ${
+              <span className={`text-base sm:text-lg font-[800] w-6 sm:w-8 text-center ${
                 r.pos <= 3 ? "text-warning" : "text-muted-foreground"
               }`}>
                 {r.pos}
@@ -149,7 +149,7 @@ const Evolution = () => {
                   {r.name} {r.isUser && <span className="text-xs text-primary/60">(Você)</span>}
                 </p>
               </div>
-              <span className="font-mono text-sm text-muted-foreground">{r.points.toLocaleString()} pts</span>
+              <span className="text-sm font-[800] text-muted-foreground">{r.points.toLocaleString()} pts</span>
             </div>
           ))}
         </div>

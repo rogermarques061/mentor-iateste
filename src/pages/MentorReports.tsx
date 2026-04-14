@@ -142,7 +142,7 @@ const MentorReports = () => {
               {topStudents.map((s, i) => (
                 <div key={i} className="flex items-center justify-between py-2 border-b border-[rgba(255,255,255,0.04)] last:border-0">
                   <div className="flex items-center gap-3">
-                    <span className="text-xs text-muted-foreground font-mono w-4">{i + 1}</span>
+                    <span className="text-xs text-muted-foreground w-4 font-[800]">{i + 1}</span>
                     <span className="text-sm">{s.name}</span>
                   </div>
                   <span className="text-xs font-[800] text-success">{s.engagement}</span>

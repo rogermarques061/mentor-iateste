@@ -213,13 +213,13 @@ const MentorGamification = () => {
                     <h4 className="font-medium text-sm">{m.name}</h4>
                     <p className="text-[11px] text-muted-foreground mt-0.5">{m.criteria}</p>
                   </div>
-                  <span className="text-[10px] font-mono text-muted-foreground">{m.daysLeft} dias restantes</span>
+                  <span className="text-[10px] text-muted-foreground font-[800]">{m.daysLeft} dias restantes</span>
                 </div>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
                     <div className="h-full rounded-full bg-primary" style={{ width: `${m.completion}%` }} />
                   </div>
-                  <span className="font-mono text-xs">{m.completion}%</span>
+                  <span className="text-xs font-[800]">{m.completion}%</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] text-primary font-medium">Recompensa: {m.reward}</span>

@@ -44,7 +44,7 @@ const Ranking = () => {
       {userEntry && (
         <div className="glass rounded-2xl p-5 sm:p-6 border-l-2 border-primary animate-fade-slide-in" style={{ animationDelay: "80ms" }}>
           <div className="flex items-center gap-4">
-            <span className="font-mono text-2xl sm:text-3xl font-bold text-primary">{userEntry.pos}º</span>
+            <span className="text-2xl sm:text-3xl font-[800] text-primary">{userEntry.pos}º</span>
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-[15px]">Sua posição atual</p>
               <p className="text-xs text-muted-foreground mt-0.5">
@@ -91,7 +91,7 @@ const Ranking = () => {
                 r.isUser ? "bg-primary/10" : "hover:bg-accent/10"
               } ${i < rankingData.length - 1 ? "border-b border-border/20" : ""}`}
             >
-              <span className={`font-mono font-bold w-6 text-center ${r.pos <= 3 ? "text-warning" : "text-muted-foreground"}`}>
+              <span className={`font-[800] w-6 text-center ${r.pos <= 3 ? "text-warning" : "text-muted-foreground"}`}>
                 {r.pos}
               </span>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0 ${
@@ -125,7 +125,7 @@ const Ranking = () => {
                 r.isUser ? "bg-primary/10" : "hover:bg-accent/10"
               } ${i < rankingData.length - 1 ? "border-b border-border/20" : ""}`}
             >
-              <span className={`font-mono font-bold ${r.pos <= 3 ? "text-warning" : "text-muted-foreground"}`}>
+              <span className={`font-[800] ${r.pos <= 3 ? "text-warning" : "text-muted-foreground"}`}>
                 {r.pos}
               </span>
               <div className="flex items-center gap-3 min-w-0">
@@ -138,8 +138,8 @@ const Ranking = () => {
                   {r.name} {r.isUser && <span className="text-primary/60">(Você)</span>}
                 </span>
               </div>
-              <span className="font-mono text-sm text-right">{r.points.toLocaleString()}</span>
-              <span className="font-mono text-sm text-right text-muted-foreground">{r.streak}d</span>
+              <span className="text-sm font-[800] text-right">{r.points.toLocaleString()}</span>
+              <span className="text-sm font-[800] text-right text-muted-foreground">{r.streak}d</span>
               <span className="text-xs text-right text-muted-foreground">{r.level}</span>
               <TrendIcon trend={r.trend} />
             </div>

@@ -16,7 +16,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       <div className="min-h-screen flex w-full">
         {isMentor ? <MentorSidebar /> : <StudentSidebar />}
         <div className="flex-1 flex flex-col min-w-0">
-          <header className="h-14 flex items-center border-b border-border/50 px-4 lg:px-8">
+          <header className="h-14 flex items-center border-b border-border/50 px-4 lg:px-8 bg-background">
             <SidebarTrigger className="text-muted-foreground hover:text-foreground" />
             <div className="ml-auto flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">

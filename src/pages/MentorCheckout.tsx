@@ -43,11 +43,21 @@ const defaultFaq = [
   { q: "Como funciona o suporte?", a: "Você terá acesso direto ao mentor por comentários nas aulas e grupo exclusivo." },
 ];
 
-const MentorCheckout = () => {
+const MentorCheckout = ({ embedded = false }: MentorCheckoutProps = {}) => {
   const { state, createCheckout, updateCheckout, publishCheckout } = usePlatform();
   const products = state.products;
+  // ProductsContext is optional — only present when used inside the product editor flow
+  let draft: ReturnType<typeof useProducts>["draft"] | null = null;
+  let updateDraft: ReturnType<typeof useProducts>["updateDraft"] | null = null;
+  try {
+    const ctx = useProducts();
+    draft = ctx.draft;
+    updateDraft = ctx.updateDraft;
+  } catch {
+    /* not inside ProductsProvider — standalone mode */
+  }
 
-  const [view, setView] = useState<"list" | "editor" | "analytics">("list");
+  const [view, setView] = useState<"list" | "editor" | "analytics">(embedded ? "editor" : "list");
   const [editorStep, setEditorStep] = useState(0);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [analyticsId, setAnalyticsId] = useState<string | null>(null);
@@ -55,11 +65,11 @@ const MentorCheckout = () => {
   const [justPublished, setJustPublished] = useState<string | null>(null);
   const [previewMode, setPreviewMode] = useState<"desktop" | "mobile">("desktop");
 
-  /* editor state */
-  const [productName, setProductName] = useState("");
-  const [productDesc, setProductDesc] = useState("");
-  const [price, setPrice] = useState("997");
-  const [originalPrice, setOriginalPrice] = useState("1497");
+  /* editor state — when embedded, hydrate from product draft */
+  const [productName, setProductName] = useState(embedded && draft ? draft.name : "");
+  const [productDesc, setProductDesc] = useState(embedded && draft ? draft.description : "");
+  const [price, setPrice] = useState(embedded && draft ? String(draft.price || "") : "997");
+  const [originalPrice, setOriginalPrice] = useState(embedded && draft ? String(draft.originalPrice ?? "") : "1497");
   const [guarantee, setGuarantee] = useState(7);
   const [paymentType, setPaymentType] = useState<"single" | "recurring">("single");
   const [installments, setInstallments] = useState(true);

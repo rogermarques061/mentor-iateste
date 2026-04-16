@@ -742,25 +742,24 @@ const MentorCheckout = ({ embedded = false }: MentorCheckoutProps = {}) => {
         </div>
       </div>
 
-      {/* RIGHT: Live Preview — hidden when embedded inside the product editor */}
-      {!embedded && (
-        <div className="flex-1 flex flex-col overflow-hidden bg-background">
-          <div className="flex items-center justify-between px-4 py-2 border-b border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
-            <span className="text-[10px] text-muted-foreground">Preview em tempo real</span>
-            <div className="flex items-center gap-1 glass rounded-lg p-0.5">
-              <button onClick={() => setPreviewMode("desktop")} className={`px-2.5 py-1 rounded-md text-[10px] transition-all ${previewMode === "desktop" ? "bg-primary/20 text-primary" : "text-muted-foreground hover:text-foreground"}`}>
-                <Monitor className="h-3 w-3" />
-              </button>
-              <button onClick={() => setPreviewMode("mobile")} className={`px-2.5 py-1 rounded-md text-[10px] transition-all ${previewMode === "mobile" ? "bg-primary/20 text-primary" : "text-muted-foreground hover:text-foreground"}`}>
-                <Smartphone className="h-3 w-3" />
-              </button>
-            </div>
-          </div>
-          <div className="flex-1 overflow-y-auto p-4">
-            <CheckoutPreview product={previewData} courses={state.courses} previewMode={previewMode} />
+      {/* RIGHT: Live Preview — also visible when embedded inside the product editor */}
+      <div className="flex-1 flex flex-col overflow-hidden bg-background">
+        <div className="flex items-center justify-between px-4 py-2 border-b border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
+          <span className="text-[10px] text-muted-foreground">Preview em tempo real</span>
+          <div className="flex items-center gap-1 glass rounded-lg p-0.5">
+            <button onClick={() => setPreviewMode("desktop")} className={`px-2.5 py-1 rounded-md text-[10px] transition-all ${previewMode === "desktop" ? "bg-primary/20 text-primary" : "text-muted-foreground hover:text-foreground"}`}>
+              <Monitor className="h-3 w-3" />
+            </button>
+            <button onClick={() => setPreviewMode("mobile")} className={`px-2.5 py-1 rounded-md text-[10px] transition-all ${previewMode === "mobile" ? "bg-primary/20 text-primary" : "text-muted-foreground hover:text-foreground"}`}>
+              <Smartphone className="h-3 w-3" />
+            </button>
           </div>
         </div>
-      )}
+        <div className="flex-1 overflow-y-auto p-4">
+          <CheckoutPreview product={previewData} courses={state.courses} previewMode={previewMode} />
+        </div>
+      </div>
+
     </div>
   );
 };

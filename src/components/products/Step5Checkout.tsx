@@ -11,7 +11,7 @@ export function Step5Checkout({ onNext, onBack }: { onNext: () => void; onBack: 
           (todos os campos hidratam a partir do draft atual e
           mudanças locais são sincronizadas de volta no draft)
       */}
-      <div className="glass rounded-2xl overflow-hidden p-2">
+      <div className="glass rounded-2xl overflow-hidden">
         <MentorCheckout embedded />
       </div>
 

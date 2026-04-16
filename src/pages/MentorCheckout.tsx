@@ -443,13 +443,12 @@ const MentorCheckout = ({ embedded = false }: MentorCheckoutProps = {}) => {
     );
   }
 
-  /* ── EDITOR VIEW — SPLIT LAYOUT (or full-width when embedded) ── */
+  /* ── EDITOR VIEW — SPLIT LAYOUT (sidebar + preview, also when embedded) ── */
   return (
-    <div className={embedded ? "flex w-full" : "flex h-[calc(100vh-5.5rem)] -m-6 lg:-m-8"}>
+    <div className={embedded ? "flex w-full h-[80vh] min-h-[640px] rounded-2xl overflow-hidden" : "flex h-[calc(100vh-5.5rem)] -m-6 lg:-m-8"}>
       {/* LEFT: Steps + Config */}
-      <div className={embedded
-        ? "w-full flex flex-col overflow-hidden min-h-[600px]"
-        : "w-80 shrink-0 glass border-r border-[rgba(255,255,255,0.05)] flex flex-col overflow-hidden"}>
+      <div className="w-80 shrink-0 glass border-r border-[rgba(255,255,255,0.05)] flex flex-col overflow-hidden">
+
         {/* Editor header — hidden when embedded (product editor already shows name/progress) */}
         {!embedded && (
           <div className="p-4 border-b border-[rgba(255,255,255,0.05)]">

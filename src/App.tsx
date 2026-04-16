@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PlatformProvider } from "@/contexts/PlatformContext";
+import { ProductsProvider } from "@/contexts/ProductsContext";
 import { AppLayout } from "@/components/layout/AppLayout";
 import StudentHome from "./pages/StudentHome";
 import MyCourses from "./pages/MyCourses";
@@ -36,6 +37,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <PlatformProvider>
+      <ProductsProvider>
       <TooltipProvider>
         <CustomCursor />
         <BackgroundOrbs />
@@ -69,6 +71,7 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
+      </ProductsProvider>
     </PlatformProvider>
   </QueryClientProvider>
 );

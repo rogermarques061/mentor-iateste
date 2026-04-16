@@ -70,23 +70,59 @@ const MentorCheckout = ({ embedded = false }: MentorCheckoutProps = {}) => {
   const [productDesc, setProductDesc] = useState(embedded && draft ? draft.description : "");
   const [price, setPrice] = useState(embedded && draft ? String(draft.price || "") : "997");
   const [originalPrice, setOriginalPrice] = useState(embedded && draft ? String(draft.originalPrice ?? "") : "1497");
-  const [guarantee, setGuarantee] = useState(7);
-  const [paymentType, setPaymentType] = useState<"single" | "recurring">("single");
-  const [installments, setInstallments] = useState(true);
-  const [maxInstallments, setMaxInstallments] = useState(12);
+  const [guarantee, setGuarantee] = useState(embedded && draft?.guarantee?.days ? draft.guarantee.days : 7);
+  const [paymentType, setPaymentType] = useState<"single" | "recurring">(embedded && draft ? draft.paymentType : "single");
+  const [installments, setInstallments] = useState(embedded && draft ? draft.installments.enabled : true);
+  const [maxInstallments, setMaxInstallments] = useState(embedded && draft ? draft.installments.max : 12);
   const [accentColor, setAccentColor] = useState("#FFD700");
   const [buttonStyle, setButtonStyle] = useState<"default" | "rounded" | "square">("default");
-  const [headline, setHeadline] = useState("");
-  const [subheadline, setSubheadline] = useState("");
-  const [ctaText, setCtaText] = useState("Quero começar agora");
+  const [headline, setHeadline] = useState(embedded && draft ? draft.salesPage.headline : "");
+  const [subheadline, setSubheadline] = useState(embedded && draft ? draft.salesPage.subheadline : "");
+  const [ctaText, setCtaText] = useState(embedded && draft ? (draft.checkout.buttonText || draft.salesPage.ctaText || "Quero começar agora") : "Quero começar agora");
   const [showCountdown, setShowCountdown] = useState(false);
   const [showVagas, setShowVagas] = useState(false);
   const [vagas, setVagas] = useState("30");
   const [linkedCourseId, setLinkedCourseId] = useState<string | null>(null);
-  const [productType, setProductType] = useState("Curso Online");
+  const [productType, setProductType] = useState(embedded && draft ? draft.type : "Curso Online");
   const [sections, setSections] = useState({
     paraQuem: true, beneficios: true, conteudo: true, mentor: true, garantia: true, faq: true, depoimentos: true,
   });
+
+  /* Embedded mode: re-hydrate when draft changes (e.g. user edits Step 1 then comes back) */
+  useEffect(() => {
+    if (!embedded || !draft) return;
+    setProductName(draft.name);
+    setProductDesc(draft.description);
+    setPrice(String(draft.price || ""));
+    setOriginalPrice(draft.originalPrice != null ? String(draft.originalPrice) : "");
+    setGuarantee(draft.guarantee.days);
+    setPaymentType(draft.paymentType);
+    setInstallments(draft.installments.enabled);
+    setMaxInstallments(draft.installments.max);
+    setHeadline(draft.salesPage.headline);
+    setSubheadline(draft.salesPage.subheadline);
+    setCtaText(draft.checkout.buttonText || draft.salesPage.ctaText || "Quero começar agora");
+    setProductType(draft.type);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [embedded, draft?.id, draft?.name, draft?.description, draft?.price, draft?.originalPrice, draft?.type]);
+
+  /* Embedded mode: sync local edits back into the product draft so other steps see them */
+  useEffect(() => {
+    if (!embedded || !updateDraft) return;
+    updateDraft({
+      name: productName,
+      description: productDesc,
+      type: productType,
+      price: Number(price) || 0,
+      originalPrice: originalPrice ? Number(originalPrice) : null,
+      paymentType,
+      installments: { enabled: installments, max: maxInstallments },
+      guarantee: { enabled: true, days: guarantee },
+      salesPage: { ...(draft?.salesPage as any), headline, subheadline, ctaText },
+      checkout: { ...(draft?.checkout as any), buttonText: ctaText, maxInstallments },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [embedded, productName, productDesc, productType, price, originalPrice, paymentType, installments, maxInstallments, guarantee, headline, subheadline, ctaText]);
 
   const steps = [
     { icon: ShoppingCart, label: "Produto e Preço" },

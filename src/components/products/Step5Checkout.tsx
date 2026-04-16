@@ -4,9 +4,15 @@ import MentorCheckout from "@/pages/MentorCheckout";
 export function Step5Checkout({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
   return (
     <div className="space-y-6 animate-fade-slide-in">
-      {/* Reaproveita exatamente o conteúdo da página /mentor/checkout */}
-      <div className="glass rounded-2xl overflow-hidden">
-        <MentorCheckout />
+      {/*
+        Reaproveita o editor de checkout global em modo "embedded":
+        - Sem painel de preview à direita (largura total)
+        - Conectado ao produto em edição via ProductsContext
+          (todos os campos hidratam a partir do draft atual e
+          mudanças locais são sincronizadas de volta no draft)
+      */}
+      <div className="glass rounded-2xl overflow-hidden p-2">
+        <MentorCheckout embedded />
       </div>
 
       <div className="flex justify-between">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CreditCard, Plus, Eye, Copy, MoreHorizontal, ShoppingCart,
   TrendingUp, TrendingDown, Percent, ArrowRight, Check, Users, Star, Shield,
@@ -7,7 +7,12 @@ import {
 } from "lucide-react";
 import { usePlatform, formatCurrency } from "@/contexts/PlatformContext";
 import type { CheckoutProduct } from "@/contexts/PlatformContext";
+import { useProducts } from "@/contexts/ProductsContext";
 import CheckoutPreview from "@/components/checkout/CheckoutPreview";
+
+interface MentorCheckoutProps {
+  embedded?: boolean;
+}
 
 const statusMap: Record<string, { label: string; color: string; bg: string }> = {
   published: { label: "Ativo", color: "#34D399", bg: "rgba(52,211,153,0.15)" },
@@ -38,11 +43,21 @@ const defaultFaq = [
   { q: "Como funciona o suporte?", a: "Você terá acesso direto ao mentor por comentários nas aulas e grupo exclusivo." },
 ];
 
-const MentorCheckout = () => {
+const MentorCheckout = ({ embedded = false }: MentorCheckoutProps = {}) => {
   const { state, createCheckout, updateCheckout, publishCheckout } = usePlatform();
   const products = state.products;
+  // ProductsContext is optional — only present when used inside the product editor flow
+  let draft: ReturnType<typeof useProducts>["draft"] | null = null;
+  let updateDraft: ReturnType<typeof useProducts>["updateDraft"] | null = null;
+  try {
+    const ctx = useProducts();
+    draft = ctx.draft;
+    updateDraft = ctx.updateDraft;
+  } catch {
+    /* not inside ProductsProvider — standalone mode */
+  }
 
-  const [view, setView] = useState<"list" | "editor" | "analytics">("list");
+  const [view, setView] = useState<"list" | "editor" | "analytics">(embedded ? "editor" : "list");
   const [editorStep, setEditorStep] = useState(0);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [analyticsId, setAnalyticsId] = useState<string | null>(null);
@@ -50,28 +65,64 @@ const MentorCheckout = () => {
   const [justPublished, setJustPublished] = useState<string | null>(null);
   const [previewMode, setPreviewMode] = useState<"desktop" | "mobile">("desktop");
 
-  /* editor state */
-  const [productName, setProductName] = useState("");
-  const [productDesc, setProductDesc] = useState("");
-  const [price, setPrice] = useState("997");
-  const [originalPrice, setOriginalPrice] = useState("1497");
-  const [guarantee, setGuarantee] = useState(7);
-  const [paymentType, setPaymentType] = useState<"single" | "recurring">("single");
-  const [installments, setInstallments] = useState(true);
-  const [maxInstallments, setMaxInstallments] = useState(12);
+  /* editor state — when embedded, hydrate from product draft */
+  const [productName, setProductName] = useState(embedded && draft ? draft.name : "");
+  const [productDesc, setProductDesc] = useState(embedded && draft ? draft.description : "");
+  const [price, setPrice] = useState(embedded && draft ? String(draft.price || "") : "997");
+  const [originalPrice, setOriginalPrice] = useState(embedded && draft ? String(draft.originalPrice ?? "") : "1497");
+  const [guarantee, setGuarantee] = useState(embedded && draft?.guarantee?.days ? draft.guarantee.days : 7);
+  const [paymentType, setPaymentType] = useState<"single" | "recurring">(embedded && draft ? draft.paymentType : "single");
+  const [installments, setInstallments] = useState(embedded && draft ? draft.installments.enabled : true);
+  const [maxInstallments, setMaxInstallments] = useState(embedded && draft ? draft.installments.max : 12);
   const [accentColor, setAccentColor] = useState("#FFD700");
   const [buttonStyle, setButtonStyle] = useState<"default" | "rounded" | "square">("default");
-  const [headline, setHeadline] = useState("");
-  const [subheadline, setSubheadline] = useState("");
-  const [ctaText, setCtaText] = useState("Quero começar agora");
+  const [headline, setHeadline] = useState(embedded && draft ? draft.salesPage.headline : "");
+  const [subheadline, setSubheadline] = useState(embedded && draft ? draft.salesPage.subheadline : "");
+  const [ctaText, setCtaText] = useState(embedded && draft ? (draft.checkout.buttonText || draft.salesPage.ctaText || "Quero começar agora") : "Quero começar agora");
   const [showCountdown, setShowCountdown] = useState(false);
   const [showVagas, setShowVagas] = useState(false);
   const [vagas, setVagas] = useState("30");
   const [linkedCourseId, setLinkedCourseId] = useState<string | null>(null);
-  const [productType, setProductType] = useState("Curso Online");
+  const [productType, setProductType] = useState(embedded && draft ? draft.type : "Curso Online");
   const [sections, setSections] = useState({
     paraQuem: true, beneficios: true, conteudo: true, mentor: true, garantia: true, faq: true, depoimentos: true,
   });
+
+  /* Embedded mode: re-hydrate when draft changes (e.g. user edits Step 1 then comes back) */
+  useEffect(() => {
+    if (!embedded || !draft) return;
+    setProductName(draft.name);
+    setProductDesc(draft.description);
+    setPrice(String(draft.price || ""));
+    setOriginalPrice(draft.originalPrice != null ? String(draft.originalPrice) : "");
+    setGuarantee(draft.guarantee.days);
+    setPaymentType(draft.paymentType);
+    setInstallments(draft.installments.enabled);
+    setMaxInstallments(draft.installments.max);
+    setHeadline(draft.salesPage.headline);
+    setSubheadline(draft.salesPage.subheadline);
+    setCtaText(draft.checkout.buttonText || draft.salesPage.ctaText || "Quero começar agora");
+    setProductType(draft.type);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [embedded, draft?.id, draft?.name, draft?.description, draft?.price, draft?.originalPrice, draft?.type]);
+
+  /* Embedded mode: sync local edits back into the product draft so other steps see them */
+  useEffect(() => {
+    if (!embedded || !updateDraft) return;
+    updateDraft({
+      name: productName,
+      description: productDesc,
+      type: productType,
+      price: Number(price) || 0,
+      originalPrice: originalPrice ? Number(originalPrice) : null,
+      paymentType,
+      installments: { enabled: installments, max: maxInstallments },
+      guarantee: { enabled: true, days: guarantee },
+      salesPage: { ...(draft?.salesPage as any), headline, subheadline, ctaText },
+      checkout: { ...(draft?.checkout as any), buttonText: ctaText, maxInstallments },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [embedded, productName, productDesc, productType, price, originalPrice, paymentType, installments, maxInstallments, guarantee, headline, subheadline, ctaText]);
 
   const steps = [
     { icon: ShoppingCart, label: "Produto e Preço" },
@@ -392,22 +443,25 @@ const MentorCheckout = () => {
     );
   }
 
-  /* ── EDITOR VIEW — SPLIT LAYOUT ── */
+  /* ── EDITOR VIEW — SPLIT LAYOUT (or full-width when embedded) ── */
   return (
-    <div className="flex h-[calc(100vh-5.5rem)] -m-6 lg:-m-8">
+    <div className={embedded ? "flex w-full" : "flex h-[calc(100vh-5.5rem)] -m-6 lg:-m-8"}>
       {/* LEFT: Steps + Config */}
-      <div className="w-80 shrink-0 glass border-r border-[rgba(255,255,255,0.05)] flex flex-col overflow-hidden">
-        {/* Editor header */}
-        <div className="p-4 border-b border-[rgba(255,255,255,0.05)]">
-          <button onClick={() => setView("list")} className="text-xs text-muted-foreground hover:text-foreground transition-all mb-3 flex items-center gap-1">← Voltar</button>
-          <input value={productName} onChange={e => setProductName(e.target.value)} className="font-display text-lg bg-transparent border-none focus:outline-none w-full" placeholder="Nome do checkout" />
-          <div className="text-[10px] text-muted-foreground mt-1">{editingProduct?.status === "published" ? "Publicado" : "Rascunho"} · {Math.round(completionPct)}% completo</div>
-          <div className="h-1 rounded-full glass mt-2 overflow-hidden">
-            <div className="h-full rounded-full bg-primary/60 transition-all" style={{ width: `${completionPct}%` }} />
+      <div className={embedded
+        ? "w-full flex flex-col overflow-hidden min-h-[600px]"
+        : "w-80 shrink-0 glass border-r border-[rgba(255,255,255,0.05)] flex flex-col overflow-hidden"}>
+        {/* Editor header — hidden when embedded (product editor already shows name/progress) */}
+        {!embedded && (
+          <div className="p-4 border-b border-[rgba(255,255,255,0.05)]">
+            <button onClick={() => setView("list")} className="text-xs text-muted-foreground hover:text-foreground transition-all mb-3 flex items-center gap-1">← Voltar</button>
+            <input value={productName} onChange={e => setProductName(e.target.value)} className="font-display text-lg bg-transparent border-none focus:outline-none w-full" placeholder="Nome do checkout" />
+            <div className="text-[10px] text-muted-foreground mt-1">{editingProduct?.status === "published" ? "Publicado" : "Rascunho"} · {Math.round(completionPct)}% completo</div>
+            <div className="h-1 rounded-full glass mt-2 overflow-hidden">
+              <div className="h-full rounded-full bg-primary/60 transition-all" style={{ width: `${completionPct}%` }} />
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Steps nav */}
         <nav className="px-3 py-2 space-y-0.5">
           {steps.map((s, i) => (
             <button key={i} onClick={() => setEditorStep(i)}
@@ -689,25 +743,25 @@ const MentorCheckout = () => {
         </div>
       </div>
 
-      {/* RIGHT: Live Preview */}
-      <div className="flex-1 flex flex-col overflow-hidden bg-background">
-        {/* Preview header */}
-        <div className="flex items-center justify-between px-4 py-2 border-b border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
-          <span className="text-[10px] text-muted-foreground">Preview em tempo real</span>
-          <div className="flex items-center gap-1 glass rounded-lg p-0.5">
-            <button onClick={() => setPreviewMode("desktop")} className={`px-2.5 py-1 rounded-md text-[10px] transition-all ${previewMode === "desktop" ? "bg-primary/20 text-primary" : "text-muted-foreground hover:text-foreground"}`}>
-              <Monitor className="h-3 w-3" />
-            </button>
-            <button onClick={() => setPreviewMode("mobile")} className={`px-2.5 py-1 rounded-md text-[10px] transition-all ${previewMode === "mobile" ? "bg-primary/20 text-primary" : "text-muted-foreground hover:text-foreground"}`}>
-              <Smartphone className="h-3 w-3" />
-            </button>
+      {/* RIGHT: Live Preview — hidden when embedded inside the product editor */}
+      {!embedded && (
+        <div className="flex-1 flex flex-col overflow-hidden bg-background">
+          <div className="flex items-center justify-between px-4 py-2 border-b border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
+            <span className="text-[10px] text-muted-foreground">Preview em tempo real</span>
+            <div className="flex items-center gap-1 glass rounded-lg p-0.5">
+              <button onClick={() => setPreviewMode("desktop")} className={`px-2.5 py-1 rounded-md text-[10px] transition-all ${previewMode === "desktop" ? "bg-primary/20 text-primary" : "text-muted-foreground hover:text-foreground"}`}>
+                <Monitor className="h-3 w-3" />
+              </button>
+              <button onClick={() => setPreviewMode("mobile")} className={`px-2.5 py-1 rounded-md text-[10px] transition-all ${previewMode === "mobile" ? "bg-primary/20 text-primary" : "text-muted-foreground hover:text-foreground"}`}>
+                <Smartphone className="h-3 w-3" />
+              </button>
+            </div>
+          </div>
+          <div className="flex-1 overflow-y-auto p-4">
+            <CheckoutPreview product={previewData} courses={state.courses} previewMode={previewMode} />
           </div>
         </div>
-        {/* Preview content */}
-        <div className="flex-1 overflow-y-auto p-4">
-          <CheckoutPreview product={previewData} courses={state.courses} previewMode={previewMode} />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

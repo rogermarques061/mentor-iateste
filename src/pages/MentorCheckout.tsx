@@ -443,20 +443,13 @@ const MentorCheckout = ({ embedded = false }: MentorCheckoutProps = {}) => {
     );
   }
 
-  /* ── EDITOR VIEW — SPLIT LAYOUT ── */
+  /* ── EDITOR VIEW — SPLIT LAYOUT (or full-width when embedded) ── */
   return (
-    <div className="flex h-[calc(100vh-5.5rem)] -m-6 lg:-m-8">
+    <div className={embedded ? "flex w-full" : "flex h-[calc(100vh-5.5rem)] -m-6 lg:-m-8"}>
       {/* LEFT: Steps + Config */}
-      <div className="w-80 shrink-0 glass border-r border-[rgba(255,255,255,0.05)] flex flex-col overflow-hidden">
-        {/* Editor header */}
-        <div className="p-4 border-b border-[rgba(255,255,255,0.05)]">
-          <button onClick={() => setView("list")} className="text-xs text-muted-foreground hover:text-foreground transition-all mb-3 flex items-center gap-1">← Voltar</button>
-          <input value={productName} onChange={e => setProductName(e.target.value)} className="font-display text-lg bg-transparent border-none focus:outline-none w-full" placeholder="Nome do checkout" />
-          <div className="text-[10px] text-muted-foreground mt-1">{editingProduct?.status === "published" ? "Publicado" : "Rascunho"} · {Math.round(completionPct)}% completo</div>
-          <div className="h-1 rounded-full glass mt-2 overflow-hidden">
-            <div className="h-full rounded-full bg-primary/60 transition-all" style={{ width: `${completionPct}%` }} />
-          </div>
-        </div>
+      <div className={embedded
+        ? "w-full flex flex-col overflow-hidden min-h-[600px]"
+        : "w-80 shrink-0 glass border-r border-[rgba(255,255,255,0.05)] flex flex-col overflow-hidden"}>
 
         {/* Steps nav */}
         <nav className="px-3 py-2 space-y-0.5">

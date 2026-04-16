@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CreditCard, Plus, Eye, Copy, MoreHorizontal, ShoppingCart,
   TrendingUp, TrendingDown, Percent, ArrowRight, Check, Users, Star, Shield,
@@ -7,7 +7,12 @@ import {
 } from "lucide-react";
 import { usePlatform, formatCurrency } from "@/contexts/PlatformContext";
 import type { CheckoutProduct } from "@/contexts/PlatformContext";
+import { useProducts } from "@/contexts/ProductsContext";
 import CheckoutPreview from "@/components/checkout/CheckoutPreview";
+
+interface MentorCheckoutProps {
+  embedded?: boolean;
+}
 
 const statusMap: Record<string, { label: string; color: string; bg: string }> = {
   published: { label: "Ativo", color: "#34D399", bg: "rgba(52,211,153,0.15)" },

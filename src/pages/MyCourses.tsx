@@ -230,7 +230,7 @@ const MyCourses = () => {
                     })}
                   </div>
                   <div className="mt-4 flex justify-end">
-                    <Link to="/player">
+                    <Link to="/aluno/player">
                       <Button size="sm" variant="default">
                         Continuar Curso
                       </Button>

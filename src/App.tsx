@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { PlatformProvider } from "@/contexts/PlatformContext";
 import { ProductsProvider } from "@/contexts/ProductsContext";
 import { AppLayout } from "@/components/layout/AppLayout";
+import Landing from "./pages/Landing";
 import StudentHome from "./pages/StudentHome";
 import MyCourses from "./pages/MyCourses";
 import LessonPlayer from "./pages/LessonPlayer";
@@ -46,12 +47,18 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<AppLayout><StudentHome /></AppLayout>} />
-            <Route path="/courses" element={<AppLayout><MyCourses /></AppLayout>} />
-            <Route path="/player" element={<AppLayout><LessonPlayer /></AppLayout>} />
-            <Route path="/evolution" element={<AppLayout><Evolution /></AppLayout>} />
-            <Route path="/achievements" element={<AppLayout><Achievements /></AppLayout>} />
-            <Route path="/ranking" element={<AppLayout><Ranking /></AppLayout>} />
+            {/* Public landing */}
+            <Route path="/" element={<Landing />} />
+
+            {/* Student area */}
+            <Route path="/aluno" element={<AppLayout><StudentHome /></AppLayout>} />
+            <Route path="/aluno/courses" element={<AppLayout><MyCourses /></AppLayout>} />
+            <Route path="/aluno/player" element={<AppLayout><LessonPlayer /></AppLayout>} />
+            <Route path="/aluno/evolution" element={<AppLayout><Evolution /></AppLayout>} />
+            <Route path="/aluno/achievements" element={<AppLayout><Achievements /></AppLayout>} />
+            <Route path="/aluno/ranking" element={<AppLayout><Ranking /></AppLayout>} />
+
+            {/* Mentor area */}
             <Route path="/mentor" element={<AppLayout><MentorDashboard /></AppLayout>} />
             <Route path="/mentor/students" element={<AppLayout><MentorStudents /></AppLayout>} />
             <Route path="/mentor/students/:id" element={<AppLayout><MentorStudentProfile /></AppLayout>} />
@@ -64,9 +71,12 @@ const App = () => (
             <Route path="/mentor/sales" element={<AppLayout><MentorSales /></AppLayout>} />
             <Route path="/mentor/financial" element={<AppLayout><MentorFinancial /></AppLayout>} />
             <Route path="/mentor/checkout" element={<AppLayout><MentorCheckout /></AppLayout>} />
+
+            {/* Public sales/checkout */}
             <Route path="/p/:slug" element={<ProductSalesPage />} />
             <Route path="/checkout/:slug" element={<CheckoutPage />} />
             <Route path="/obrigado/:id" element={<PurchaseSuccess />} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

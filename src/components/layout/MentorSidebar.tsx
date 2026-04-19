@@ -97,7 +97,7 @@ export function MentorSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <NavLink
-                to="/"
+                to="/aluno"
                 className="flex items-center gap-3 px-4 py-3 rounded-xl text-[15px] font-semibold text-muted-foreground hover:bg-[rgba(255,255,255,0.03)] transition-all duration-200"
                 activeClassName=""
               >

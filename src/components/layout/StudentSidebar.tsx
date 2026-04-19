@@ -14,12 +14,12 @@ import {
 } from "@/components/ui/sidebar";
 
 const mainItems = [
-  { title: "Início", url: "/", icon: Home },
-  { title: "Meus Cursos", url: "/courses", icon: BookOpen },
-  { title: "Player de Aula", url: "/player", icon: PlayCircle },
-  { title: "Minha Evolução", url: "/evolution", icon: BarChart3 },
-  { title: "Conquistas", url: "/achievements", icon: Trophy },
-  { title: "Ranking", url: "/ranking", icon: Medal },
+  { title: "Início", url: "/aluno", icon: Home },
+  { title: "Meus Cursos", url: "/aluno/courses", icon: BookOpen },
+  { title: "Player de Aula", url: "/aluno/player", icon: PlayCircle },
+  { title: "Minha Evolução", url: "/aluno/evolution", icon: BarChart3 },
+  { title: "Conquistas", url: "/aluno/achievements", icon: Trophy },
+  { title: "Ranking", url: "/aluno/ranking", icon: Medal },
 ];
 
 export function StudentSidebar() {
@@ -50,7 +50,7 @@ export function StudentSidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
-                      end={item.url === "/"}
+                      end={item.url === "/aluno"}
                       className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 text-muted-foreground hover:text-foreground hover:bg-[rgba(255,255,255,0.03)]"
                       activeClassName="bg-[rgba(255,215,0,0.08)] text-primary"
                     >

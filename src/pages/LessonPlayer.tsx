@@ -47,7 +47,7 @@ const LessonPlayer = () => {
     <div className="space-y-0 -m-4 sm:-m-5 md:-m-6 lg:-m-8 xl:-mx-12">
       {/* Top bar */}
       <div className="flex items-center gap-3 px-4 sm:px-6 py-3 border-b border-border/30">
-        <Link to="/courses" className="text-muted-foreground hover:text-foreground transition-colors">
+        <Link to="/aluno/courses" className="text-muted-foreground hover:text-foreground transition-colors">
           <ChevronLeft className="h-5 w-5" strokeWidth={1.5} />
         </Link>
         <div className="flex-1 min-w-0">

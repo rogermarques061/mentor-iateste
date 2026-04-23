@@ -29,6 +29,7 @@ import ProductSalesPage from "./pages/ProductSalesPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import PurchaseSuccess from "./pages/PurchaseSuccess";
 import NotFound from "./pages/NotFound";
+import SignupPage from "./pages/SignupPage";
 import { CustomCursor } from "./components/effects/CustomCursor";
 import { BackgroundOrbs } from "./components/effects/BackgroundOrbs";
 import { WaveCanvas } from "./components/effects/WaveCanvas";
@@ -71,6 +72,9 @@ const App = () => (
             <Route path="/mentor/sales" element={<AppLayout><MentorSales /></AppLayout>} />
             <Route path="/mentor/financial" element={<AppLayout><MentorFinancial /></AppLayout>} />
             <Route path="/mentor/checkout" element={<AppLayout><MentorCheckout /></AppLayout>} />
+
+            {/* Signup funnel */}
+            <Route path="/criar-conta" element={<SignupPage />} />
 
             {/* Public sales/checkout */}
             <Route path="/p/:slug" element={<ProductSalesPage />} />

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, Plus, Minus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import s from "./Landing.module.css";
 import { AuthModals, type AuthMode } from "@/components/landing/AuthModals";
 
@@ -15,10 +16,12 @@ const LogoMark = ({ size = 36 }: { size?: number }) => (
 type TabKey = "dashboard" | "ia" | "gami" | "fin";
 
 const Landing = () => {
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [authMode, setAuthMode] = useState<AuthMode>(null);
   const [tab, setTab] = useState<TabKey>("dashboard");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const goSignup = () => navigate("/criar-conta");
 
   useEffect(() => {
     document.title = "Implofy — Painel de Performance para Mentores";
@@ -71,7 +74,7 @@ const Landing = () => {
           </nav>
           <div className={s.headerActions}>
             <button className={`${s.btn} ${s.btnGhost}`} onClick={() => setAuthMode("login")}>Entrar</button>
-            <button className={`${s.btn} ${s.btnPrimary}`} onClick={() => setAuthMode("signup")}>Criar Conta</button>
+            <button className={`${s.btn} ${s.btnPrimary}`} onClick={() => goSignup()}>Criar Conta</button>
           </div>
         </div>
       </header>
@@ -92,7 +95,7 @@ const Landing = () => {
               Dashboard completo com alertas de IA, gamificação e métricas em tempo real para mentores que vendem mais.
             </p>
             <div className={s.heroCtas}>
-              <button className={`${s.btn} ${s.btnPrimary} ${s.btnLg}`} onClick={() => setAuthMode("signup")}>
+              <button className={`${s.btn} ${s.btnPrimary} ${s.btnLg}`} onClick={() => goSignup()}>
                 Criar minha conta <ArrowRight size={14} />
               </button>
               <button className={`${s.btn} ${s.btnOutline} ${s.btnLg}`} onClick={() => scrollTo("preview")}>

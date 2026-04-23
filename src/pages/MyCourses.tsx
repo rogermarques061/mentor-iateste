@@ -2,83 +2,37 @@ import { useState } from "react";
 import { BookOpen, Clock, CheckCircle2, Lock, Filter, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-
-const coursesData = [
-  {
-    id: 1,
-    title: "Vendas de Alto Ticket",
-    description: "Domine as técnicas de vendas consultivas para produtos premium.",
-    modules: [
-      { title: "Fundamentos", lessons: 6, completed: 6 },
-      { title: "Rapport Avançado", lessons: 7, completed: 7 },
-      { title: "Qualificação", lessons: 8, completed: 5 },
-      { title: "Fechamento", lessons: 6, completed: 0 },
-      { title: "Pós-venda", lessons: 5, completed: 0 },
-    ],
-    category: "Vendas",
-    progress: 68,
-  },
-  {
-    id: 2,
-    title: "Marketing Digital Avançado",
-    description: "Estratégias avançadas de tráfego pago e orgânico.",
-    modules: [
-      { title: "Tráfego Pago", lessons: 8, completed: 5 },
-      { title: "SEO Avançado", lessons: 6, completed: 2 },
-      { title: "Email Marketing", lessons: 5, completed: 0 },
-      { title: "Analytics", lessons: 5, completed: 0 },
-    ],
-    category: "Marketing",
-    progress: 35,
-  },
-  {
-    id: 3,
-    title: "Liderança e Gestão",
-    description: "Desenvolva habilidades de liderança para times de alta performance.",
-    modules: [
-      { title: "Autoconhecimento", lessons: 7, completed: 2 },
-      { title: "Comunicação", lessons: 6, completed: 0 },
-      { title: "Gestão de Conflitos", lessons: 7, completed: 0 },
-      { title: "Cultura de Time", lessons: 8, completed: 0 },
-      { title: "Métricas", lessons: 6, completed: 0 },
-      { title: "Escala", lessons: 6, completed: 0 },
-    ],
-    category: "Gestão",
-    progress: 12,
-  },
-  {
-    id: 4,
-    title: "Copywriting Persuasivo",
-    description: "Escreva textos que convertem com frameworks comprovados.",
-    modules: [
-      { title: "Headlines", lessons: 6, completed: 0 },
-      { title: "Storytelling", lessons: 6, completed: 0 },
-      { title: "CTAs", lessons: 6, completed: 0 },
-    ],
-    category: "Copy",
-    progress: 0,
-  },
-  {
-    id: 5,
-    title: "Funis de Conversão",
-    description: "Monte funis automatizados que geram vendas 24/7.",
-    modules: [
-      { title: "Estrutura de Funil", lessons: 5, completed: 0 },
-      { title: "Landing Pages", lessons: 5, completed: 0 },
-      { title: "Automação", lessons: 5, completed: 0 },
-      { title: "Otimização", lessons: 5, completed: 0 },
-    ],
-    category: "Marketing",
-    progress: 0,
-  },
-];
+import { usePlatform } from "@/contexts/PlatformContext";
 
 type FilterType = "all" | "in-progress" | "completed" | "not-started";
 
 const MyCourses = () => {
+  const { state } = usePlatform();
   const [filter, setFilter] = useState<FilterType>("all");
   const [search, setSearch] = useState("");
-  const [expandedCourse, setExpandedCourse] = useState<number | null>(null);
+  const [expandedCourse, setExpandedCourse] = useState<string | null>(null);
+
+  const currentStudent = state.currentStudentId
+    ? state.students.find(s => s.id === state.currentStudentId)
+    : state.students[0];
+
+  const coursesData = state.courses
+    .filter(c => c.status === "published")
+    .map(c => {
+      const progress = currentStudent?.progress[c.id]?.percentage ?? 0;
+      return {
+        id: c.id,
+        title: c.title,
+        description: c.description,
+        modules: c.modules.map(m => ({
+          title: m.title,
+          lessons: m.lessons.length,
+          completed: 0,
+        })),
+        category: c.description?.split(" ")[0] || "Curso",
+        progress,
+      };
+    });
 
   const filtered = coursesData.filter((c) => {
     if (search && !c.title.toLowerCase().includes(search.toLowerCase())) return false;
@@ -245,7 +199,9 @@ const MyCourses = () => {
         {filtered.length === 0 && (
           <div className="glass rounded-2xl p-12 text-center">
             <Filter className="h-10 w-10 text-muted-foreground/40 mx-auto mb-3" strokeWidth={1.5} />
-            <p className="text-muted-foreground text-sm">Nenhum curso encontrado com esses filtros.</p>
+            <p className="text-muted-foreground text-sm">
+              {coursesData.length === 0 ? "Nenhum curso publicado ainda." : "Nenhum curso encontrado com esses filtros."}
+            </p>
           </div>
         )}
       </div>

@@ -8,6 +8,7 @@ import {
 import { usePlatform, formatCurrency } from "@/contexts/PlatformContext";
 import type { CheckoutProduct } from "@/contexts/PlatformContext";
 import { useProducts } from "@/contexts/ProductsContext";
+import type { DraftProduct } from "@/contexts/ProductsContext";
 import CheckoutPreview from "@/components/checkout/CheckoutPreview";
 
 interface MentorCheckoutProps {
@@ -118,8 +119,8 @@ const MentorCheckout = ({ embedded = false }: MentorCheckoutProps = {}) => {
       paymentType,
       installments: { enabled: installments, max: maxInstallments },
       guarantee: { enabled: true, days: guarantee },
-      salesPage: { ...(draft?.salesPage as any), headline, subheadline, ctaText },
-      checkout: { ...(draft?.checkout as any), buttonText: ctaText, maxInstallments },
+      salesPage: { ...draft?.salesPage, headline, subheadline, ctaText } as DraftProduct['salesPage'],
+      checkout: { ...draft?.checkout, buttonText: ctaText, maxInstallments } as DraftProduct['checkout'],
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [embedded, productName, productDesc, productType, price, originalPrice, paymentType, installments, maxInstallments, guarantee, headline, subheadline, ctaText]);
@@ -149,7 +150,7 @@ const MentorCheckout = ({ embedded = false }: MentorCheckoutProps = {}) => {
     setCtaText(p.ctaText);
     setLinkedCourseId(p.linkedCourseId);
     setProductType(p.type);
-    setSections(p.sections as any);
+    setSections(prev => ({ ...prev, ...p.sections }));
   };
 
   const getEditorData = (): Partial<CheckoutProduct> => ({
@@ -167,7 +168,7 @@ const MentorCheckout = ({ embedded = false }: MentorCheckoutProps = {}) => {
     paymentType,
     installments,
     maxInstallments,
-    sections: sections as any,
+    sections,
     testimonials: defaultTestimonials,
     faq: defaultFaq,
     benefits: ["Acesso vitalício a todo conteúdo", "Suporte direto com o mentor", "Certificado de conclusão", "Comunidade exclusiva"],

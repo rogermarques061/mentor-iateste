@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Play, CheckCircle2, Circle, ArrowRight, FileText, MessageSquare, AlignLeft, ChevronLeft, Download, Send, StickyNote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
-const moduleLessons = [
+const initialLessons = [
   { id: 1, title: "Introdução ao Rapport", duration: "08:32", status: "completed" as const },
   { id: 2, title: "Linguagem Corporal", duration: "12:15", status: "completed" as const },
   { id: 3, title: "Espelhamento Avançado", duration: "15:20", status: "completed" as const },
@@ -13,9 +14,9 @@ const moduleLessons = [
   { id: 7, title: "Prática e Exercícios", duration: "20:00", status: "pending" as const },
 ];
 
-const comments = [
-  { author: "Maria S.", avatar: "MS", text: "Excelente aula! O exemplo do espelhamento me ajudou muito na prática.", time: "há 2 dias" },
-  { author: "Pedro L.", avatar: "PL", text: "Alguém pode explicar melhor a técnica do pacing? Fiquei com dúvida.", time: "há 3 dias" },
+const initialComments = [
+  { author: "Maria S.", avatar: "MS", text: "Excelente aula! O exemplo do espelhamento me ajudou muito na prática.", time: "há 2 dias", isMentor: false },
+  { author: "Pedro L.", avatar: "PL", text: "Alguém pode explicar melhor a técnica do pacing? Fiquei com dúvida.", time: "há 3 dias", isMentor: false },
   { author: "Mentor", avatar: "MT", text: "Pedro, o pacing é quando você acompanha o ritmo da fala e energia do seu prospect antes de liderar a conversa.", time: "há 3 dias", isMentor: true },
 ];
 
@@ -25,16 +26,50 @@ const materials = [
   { name: "Checklist de Rapport", type: "PDF", size: "890 KB" },
 ];
 
+type LessonStatus = "completed" | "current" | "pending";
 type Tab = "materials" | "comments" | "transcript" | "notes";
 
 const LessonPlayer = () => {
   const [activeTab, setActiveTab] = useState<Tab>("materials");
-  const [noteText, setNoteText] = useState("");
+  const [lessons, setLessons] = useState(initialLessons);
+  const [comments, setComments] = useState(initialComments);
+  const [noteText, setNoteText] = useState(() =>
+    localStorage.getItem("lesson_notes_current") || ""
+  );
   const [commentText, setCommentText] = useState("");
   const [showLessonList, setShowLessonList] = useState(false);
-  const currentLesson = moduleLessons.find((l) => l.status === "current")!;
-  const completedCount = moduleLessons.filter((l) => l.status === "completed").length;
-  const progressPct = Math.round((completedCount / moduleLessons.length) * 100);
+
+  const currentLesson = lessons.find((l) => l.status === "current") || lessons[0];
+  const completedCount = lessons.filter((l) => l.status === "completed").length;
+  const progressPct = Math.round((completedCount / lessons.length) * 100);
+
+  const handleMarkComplete = () => {
+    setLessons(prev => {
+      const idx = prev.findIndex(l => l.status === "current");
+      if (idx === -1) return prev;
+      const updated = prev.map((l, i) => {
+        if (i === idx) return { ...l, status: "completed" as LessonStatus };
+        if (i === idx + 1 && l.status === "pending") return { ...l, status: "current" as LessonStatus };
+        return l;
+      });
+      return updated;
+    });
+    toast.success("Aula marcada como concluída!");
+  };
+
+  const handleSaveNotes = () => {
+    localStorage.setItem("lesson_notes_current", noteText);
+    toast.success("Anotações salvas!");
+  };
+
+  const handleSendComment = () => {
+    if (!commentText.trim()) return;
+    setComments(prev => [
+      ...prev,
+      { author: "Você", avatar: "JS", text: commentText.trim(), time: "agora", isMentor: false },
+    ]);
+    setCommentText("");
+  };
 
   const tabs: { id: Tab; label: string; icon: typeof FileText }[] = [
     { id: "materials", label: "Materiais", icon: FileText },
@@ -82,11 +117,16 @@ const LessonPlayer = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 sm:px-6 py-4 border-b border-border/30 gap-3">
             <div>
               <h3 className="font-semibold text-[15px]">{currentLesson.title}</h3>
-              <p className="text-xs text-muted-foreground mt-0.5">Aula {currentLesson.id} de {moduleLessons.length} · {currentLesson.duration}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Aula {currentLesson.id} de {lessons.length} · {currentLesson.duration}</p>
             </div>
-            <Button size="sm" className="gap-2 w-full sm:w-auto">
+            <Button
+              size="sm"
+              className="gap-2 w-full sm:w-auto"
+              onClick={handleMarkComplete}
+              disabled={currentLesson.status === "completed"}
+            >
               <CheckCircle2 className="h-4 w-4" strokeWidth={1.5} />
-              Marcar como concluída
+              {currentLesson.status === "completed" ? "Concluída" : "Marcar como concluída"}
             </Button>
           </div>
 
@@ -156,9 +196,10 @@ const LessonPlayer = () => {
                         placeholder="Escreva um comentário..."
                         value={commentText}
                         onChange={(e) => setCommentText(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && handleSendComment()}
                         className="flex-1 h-9 px-3 rounded-lg glass text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 bg-transparent"
                       />
-                      <Button size="sm" variant="ghost" className="h-9 w-9 p-0">
+                      <Button size="sm" variant="ghost" className="h-9 w-9 p-0" onClick={handleSendComment}>
                         <Send className="h-4 w-4" strokeWidth={1.5} />
                       </Button>
                     </div>
@@ -194,7 +235,9 @@ const LessonPlayer = () => {
                     className="w-full h-40 p-4 rounded-xl glass text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 bg-transparent resize-none"
                   />
                   <div className="flex justify-end">
-                    <Button size="sm" variant="secondary">Salvar Anotações</Button>
+                    <Button size="sm" variant="secondary" onClick={handleSaveNotes}>
+                      Salvar Anotações
+                    </Button>
                   </div>
                 </div>
               )}
@@ -206,10 +249,10 @@ const LessonPlayer = () => {
         <div className={`${showLessonList ? 'block' : 'hidden'} lg:block w-full lg:w-80 border-t lg:border-t-0 lg:border-l border-border/30 flex-shrink-0`}>
           <div className="p-4 border-b border-border/30">
             <h3 className="text-sm font-semibold">Módulo 3 — Qualificação</h3>
-            <p className="text-xs text-muted-foreground mt-0.5">{completedCount}/{moduleLessons.length} aulas concluídas</p>
+            <p className="text-xs text-muted-foreground mt-0.5">{completedCount}/{lessons.length} aulas concluídas</p>
           </div>
           <div className="divide-y divide-border/20">
-            {moduleLessons.map((lesson) => (
+            {lessons.map((lesson) => (
               <div
                 key={lesson.id}
                 className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-200 ${

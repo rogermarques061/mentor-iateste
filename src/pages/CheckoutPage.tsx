@@ -5,6 +5,11 @@ import {
   AlertCircle, CheckCircle2, Star, Award, Eye, EyeOff
 } from "lucide-react";
 import { usePlatform, formatCurrency } from "@/contexts/PlatformContext";
+import { toast } from "sonner";
+
+const VALID_COUPONS: Record<string, number> = {
+  LAUNCH10: 100,
+};
 
 const maskCpf = (v: string) => {
   const n = v.replace(/\D/g, "").slice(0, 11);
@@ -63,7 +68,7 @@ const CheckoutPage = () => {
 
   const product = state.products.find(p => p.slug === slug);
 
-  const discount = couponApplied ? 100 : 0;
+  const discount = couponApplied ? (VALID_COUPONS[coupon.toUpperCase()] ?? 0) : 0;
   const total = product ? product.price - discount : 0;
 
   useEffect(() => {
@@ -115,8 +120,18 @@ const CheckoutPage = () => {
   const brand = detectBrand(cardNumber);
 
   const applyCoupon = () => {
+    if (!coupon.trim()) return;
     setCouponLoading(true);
-    setTimeout(() => { setCouponApplied(true); setCoupon("LAUNCH10"); setCouponLoading(false); }, 800);
+    setTimeout(() => {
+      const code = coupon.trim().toUpperCase();
+      if (VALID_COUPONS[code] !== undefined) {
+        setCouponApplied(true);
+        setCoupon(code);
+      } else {
+        toast.error("Cupom inválido ou expirado.");
+      }
+      setCouponLoading(false);
+    }, 800);
   };
 
   const handlePixPayment = async () => {

@@ -81,29 +81,50 @@ const MentorDashboard = () => {
   const periodSales = filtered.length;
   const ticketMedio = periodSales > 0 ? periodRevenue / periodSales : 0;
 
+  const pixRevenue = filtered.filter(t => t.method === "pix").reduce((a, t) => a + t.amount, 0);
+  const cardRevenue = filtered.filter(t => t.method === "card").reduce((a, t) => a + t.amount, 0);
+  const boletoRevenue = filtered.filter(t => t.method === "boleto").reduce((a, t) => a + t.amount, 0);
+
   const metrics = [
     { label: "Vendas", value: formatCurrency(periodRevenue), icon: DollarSign },
     { label: "Total de transações", value: String(periodSales), icon: ShoppingCart },
     { label: "Ticket médio", value: formatCurrency(ticketMedio), icon: BarChart3 },
-    { label: "Vendas por Pix", value: formatCurrency(0), icon: Landmark },
-    { label: "Vendas por cartão", value: formatCurrency(0), icon: CreditCard },
-    { label: "Vendas por boleto", value: formatCurrency(0), icon: Receipt },
+    { label: "Vendas por Pix", value: formatCurrency(pixRevenue), icon: Landmark },
+    { label: "Vendas por cartão", value: formatCurrency(cardRevenue), icon: CreditCard },
+    { label: "Vendas por boleto", value: formatCurrency(boletoRevenue), icon: Receipt },
   ];
 
+  const pixCount = filtered.filter(t => t.method === "pix").length;
+  const boletoCount = filtered.filter(t => t.method === "boleto").length;
+  const pixPct = periodSales > 0 ? Math.round((pixCount / periodSales) * 100) : 0;
+  const boletoPct = periodSales > 0 ? Math.round((boletoCount / periodSales) * 100) : 0;
+
   const conversions = [
-    { label: "Conversão por PIX", percent: 100 },
-    { label: "Conversão por boleto", percent: 100 },
+    { label: "Conversão por PIX", percent: pixPct },
+    { label: "Conversão por boleto", percent: boletoPct },
     { label: "Chargebacks", percent: 0 },
   ];
 
   const topProducts = state.products?.slice(0, 5) || [];
 
-  const revenueData = [
-    { day: "01", receita: 1200 }, { day: "05", receita: 3400 },
-    { day: "10", receita: 2800 }, { day: "15", receita: 5600 },
-    { day: "20", receita: 4200 }, { day: "25", receita: 6800 },
-    { day: "30", receita: 7400 },
-  ];
+  const revenueData = useMemo(() => {
+    const byDay: Record<string, number> = {};
+    filtered.forEach(t => {
+      const d = new Date(t.paidAt || t.createdAt);
+      const key = String(d.getDate()).padStart(2, "0");
+      byDay[key] = (byDay[key] || 0) + t.amount;
+    });
+    const entries = Object.entries(byDay)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([day, receita]) => ({ day, receita }));
+    if (entries.length > 0) return entries;
+    return [
+      { day: "01", receita: 1200 }, { day: "05", receita: 3400 },
+      { day: "10", receita: 2800 }, { day: "15", receita: 5600 },
+      { day: "20", receita: 4200 }, { day: "25", receita: 6800 },
+      { day: "30", receita: 7400 },
+    ];
+  }, [filtered]);
 
   const periodButtons: { key: PeriodKey; label: string }[] = [
     { key: "today", label: "Hoje" },

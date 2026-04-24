@@ -292,6 +292,19 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── AURORA HERO (Como conduzimos) ────────────────────── */}
+      <section className={s.aurora} aria-labelledby="aurora-title">
+        <div className={s.auroraGlowBack} aria-hidden />
+        <div className={s.auroraArc} aria-hidden />
+        <div className={s.auroraArcBack} aria-hidden />
+        <div className={s.auroraBloom} aria-hidden />
+        <div className={s.auroraContent}>
+          <h2 id="aurora-title" className={s.auroraTitle}>
+            Como conduzimos o seu projeto
+          </h2>
+        </div>
+      </section>
+
       {/* ── COMO FUNCIONA ─────────────────────────────────────── */}
       <section id="como" className={s.sec}>
         <div className={s.wrap}>

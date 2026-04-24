@@ -132,6 +132,11 @@ export default function Landing() {
 
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className={s.hero}>
+        {/* aurora glow background */}
+        <div className={s.auroraGlowBack} aria-hidden />
+        <div className={s.auroraBloom} aria-hidden />
+        <div className={s.auroraArcBack} aria-hidden />
+        <div className={s.auroraArc} aria-hidden />
         {/* orbs */}
         <div className={s.orb1} aria-hidden />
         <div className={s.orb2} aria-hidden />
@@ -289,19 +294,6 @@ export default function Landing() {
               <div className={s.numLabel}>{l}</div>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* ── AURORA HERO (Como conduzimos) ────────────────────── */}
-      <section className={s.aurora} aria-labelledby="aurora-title">
-        <div className={s.auroraGlowBack} aria-hidden />
-        <div className={s.auroraArc} aria-hidden />
-        <div className={s.auroraArcBack} aria-hidden />
-        <div className={s.auroraBloom} aria-hidden />
-        <div className={s.auroraContent}>
-          <h2 id="aurora-title" className={s.auroraTitle}>
-            Como conduzimos o seu projeto
-          </h2>
         </div>
       </section>
 

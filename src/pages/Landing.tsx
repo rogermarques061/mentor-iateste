@@ -132,6 +132,11 @@ export default function Landing() {
 
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className={s.hero}>
+        {/* aurora glow background */}
+        <div className={s.auroraGlowBack} aria-hidden />
+        <div className={s.auroraBloom} aria-hidden />
+        <div className={s.auroraArcBack} aria-hidden />
+        <div className={s.auroraArc} aria-hidden />
         {/* orbs */}
         <div className={s.orb1} aria-hidden />
         <div className={s.orb2} aria-hidden />
